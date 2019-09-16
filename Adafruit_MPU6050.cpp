@@ -108,27 +108,23 @@ boolean Adafruit_MPU6050::_init(void) {
   return true;
 }
 
-// void Adafruit_MPU6050::enableProximityInterrupts(MPU6050_ProximityType interrupt_condition) {
-//   Adafruit_BusIO_RegisterBits proximity_int_config = 
-//     Adafruit_BusIO_RegisterBits(PS_CONFIG_12, 2, 8);
-
-//   proximity_int_config.write(interrupt_condition);
-// }
 
 /**************************************************************************/
 /*!
-    @brief Gets the proximity low threshold.
-    @returns  The current low threshold
+    @brief Gets the acceleration measurement range.
+    @returns  The acceleration measurement range
 */
 /**************************************************************************/
 // Adafruit_BusIO_RegisterBits(*register, number_of_bits, shift);
-mpu6050_range_t Adafruit_MPU6050::getRange(void){
+mpu6050_range_t Adafruit_MPU6050::getAccelerometerRange(void){
   Adafruit_BusIO_Register  config =
     Adafruit_BusIO_Register(i2c_dev, MPU6050_ACCEL_CONFIG, 1);
-  Adafruit_BusIO_RegisterBits range = 
+  Adafruit_BusIO_RegisterBits accel_range = 
     Adafruit_BusIO_RegisterBits(&config, 2, 3);
   
+  return (mpu6050_range_t)accel_range.read();
 }
+
 /**************************************************************************/
 /*!
     @brief Sets the proximity low threshold.
@@ -136,20 +132,22 @@ mpu6050_range_t Adafruit_MPU6050::getRange(void){
             The low threshold to set
 */
 /**************************************************************************/
-
+void Adafruit_MPU6050::setAccelerometerRange(mpu6050_range_t new_range){
+  Adafruit_BusIO_Register config =
+    Adafruit_BusIO_Register(i2c_dev, MPU6050_ACCEL_CONFIG, 1);
+  
+  Adafruit_BusIO_RegisterBits accel_range =
+    Adafruit_BusIO_RegisterBits(&config, 2, 3);
+  accel_range.write(new_range);
+}
 
 void Adafruit_MPU6050::fetchData(void){
     Adafruit_BusIO_Register data_reg = 
-    Adafruit_BusIO_Register(i2c_dev, MPU6050_ACCEL_OUT, 14);
-
-    //read 14 bytes = 7x uint16_t
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_ACCEL_OUT, 14);
 
     uint8_t buffer[14];
     // can I make this a int16_t and cast it to a uint8_t?
     data_reg.read(buffer, 14);
-    // for (uint8_t i=0; i<14; i++){
-    //   Serial.println(buffer[i], BIN);
-    // }
 
     rawAccX = buffer[0] << 8 | buffer[1];
     rawAccY = buffer[2] << 8 | buffer[3];
@@ -161,10 +159,16 @@ void Adafruit_MPU6050::fetchData(void){
 
   temp = (rawTemp + 12412.0) / 340.0;
 
-  accX = ((float)rawAccX) / 16384.0;
-  accY = ((float)rawAccY) / 16384.0;
-  accZ = ((float)rawAccZ) / 16384.0;
-  ;Serial.print(accX);
+  //setup range dependant scaling
+  accX = ((float)rawAccX) / 4096.0;
+  accY = ((float)rawAccY) / 4096.0;
+  accZ = ((float)rawAccZ) / 4096.0;
+
+  // accX = ((float)rawAccX) / 16384.0;
+  // accY = ((float)rawAccY) / 16384.0;
+  // accZ = ((float)rawAccZ) / 16384.0;
+
+  Serial.print(accX);
   Serial.print(",");Serial.print(accY);
   Serial.print(",");Serial.println(accZ);
 

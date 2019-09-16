@@ -27,7 +27,6 @@
 
 // All addresses are for 16bit registers; 
 // duplicates are for high or low bytes that aren't used together
-#define MPU6050_ALS_CONFIG         0x00 ///< Ambient light sensor configuration register
 #define MPU6050_SMPLRT_DIV   0x19
 #define MPU6050_CONFIG       0x1a
 #define MPU6050_GYRO_CONFIG  0x1b
@@ -64,7 +63,8 @@ public:
   Adafruit_MPU6050();
   boolean begin(uint8_t i2c_addr=MPU6050_I2CADDR_DEFAULT, TwoWire *wire = &Wire);
   void fetchData(void);
-  mpu6050_range_t getRange(void);
+  mpu6050_range_t getAccelerometerRange(void);
+  void setAccelerometerRange(mpu6050_range_t);
 
 private:
   bool _init(void);

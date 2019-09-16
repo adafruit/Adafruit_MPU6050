@@ -18,17 +18,18 @@ void setup(void) {
   }
   Serial.println("MPU6050 Found!");
 
-  //mpu.setDataRate(MPU6050_DATARATE_31_25_HZ);
-  //Serial.print("Data rate set to: ");
-  //switch (mpu.getDataRate()) {
-  //  case MPU6050_DATARATE_1_HZ: Serial.println("1 Hz"); break;
-  //  case MPU6050_DATARATE_1_95_HZ: Serial.println("1.95 Hz"); break;
-
-  //}
+  mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
+  Serial.print("Range set to: ");
+  switch (mpu.getAccelerometerRange()) {
+    case MPU6050_RANGE_2_G: Serial.println("+-2G"); break;
+    case MPU6050_RANGE_4_G: Serial.println("+-4G"); break;
+    case MPU6050_RANGE_8_G: Serial.println("+-8G"); break;
+    case MPU6050_RANGE_16_G: Serial.println("+-16G"); break;
+  }
 }
 
 void loop() {
   mpu.fetchData();      // get X Y and Z data at once
- 
+
   delay(100); 
 }

@@ -6,13 +6,11 @@ Adafruit MPU6050 [![Build Status](https://travis-ci.com/adafruit/Adafruit_MPU605
 <a href="https://www.adafruit.com/products/3886"><img src="assets/board.jpg?raw=true" width="500px"></a>
 This is the Adafruit MPU6050 6-Axis Accelerometer and Magnetometer Library for Arduino
 
-Tested and works great with the Adafruit LPS35HW Breakout Board 
+Tested and works great with the Adafruit MPU6050 Breakout Board 
 * <a href="https://www.adafruit.com/products/3886"><img src="assets/board.jpg?raw=true" width="500px"></a>
 This chip uses I2C to communicate, 2 pins are required to interface
 
 Adafruit invests time and resources providing this open source code, please support Adafruit and open-source hardware by purchasing products from Adafruit!
-################################################
-* `Adafruit_BusIO <https://github.com/adafruit/Adafruit_BusIO>`_
 
 Contributing
 ============
