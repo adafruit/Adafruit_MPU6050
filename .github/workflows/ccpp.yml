@@ -1,0 +1,24 @@
+name: Github Arduino Library CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: pre-install
+      run: |
+        source <(curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/install.sh)
+    - name: install libraries
+      run: |
+        arduino --install-library "Adafruit BusIO"
+        arduino --install-library "Adafruit Unified Sensor"
+    - name: test platform
+      run: build_main_platforms
+    - name: build documentation
+      run: |
+        source <(curl -SLs  https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/library_check.sh)
+        source <(curl -SLs  https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/doxy_gen_and_deploy.sh)
