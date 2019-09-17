@@ -20,6 +20,7 @@
 #include "Arduino.h"
 #include <Wire.h>
 #include <Adafruit_I2CDevice.h>
+#include <Adafruit_Sensor.h>
 #include <Adafruit_BusIO_Register.h>
 
 // TODO: Trust but verify
@@ -36,15 +37,17 @@
 #define MPU6050_TEMP_H       0x41
 #define MPU6050_TEMP_L       0x42
 #define MPU6050_ACCEL_OUT    0x3B // base address for all data reads. Start here and read 14 bytes to get accel, gyro, and
+
+
 /**
  * @brief Proximity LED current values
  *
  * Allowed values for `setProximityLEDCurrent`.
  */
-typedef enum led_current {
-  MPU6050_LED_CURRENT_50MA,
+// typedef enum led_current {
+//   MPU6050_LED_CURRENT_50MA,
 
-} MPU6050_LEDCurrent;
+// } MPU6050_LEDCurrent;
 
 /** The accelerometer ranges */
 typedef enum {
@@ -58,22 +61,32 @@ typedef enum {
  *    @brief  Class that stores state and functions for interacting with
  *            the MPU6050 I2C Digital Potentiometer
  */
-class Adafruit_MPU6050 {
+class Adafruit_MPU6050 : public Adafruit_Sensor {
+
 public:
   Adafruit_MPU6050();
-  boolean begin(uint8_t i2c_addr=MPU6050_I2CADDR_DEFAULT, TwoWire *wire = &Wire);
-  void fetchData(void);
+  boolean begin(uint8_t i2c_addr=MPU6050_I2CADDR_DEFAULT, TwoWire *wire = &Wire, int32_t sensorID = 0);
+  
   mpu6050_range_t getAccelerometerRange(void);
   void setAccelerometerRange(mpu6050_range_t);
 
+
+  // Adafruit_Sensor API/Interface
+  void read(void);
+  bool getEvent(sensors_event_t *event);
+  void getSensor(sensor_t *sensor);
+  // void getAccelEvent(sensors_event_t* event, uint32_t timestamp);
+  // void getGyroEvent(sensors_event_t* event, uint32_t timestamp);
+
+
 private:
-  bool _init(void);
+  bool _init(int32_t);
 
   Adafruit_I2CDevice *i2c_dev;
   float temp, accX, accY, accZ, gyroX, gyroY, gyroZ;
   int16_t rawAccX, rawAccY, rawAccZ, rawTemp,
   rawGyroX, rawGyroY, rawGyroZ;
-
+  uint8_t _sensorID;
 };
 
 #endif
