@@ -72,27 +72,21 @@ public:
 
   // Adafruit_Sensor API/Interface
   void read();
-  bool getEvent(sensors_event_t *accel, sensors_event_t *gyro);
-  void getSensor(sensor_t *accel, sensor_t *gyro);
+  bool getEvent(sensors_event_t *accel, sensors_event_t *gyro, sensors_event_t *temp);
+  void getSensor(sensor_t *accel, sensor_t *gyro, sensor_t *temp);
 
 private:
   bool _init(int32_t);
 
   Adafruit_I2CDevice *i2c_dev;
-  float temp, accX, accY, accZ, gyroX, gyroY, gyroZ;
+  float temperature, accX, accY, accZ, gyroX, gyroY, gyroZ;
   int16_t rawAccX, rawAccY, rawAccZ, rawTemp, rawGyroX, rawGyroY, rawGyroZ;
 
   float angleGyroX, angleGyroY, angleGyroZ, angleAccX, angleAccY, angleAccZ;
 
-  // float angleX, angleY, angleZ;
-
-  // float interval;
-  // long preInterval;
-
   float accCoef, gyroCoef;
 
-  // uint8_t _sensorID;
-  uint8_t _sensorid_accel, _sensorid_gyro;
+  uint8_t _sensorid_accel, _sensorid_gyro, _sensorid_temp;
 };
 
 #endif

@@ -72,6 +72,7 @@ boolean Adafruit_MPU6050::_init(int32_t sensorID) {
 
   _sensorid_accel = sensorID;
   _sensorid_gyro = sensorID + 1;
+  _sensorid_temp = sensorID + 2;
 
   Adafruit_BusIO_Register power_mgmt_1 =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_1, 1);
@@ -99,8 +100,6 @@ boolean Adafruit_MPU6050::_init(int32_t sensorID) {
 
   power_mgmt_1.write(0x01); // set clock config
 
-  _sensorid_accel = sensorID;
-  _sensorid_gyro = sensorID + 1;
   delay(100);
   return true;
 }
@@ -154,8 +153,6 @@ void Adafruit_MPU6050::read(void) {
   rawGyroY = buffer[10] << 8 | buffer[11];
   rawGyroZ = buffer[12] << 8 | buffer[13];
 
-  temp = (rawTemp + 12412.0) / 340.0;
-
   mpu6050_range_t range = getAccelerometerRange();
   float scale = 1;
   if (range == MPU6050_RANGE_16_G)
@@ -172,7 +169,7 @@ void Adafruit_MPU6050::read(void) {
   accY = ((float)rawAccY) / scale;
   accZ = ((float)rawAccZ) / scale;
 
-  temp = (rawTemp + 12412.0) / 340.0;
+  temperature = (rawTemp + 12412.0) / 340.0;
 
   // TODO: CHeck scaling
   gyroX = ((float)rawGyroX) / 65.5;
@@ -185,7 +182,7 @@ void Adafruit_MPU6050::read(void) {
   // gyroZ -= gyroZoffset;
 }
 
-void Adafruit_MPU6050::getSensor(sensor_t *accel, sensor_t *gyro) {
+void Adafruit_MPU6050::getSensor(sensor_t *accel, sensor_t *gyro, sensor_t *temp) {
   /* Clear the sensor_t object */
   memset(accel, 0, sizeof(sensor_t));
 
@@ -210,7 +207,19 @@ void Adafruit_MPU6050::getSensor(sensor_t *accel, sensor_t *gyro) {
   gyro->max_value = 0.0;  // ToDo
   gyro->min_value = 0.0;  // ToDo
   gyro->resolution = 0.0; // ToDo
+
+  memset(temp, 0, sizeof(sensor_t));
+  strncpy(temp->name, "MPU6050_T", sizeof(temp->name) - 1);
+  temp->name[sizeof(temp->name) - 1] = 0;
+  temp->version = 1;
+  temp->sensor_id = _sensorid_temp;
+  temp->type = SENSOR_TYPE_AMBIENT_TEMPERATURE;
+  temp->min_delay = 0;
+  temp->max_value = 0.0;  // ToDo
+  temp->min_value = 0.0;  // ToDo
+  temp->resolution = 0.0; // ToDo
 }
+
 
 /**************************************************************************/
 /*!
@@ -220,7 +229,7 @@ void Adafruit_MPU6050::getSensor(sensor_t *accel, sensor_t *gyro) {
     @returns True on successful read
 */
 /**************************************************************************/
-bool Adafruit_MPU6050::getEvent(sensors_event_t *accel, sensors_event_t *gyro) {
+bool Adafruit_MPU6050::getEvent(sensors_event_t *accel, sensors_event_t *gyro, sensors_event_t *temp) {
   /* Clear the event */
   memset(accel, 0, sizeof(sensors_event_t));
 
@@ -246,6 +255,13 @@ bool Adafruit_MPU6050::getEvent(sensors_event_t *accel, sensors_event_t *gyro) {
   gyro->gyro.x = gyroX;
   gyro->gyro.y = gyroY;
   gyro->gyro.z = gyroZ;
+
+  memset(temp, 0, sizeof(sensors_event_t));
+  temp->version   = sizeof(sensors_event_t);
+  temp->sensor_id = _sensorid_temp;
+  temp->type      = SENSOR_TYPE_AMBIENT_TEMPERATURE;
+  temp->timestamp = 0;
+  temp->temperature = temperature;
 
   return true;
 }
