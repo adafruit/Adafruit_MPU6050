@@ -34,9 +34,8 @@
 #define MPU6050_PWR_MGMT_1 0x6b
 #define MPU6050_TEMP_H 0x41
 #define MPU6050_TEMP_L 0x42
-#define MPU6050_ACCEL_OUT                                                      \
-  0x3B // base address for all data reads. Start here and read 14 bytes to get
-       // accel, gyro, and
+#define MPU6050_ACCEL_OUT 0x3B // base address for sensor data reads
+#define MPU6050_DEVICE_ID 0x68 //the correct MPU6050_WHO_AM_I value
 
 /**
  * @brief Proximity LED current values

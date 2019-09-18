@@ -62,17 +62,25 @@ boolean Adafruit_MPU6050::begin(uint8_t i2c_address, TwoWire *wire,
 }
 
 boolean Adafruit_MPU6050::_init(int32_t sensorID) {
-  // Adafruit_BusIO_Register chip_id =
-  //   Adafruit_BusIO_Register(i2c_dev, MPU6050_DEVICE_ID, 2);
+  Adafruit_BusIO_Register chip_id =
+    Adafruit_BusIO_Register(i2c_dev, MPU6050_WHO_AM_I, 1);
 
-  // // make sure we're talking to the right chip
-  // if (chip_id.read() != 0x0186) {
-  //   return false;
-  // }
+  // make sure we're talking to the right chip
+  if (chip_id.read() != MPU6050_DEVICE_ID) {
+    return false;
+  }
 
   _sensorid_accel = sensorID;
   _sensorid_gyro = sensorID + 1;
-  // TODO: CHECK CHIP ID
+
+  Adafruit_BusIO_Register power_mgmt_1 =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_1, 1);
+
+  power_mgmt_1.write(0b10000000); // reset
+  while (power_mgmt_1.read() != 0b01000000) { // check for the post reset value
+    delay(10);
+  }
+
   Adafruit_BusIO_Register sample_rate_div =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_SMPLRT_DIV, 1);
   sample_rate_div.write(0x00);
@@ -89,13 +97,11 @@ boolean Adafruit_MPU6050::_init(int32_t sensorID) {
       Adafruit_BusIO_Register(i2c_dev, MPU6050_ACCEL_CONFIG, 1);
   accel_config.write(0x00);
 
-  Adafruit_BusIO_Register power_mgmt_1 =
-      Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_1, 1);
-  power_mgmt_1.write(0x01);
+  power_mgmt_1.write(0x01); // set clock config
 
   _sensorid_accel = sensorID;
   _sensorid_gyro = sensorID + 1;
-
+  delay(100);
   return true;
 }
 
