@@ -46,7 +46,7 @@
  *
  * Allowed values for `setFsyncSampleOutput`.
  */
-typedef enum led_current {
+typedef enum fsync_out {
   MPU6050_FSYNC_OUT_DISABLED,
   MPU6050_FSYNC_OUT_TEMP,
   MPU6050_FSYNC_OUT_GYROX,
@@ -58,7 +58,7 @@ typedef enum led_current {
 } mpu6050_fsync_out_t;  
 
 typedef enum clock_select {
-  MPU6050_INT_8MHz,
+  MPU6050_INTR_8MHz,
   MPU6050_PLL_GYROX,
   MPU6050_PLL_GYROY,
   MPU6050_PLL_GYROZ,
@@ -68,13 +68,20 @@ typedef enum clock_select {
 } mpu6050_clock_select_t;  
 
 /** The accelerometer ranges */
-typedef enum {
+typedef enum  accel_range {
   MPU6050_RANGE_2_G = 0b00,  ///< +/- 2g (default value)
   MPU6050_RANGE_4_G = 0b01,  ///< +/- 4g
   MPU6050_RANGE_8_G = 0b10,  ///< +/- 8g
   MPU6050_RANGE_16_G = 0b11, ///< +/- 16g
-} mpu6050_range_t;
+} mpu6050_accel_range_t;
 
+/** The accelerometer ranges */
+typedef enum gyro_range{
+  MPU6050_RANGE_250_DEG,  ///< +/- 2g (default value)
+  MPU6050_RANGE_500_DEG,  ///< +/- 4g
+  MPU6050_RANGE_1000_DEG,  ///< +/- 8g
+  MPU6050_RANGE_2000_DEG, ///< +/- 16g
+} mpu6050_gyro_range_t;
 
 
 /*!
@@ -89,22 +96,26 @@ public:
   boolean begin(uint8_t i2c_addr = MPU6050_I2CADDR_DEFAULT,
                 TwoWire *wire = &Wire, int32_t sensorID = 0);
 
-  mpu6050_range_t getAccelerometerRange(void);
-  void setAccelerometerRange(mpu6050_range_t);
+  mpu6050_accel_range_t getAccelerometerRange(void);
+  void setAccelerometerRange(mpu6050_accel_range_t);
+
+  mpu6050_gyro_range_t getGyroRange(void);
+  void setGyroRange(mpu6050_gyro_range_t);
 
   // Adafruit_Sensor API/Interface
   void read();
   bool getEvent(sensors_event_t *accel, sensors_event_t *gyro, sensors_event_t *temp);
   void getSensor(sensor_t *accel, sensor_t *gyro, sensor_t *temp);
-  
+
   void setInterruptPinPolarity(bool active_low);
   void setFsyncSampleOutput(mpu6050_fsync_out_t fsync_output);
+
   mpu6050_fsync_out_t getFsyncSampleOutput(void);
   void setI2CBypass(bool bypass);
 
   void setClock(mpu6050_clock_select_t);
   mpu6050_clock_select_t getClock(void);
-  
+
   void enableGyroX(bool enabled);
   bool gyroXEnabled(void);
 

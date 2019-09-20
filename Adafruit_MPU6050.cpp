@@ -110,35 +110,55 @@ boolean Adafruit_MPU6050::_init(int32_t sensorID) {
     @returns  The acceleration measurement range
 */
 /**************************************************************************/
-mpu6050_range_t Adafruit_MPU6050::getAccelerometerRange(void) {
-  Adafruit_BusIO_Register config =
+mpu6050_accel_range_t Adafruit_MPU6050::getAccelerometerRange(void) {
+  Adafruit_BusIO_Register accel_config =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_ACCEL_CONFIG, 1);
   Adafruit_BusIO_RegisterBits accel_range =
-      Adafruit_BusIO_RegisterBits(&config, 2, 3);
+      Adafruit_BusIO_RegisterBits(&accel_config, 2, 3);
 
-  return (mpu6050_range_t)accel_range.read();
+  return (mpu6050_accel_range_t)accel_range.read();
 }
 
 /**************************************************************************/
 /*!
-    @brief Sets the proximity low threshold.
-    @param  low_threshold
-            The low threshold to set
+    @brief Sets the accelerometer measurement range
+    @param  new_range
+            The low range to set. Must be a `mpu6050_accel_range_t`
 */
 /**************************************************************************/
-void Adafruit_MPU6050::setAccelerometerRange(mpu6050_range_t new_range) {
-  Adafruit_BusIO_Register config =
+
+void Adafruit_MPU6050::setAccelerometerRange(mpu6050_accel_range_t new_range) {
+  Adafruit_BusIO_Register accel_config =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_ACCEL_CONFIG, 1);
 
   Adafruit_BusIO_RegisterBits accel_range =
-      Adafruit_BusIO_RegisterBits(&config, 2, 3);
+      Adafruit_BusIO_RegisterBits(&accel_config, 2, 3);
   accel_range.write(new_range);
 }
+
+mpu6050_gyro_range_t Adafruit_MPU6050::getGyroRange(void){
+  Adafruit_BusIO_Register gyro_config =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_GYRO_CONFIG, 1);
+  Adafruit_BusIO_RegisterBits gyro_range =
+      Adafruit_BusIO_RegisterBits(&gyro_config, 2, 3);
+
+  return (mpu6050_gyro_range_t)gyro_range.read();
+}
+
+void Adafruit_MPU6050::setGyroRange(mpu6050_gyro_range_t new_range){
+  Adafruit_BusIO_Register gyro_config =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_GYRO_CONFIG, 1);
+  Adafruit_BusIO_RegisterBits gyro_range =
+      Adafruit_BusIO_RegisterBits(&gyro_config, 2, 3);
+
+  gyro_range.write(new_range);
+}
+
 /**************************************************************************/
 /*!
-    @brief Sets the proximity low threshold.
-    @param  low_threshold
-            The low threshold to set
+    @brief Sets clock source.
+    @param  new_clock
+            The clock source to set. Must be a `mpu6050_clock_select_t`
 */
 
 /**************************************************************************/
@@ -199,32 +219,41 @@ void Adafruit_MPU6050::read(void) {
   rawGyroZ = buffer[12] << 8 | buffer[13];
 
 
-  // report fsync status
-  boolean fsync = buffer[1] & 0x01;
-  Serial.print("FSYNC on ACCX: "); Serial.println(fsync);
-  mpu6050_range_t range = getAccelerometerRange();
+  mpu6050_accel_range_t accel_range = getAccelerometerRange();
 
-  float scale = 1;
-  if (range == MPU6050_RANGE_16_G)
-    scale = 2048;
-  if (range == MPU6050_RANGE_8_G)
-    scale = 4096;
-  if (range == MPU6050_RANGE_4_G)
-    scale = 8192;
-  if (range == MPU6050_RANGE_2_G)
-    scale = 16384;
+  float accel_scale = 1;
+  if (accel_range == MPU6050_RANGE_16_G)
+    accel_scale = 2048;
+  if (accel_range == MPU6050_RANGE_8_G)
+    accel_scale = 4096;
+  if (accel_range == MPU6050_RANGE_4_G)
+    accel_scale = 8192;
+  if (accel_range == MPU6050_RANGE_2_G)
+    accel_scale = 16384;
 
   // setup range dependant scaling
-  accX = ((float)rawAccX) / scale;
-  accY = ((float)rawAccY) / scale;
-  accZ = ((float)rawAccZ) / scale;
+  accX = ((float)rawAccX) / accel_scale;
+  accY = ((float)rawAccY) / accel_scale;
+  accZ = ((float)rawAccZ) / accel_scale;
 
   temperature = (rawTemp + 12412.0) / 340.0;
+  mpu6050_gyro_range_t gyro_range = getGyroRange();
 
+  float gyro_scale = 1;
+  if (gyro_range == MPU6050_RANGE_250_DEG)
+    gyro_scale = 131;
+  if (gyro_range == MPU6050_RANGE_500_DEG)
+    gyro_scale = 65.5;
+  if (gyro_range == MPU6050_RANGE_1000_DEG)
+    gyro_scale = 32.8;
+  if (gyro_range == MPU6050_RANGE_2000_DEG)
+    gyro_scale = 16.4;
+
+  Serial.print("gyro scale: "); Serial.println(gyro_scale);
   // TODO: CHeck scaling
-  gyroX = ((float)rawGyroX) / 65.5;
-  gyroY = ((float)rawGyroY) / 65.5;
-  gyroZ = ((float)rawGyroZ) / 65.5;
+  gyroX = ((float)rawGyroX) / gyro_scale;
+  gyroY = ((float)rawGyroY) / gyro_scale;
+  gyroZ = ((float)rawGyroZ) / gyro_scale;
 
   // later, set offsets in constructor or something
   // gyroX -= gyroXoffset;
