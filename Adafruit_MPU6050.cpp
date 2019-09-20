@@ -98,7 +98,7 @@ boolean Adafruit_MPU6050::_init(int32_t sensorID) {
       Adafruit_BusIO_Register(i2c_dev, MPU6050_ACCEL_CONFIG, 1);
   accel_config.write(0x00);
 
-  power_mgmt_1.write(0x01); // set clock config
+  power_mgmt_1.write(0x01); // set clock config to PLL with Gyro X reference
 
   delay(100);
   return true;
@@ -134,6 +134,51 @@ void Adafruit_MPU6050::setAccelerometerRange(mpu6050_range_t new_range) {
       Adafruit_BusIO_RegisterBits(&config, 2, 3);
   accel_range.write(new_range);
 }
+/**************************************************************************/
+/*!
+    @brief Sets the proximity low threshold.
+    @param  low_threshold
+            The low threshold to set
+*/
+
+/**************************************************************************/
+void Adafruit_MPU6050::setClock(mpu6050_clock_select_t new_clock) {
+  Adafruit_BusIO_Register pwr_mgmt =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_1, 1);
+
+  Adafruit_BusIO_RegisterBits clock_select =
+      Adafruit_BusIO_RegisterBits(&pwr_mgmt, 3, 0);
+  clock_select.write(new_clock);
+}
+
+mpu6050_clock_select_t Adafruit_MPU6050::getClock(void) {
+  Adafruit_BusIO_Register pwr_mgmt =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_1, 1);
+
+  Adafruit_BusIO_RegisterBits clock_select =
+      Adafruit_BusIO_RegisterBits(&pwr_mgmt, 3, 0);
+  return clock_select.read();
+}
+
+void Adafruit_MPU6050::enableGyroX(bool enable){
+  Adafruit_BusIO_Register pwr_mgmt_2 =
+    Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_2, 1);
+
+  Adafruit_BusIO_RegisterBits gyro_x_en =
+    Adafruit_BusIO_RegisterBits(&pwr_mgmt_2, 1, 2);
+
+  gyro_x_en.write(enable);
+}
+
+bool Adafruit_MPU6050::gyroXEnabled(void){
+  Adafruit_BusIO_Register pwr_mgmt_2 =
+    Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_2, 1);
+
+  Adafruit_BusIO_RegisterBits gyro_x_en =
+    Adafruit_BusIO_RegisterBits(&pwr_mgmt_2, 1, 2);
+
+  return gyro_x_en.read();
+}
 
 void Adafruit_MPU6050::read(void) {
   Adafruit_BusIO_Register data_reg =
@@ -153,7 +198,12 @@ void Adafruit_MPU6050::read(void) {
   rawGyroY = buffer[10] << 8 | buffer[11];
   rawGyroZ = buffer[12] << 8 | buffer[13];
 
+
+  // report fsync status
+  boolean fsync = buffer[1] & 0x01;
+  Serial.print("FSYNC on ACCX: "); Serial.println(fsync);
   mpu6050_range_t range = getAccelerometerRange();
+
   float scale = 1;
   if (range == MPU6050_RANGE_16_G)
     scale = 2048;
@@ -180,6 +230,61 @@ void Adafruit_MPU6050::read(void) {
   // gyroX -= gyroXoffset;
   // gyroY -= gyroYoffset;
   // gyroZ -= gyroZoffset;
+}
+/*!
+*     @brief  Sets the location that the FSYNC pin sample is stored
+*     @param  fsync_output
+*/
+mpu6050_fsync_out_t Adafruit_MPU6050::getFsyncSampleOutput(void){
+    Adafruit_BusIO_Register config =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_CONFIG, 1);
+    Adafruit_BusIO_RegisterBits fsync_out =
+      Adafruit_BusIO_RegisterBits(&config, 3, 3);
+    return fsync_out.read();
+}
+
+/*!
+*     @brief  Gets the location that the FSYNC pin sample is stored
+*     @returns  The current FSYNC output
+*/
+void Adafruit_MPU6050::setFsyncSampleOutput(mpu6050_fsync_out_t fsync_output){
+    Adafruit_BusIO_Register config =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_CONFIG, 1);
+    Adafruit_BusIO_RegisterBits fsync_out =
+      Adafruit_BusIO_RegisterBits(&config, 3, 3);
+    fsync_out.write(fsync_output);
+}
+
+/*!
+*     @brief  Gets the location that the FSYNC pin sample is stored
+*     @returns  The current FSYNC output
+*/
+void Adafruit_MPU6050::setInterruptPinPolarity(bool active_low){
+  Adafruit_BusIO_Register int_pin_config =
+    Adafruit_BusIO_Register(i2c_dev, MPU6050_INT_PIN_CONFIG, 1);
+  Adafruit_BusIO_RegisterBits int_level =
+  Adafruit_BusIO_RegisterBits(&int_pin_config, 1, 7);
+  int_level.write(active_low);
+}
+
+/*!
+*     @brief  Gets the location that the FSYNC pin sample is stored
+*     @returns  The current FSYNC output
+*/
+void Adafruit_MPU6050::setI2CBypass(bool bypass){
+  Adafruit_BusIO_Register int_pin_config =
+    Adafruit_BusIO_Register(i2c_dev, MPU6050_INT_PIN_CONFIG, 1);
+  Adafruit_BusIO_RegisterBits i2c_bypass =
+    Adafruit_BusIO_RegisterBits(&int_pin_config, 1, 1);
+
+
+  Adafruit_BusIO_Register user_ctrl =
+    Adafruit_BusIO_Register(i2c_dev, MPU6050_USER_CTRL, 1);
+  Adafruit_BusIO_RegisterBits i2c_master_enable =
+  Adafruit_BusIO_RegisterBits(&int_pin_config, 1, 5);
+
+  i2c_bypass.write(bypass);
+  i2c_master_enable.write(!bypass);
 }
 
 void Adafruit_MPU6050::getSensor(sensor_t *accel, sensor_t *gyro, sensor_t *temp) {

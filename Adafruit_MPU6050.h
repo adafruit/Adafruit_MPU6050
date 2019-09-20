@@ -24,28 +24,48 @@
 #include <Wire.h>
 
 // TODO: Trust but verify
-#define MPU6050_I2CADDR_DEFAULT 0x69 ///< MPU6050 default i2c address
+#define MPU6050_I2CADDR_DEFAULT 0x69 ///< MPU6050 default i2c address w/ AD0 high
 
 #define MPU6050_SMPLRT_DIV 0x19
-#define MPU6050_CONFIG 0x1a
-#define MPU6050_GYRO_CONFIG 0x1b
-#define MPU6050_ACCEL_CONFIG 0x1c
+#define MPU6050_CONFIG 0x1A
+#define MPU6050_GYRO_CONFIG 0x1B
+#define MPU6050_ACCEL_CONFIG 0x1C
+#define MPU6050_INT_PIN_CONFIG 0x37
+#define MPU6050_INT_ENABLE 0x38
 #define MPU6050_WHO_AM_I 0x75
-#define MPU6050_PWR_MGMT_1 0x6b
+#define MPU6050_USER_CTRL 0x6A
+#define MPU6050_PWR_MGMT_1 0x6B
+#define MPU6050_PWR_MGMT_2 0x6C
 #define MPU6050_TEMP_H 0x41
 #define MPU6050_TEMP_L 0x42
 #define MPU6050_ACCEL_OUT 0x3B // base address for sensor data reads
 #define MPU6050_DEVICE_ID 0x68 //the correct MPU6050_WHO_AM_I value
 
 /**
- * @brief Proximity LED current values
+ * @brief FSYNC output values
  *
- * Allowed values for `setProximityLEDCurrent`.
+ * Allowed values for `setFsyncSampleOutput`.
  */
-// typedef enum led_current {
-//   MPU6050_LED_CURRENT_50MA,
+typedef enum led_current {
+  MPU6050_FSYNC_OUT_DISABLED,
+  MPU6050_FSYNC_OUT_TEMP,
+  MPU6050_FSYNC_OUT_GYROX,
+  MPU6050_FSYNC_OUT_GYROY,
+  MPU6050_FSYNC_OUT_GYROZ,
+  MPU6050_FSYNC_OUT_ACCELX,
+  MPU6050_FSYNC_OUT_ACCELY,
+  MPU6050_FSYNC_OUT_ACCEL_Z,
+} mpu6050_fsync_out_t;  
 
-// } MPU6050_LEDCurrent;
+typedef enum clock_select {
+  MPU6050_INT_8MHz,
+  MPU6050_PLL_GYROX,
+  MPU6050_PLL_GYROY,
+  MPU6050_PLL_GYROZ,
+  MPU6050_PLL_EXT_32K,
+  MPU6050_PLL_EXT_19MHz,
+  MPU6050_STOP = 7,
+} mpu6050_clock_select_t;  
 
 /** The accelerometer ranges */
 typedef enum {
@@ -54,6 +74,8 @@ typedef enum {
   MPU6050_RANGE_8_G = 0b10,  ///< +/- 8g
   MPU6050_RANGE_16_G = 0b11, ///< +/- 16g
 } mpu6050_range_t;
+
+
 
 /*!
  *    @brief  Class that stores state and functions for interacting with
@@ -74,6 +96,17 @@ public:
   void read();
   bool getEvent(sensors_event_t *accel, sensors_event_t *gyro, sensors_event_t *temp);
   void getSensor(sensor_t *accel, sensor_t *gyro, sensor_t *temp);
+  
+  void setInterruptPinPolarity(bool active_low);
+  void setFsyncSampleOutput(mpu6050_fsync_out_t fsync_output);
+  mpu6050_fsync_out_t getFsyncSampleOutput(void);
+  void setI2CBypass(bool bypass);
+
+  void setClock(mpu6050_clock_select_t);
+  mpu6050_clock_select_t getClock(void);
+  
+  void enableGyroX(bool enabled);
+  bool gyroXEnabled(void);
 
 private:
   bool _init(int32_t);
