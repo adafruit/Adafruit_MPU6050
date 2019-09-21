@@ -76,14 +76,14 @@ typedef enum  accel_range {
 
 /** The accelerometer ranges */
 typedef enum gyro_range{
-  MPU6050_RANGE_250_DEG,  ///< +/- 2g (default value)
-  MPU6050_RANGE_500_DEG,  ///< +/- 4g
-  MPU6050_RANGE_1000_DEG,  ///< +/- 8g
-  MPU6050_RANGE_2000_DEG, ///< +/- 16g
+  MPU6050_RANGE_250_DEG,  ///< +/- 250 deg/s (default value)
+  MPU6050_RANGE_500_DEG,  ///< +/- 500 deg/s
+  MPU6050_RANGE_1000_DEG, ///< +/- 1000 deg/s
+  MPU6050_RANGE_2000_DEG, ///< +/- 2000 deg/s
 } mpu6050_gyro_range_t;
 
 typedef enum bandwidth {
-  MPU6050_BAND_260_HZ,
+  MPU6050_BAND_260_HZ, ///< Docs imply this disables the filter
   MPU6050_BAND_184_HZ,
   MPU6050_BAND_94_HZ,
   MPU6050_BAND_44_HZ,
@@ -91,6 +91,13 @@ typedef enum bandwidth {
   MPU6050_BAND_10_HZ,
   MPU6050_BAND_5_HZ,
 } mpu6050_bandwidth_t;
+
+typedef enum cycle_rate {
+  MPU6050_CYCLE_1_25_HZ, ///< 1.25 Hz
+  MPU6050_CYCLE_5_HZ, ///< 5 Hz
+  MPU6050_CYCLE_20_HZ, ///< 20 Hz
+  MPU6050_CYCLE_40_HZ, ///< 40 Hz
+} mpu6050_cycle_rate_t;
 
 /*!
  *    @brief  Class that stores state and functions for interacting with
@@ -129,6 +136,15 @@ public:
 
   void setFilterBandwidth(mpu6050_bandwidth_t bandwidth);
   mpu6050_bandwidth_t getFilterBandwidth(void);
+
+  void setSampleRateDivisor(uint8_t);
+  uint8_t getSampleRateDivisor(void);
+
+  void enableSleep(bool enable);
+  void enableCycle(bool enable);
+
+  void setCycleRate(mpu6050_cycle_rate_t rate);
+  mpu6050_cycle_rate_t getCycleRate(void);
 
 private:
   bool _init(int32_t);
