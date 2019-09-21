@@ -31,7 +31,6 @@
 #define MPU6050_GYRO_CONFIG 0x1B
 #define MPU6050_ACCEL_CONFIG 0x1C
 #define MPU6050_INT_PIN_CONFIG 0x37
-#define MPU6050_INT_ENABLE 0x38
 #define MPU6050_WHO_AM_I 0x75
 #define MPU6050_USER_CTRL 0x6A
 #define MPU6050_PWR_MGMT_1 0x6B
@@ -83,6 +82,15 @@ typedef enum gyro_range{
   MPU6050_RANGE_2000_DEG, ///< +/- 16g
 } mpu6050_gyro_range_t;
 
+typedef enum bandwidth {
+  MPU6050_BAND_260_HZ,
+  MPU6050_BAND_184_HZ,
+  MPU6050_BAND_94_HZ,
+  MPU6050_BAND_44_HZ,
+  MPU6050_BAND_21_HZ,
+  MPU6050_BAND_10_HZ,
+  MPU6050_BAND_5_HZ,
+} mpu6050_bandwidth_t;
 
 /*!
  *    @brief  Class that stores state and functions for interacting with
@@ -118,6 +126,9 @@ public:
 
   void enableGyroX(bool enabled);
   bool gyroXEnabled(void);
+
+  void setFilterBandwidth(mpu6050_bandwidth_t bandwidth);
+  mpu6050_bandwidth_t getFilterBandwidth(void);
 
 private:
   bool _init(int32_t);

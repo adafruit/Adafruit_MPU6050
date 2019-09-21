@@ -249,8 +249,7 @@ void Adafruit_MPU6050::read(void) {
   if (gyro_range == MPU6050_RANGE_2000_DEG)
     gyro_scale = 16.4;
 
-  Serial.print("gyro scale: "); Serial.println(gyro_scale);
-  // TODO: CHeck scaling
+
   gyroX = ((float)rawGyroX) / gyro_scale;
   gyroY = ((float)rawGyroY) / gyro_scale;
   gyroZ = ((float)rawGyroZ) / gyro_scale;
@@ -283,7 +282,27 @@ void Adafruit_MPU6050::setFsyncSampleOutput(mpu6050_fsync_out_t fsync_output){
       Adafruit_BusIO_RegisterBits(&config, 3, 3);
     fsync_out.write(fsync_output);
 }
+/*!
+*     @brief  Gets the location that the FSYNC pin sample is stored
+*     @returns  The current FSYNC output
+*/
+void Adafruit_MPU6050::setFilterBandwidth(mpu6050_bandwidth_t bandwidth){
+    Adafruit_BusIO_Register config =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_CONFIG, 1);
 
+    Adafruit_BusIO_RegisterBits filter_config =
+      Adafruit_BusIO_RegisterBits(&config, 3, 3);
+    filter_config.write(bandwidth);
+}
+
+mpu6050_bandwidth_t Adafruit_MPU6050::getFilterBandwidth(void){
+    Adafruit_BusIO_Register config =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_CONFIG, 1);
+
+    Adafruit_BusIO_RegisterBits filter_config =
+      Adafruit_BusIO_RegisterBits(&config, 3, 3);
+    return (mpu6050_bandwidth_t)filter_config.read();
+}
 /*!
 *     @brief  Gets the location that the FSYNC pin sample is stored
 *     @returns  The current FSYNC output
@@ -296,6 +315,7 @@ void Adafruit_MPU6050::setInterruptPinPolarity(bool active_low){
   int_level.write(active_low);
 }
 
+
 /*!
 *     @brief  Gets the location that the FSYNC pin sample is stored
 *     @returns  The current FSYNC output
@@ -305,7 +325,6 @@ void Adafruit_MPU6050::setI2CBypass(bool bypass){
     Adafruit_BusIO_Register(i2c_dev, MPU6050_INT_PIN_CONFIG, 1);
   Adafruit_BusIO_RegisterBits i2c_bypass =
     Adafruit_BusIO_RegisterBits(&int_pin_config, 1, 1);
-
 
   Adafruit_BusIO_Register user_ctrl =
     Adafruit_BusIO_Register(i2c_dev, MPU6050_USER_CTRL, 1);
