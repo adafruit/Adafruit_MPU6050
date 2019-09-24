@@ -128,8 +128,6 @@ void loop() {
   Serial.print(",");
   Serial.print(a.acceleration.z);
   Serial.println("");
-  q
-
       //  Serial.print(",");
       //
       //  Serial.print(g.gyro.x);
