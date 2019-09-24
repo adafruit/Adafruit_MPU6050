@@ -26,6 +26,10 @@
 // TODO: Trust but verify
 #define MPU6050_I2CADDR_DEFAULT 0x69 ///< MPU6050 default i2c address w/ AD0 high
 
+#define MPU6050_SELF_TEST_X 0x0D
+#define MPU6050_SELF_TEST_Y 0x0E
+#define MPU6050_SELF_TEST_Z 0x0F
+#define MPU6050_SELF_TEST_A 0x10
 #define MPU6050_SMPLRT_DIV 0x19
 #define MPU6050_CONFIG 0x1A
 #define MPU6050_GYRO_CONFIG 0x1B
@@ -146,8 +150,13 @@ public:
   void setCycleRate(mpu6050_cycle_rate_t rate);
   mpu6050_cycle_rate_t getCycleRate(void);
 
+  bool selfTest(void);
+
 private:
   bool _init(int32_t);
+
+  void _getRawSensorData(void);
+  void _scaleSensorData(void);
 
   Adafruit_I2CDevice *i2c_dev;
   float temperature, accX, accY, accZ, gyroX, gyroY, gyroZ;
@@ -158,6 +167,7 @@ private:
   float accCoef, gyroCoef;
 
   uint8_t _sensorid_accel, _sensorid_gyro, _sensorid_temp;
+  double _ft_acc_math(int8_t ft_reg_value);
 };
 
 #endif

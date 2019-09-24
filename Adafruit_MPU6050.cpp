@@ -180,7 +180,7 @@ mpu6050_clock_select_t Adafruit_MPU6050::getClock(void) {
 
   Adafruit_BusIO_RegisterBits clock_select =
       Adafruit_BusIO_RegisterBits(&pwr_mgmt, 3, 0);
-  return clock_select.read();
+  return (mpu6050_clock_select_t)clock_select.read();
 }
 
 void Adafruit_MPU6050::enableGyroX(bool enable){
@@ -212,7 +212,7 @@ mpu6050_fsync_out_t Adafruit_MPU6050::getFsyncSampleOutput(void){
       Adafruit_BusIO_Register(i2c_dev, MPU6050_CONFIG, 1);
     Adafruit_BusIO_RegisterBits fsync_out =
       Adafruit_BusIO_RegisterBits(&config, 3, 3);
-    return fsync_out.read();
+    return (mpu6050_fsync_out_t)fsync_out.read();
 }
 
 /*!
@@ -305,7 +305,7 @@ mpu6050_cycle_rate_t Adafruit_MPU6050::getCycleRate(void){
 
   Adafruit_BusIO_RegisterBits cycle_rate =
       Adafruit_BusIO_RegisterBits(&pwr_mgmt_2, 1, 5);
-  return cycle_rate.read();
+  return (mpu6050_cycle_rate_t)cycle_rate.read();
 }
 
 void Adafruit_MPU6050::setCycleRate(mpu6050_cycle_rate_t rate){
@@ -321,58 +321,66 @@ void Adafruit_MPU6050::setCycleRate(mpu6050_cycle_rate_t rate){
 /******************* Adafruit_Sensor functions *****************/
 
 void Adafruit_MPU6050::read(void) {
-  Adafruit_BusIO_Register data_reg =
-      Adafruit_BusIO_Register(i2c_dev, MPU6050_ACCEL_OUT, 14);
+  //
+  //
+  //              WHAT? TWO READS IN A ROW MAKES FOR INTERESTING DATQA
+  //
+  //
+  _getRawSensorData();
+  _scaleSensorData();
 
-  uint8_t buffer[14];
-  // can I make this a int16_t and cast it to a uint8_t?
-  data_reg.read(buffer, 14);
+  // Adafruit_BusIO_Register data_reg =
+  //     Adafruit_BusIO_Register(i2c_dev, MPU6050_ACCEL_OUT, 14);
 
-  rawAccX = buffer[0] << 8 | buffer[1];
-  rawAccY = buffer[2] << 8 | buffer[3];
-  rawAccZ = buffer[4] << 8 | buffer[5];
+  // uint8_t buffer[14];
+  // // can I make this a int16_t and cast it to a uint8_t?
+  // data_reg.read(buffer, 14);
 
-  rawTemp = buffer[6] << 8 | buffer[7];
+  // rawAccX = buffer[0] << 8 | buffer[1];
+  // rawAccY = buffer[2] << 8 | buffer[3];
+  // rawAccZ = buffer[4] << 8 | buffer[5];
 
-  rawGyroX = buffer[8] << 8 | buffer[9];
-  rawGyroY = buffer[10] << 8 | buffer[11];
-  rawGyroZ = buffer[12] << 8 | buffer[13];
+  // rawTemp = buffer[6] << 8 | buffer[7];
 
-
-  mpu6050_accel_range_t accel_range = getAccelerometerRange();
-
-  float accel_scale = 1;
-  if (accel_range == MPU6050_RANGE_16_G)
-    accel_scale = 2048;
-  if (accel_range == MPU6050_RANGE_8_G)
-    accel_scale = 4096;
-  if (accel_range == MPU6050_RANGE_4_G)
-    accel_scale = 8192;
-  if (accel_range == MPU6050_RANGE_2_G)
-    accel_scale = 16384;
-
-  // setup range dependant scaling
-  accX = ((float)rawAccX) / accel_scale;
-  accY = ((float)rawAccY) / accel_scale;
-  accZ = ((float)rawAccZ) / accel_scale;
-
-  temperature = (rawTemp + 12412.0) / 340.0;
-  mpu6050_gyro_range_t gyro_range = getGyroRange();
-
-  float gyro_scale = 1;
-  if (gyro_range == MPU6050_RANGE_250_DEG)
-    gyro_scale = 131;
-  if (gyro_range == MPU6050_RANGE_500_DEG)
-    gyro_scale = 65.5;
-  if (gyro_range == MPU6050_RANGE_1000_DEG)
-    gyro_scale = 32.8;
-  if (gyro_range == MPU6050_RANGE_2000_DEG)
-    gyro_scale = 16.4;
+  // rawGyroX = buffer[8] << 8 | buffer[9];
+  // rawGyroY = buffer[10] << 8 | buffer[11];
+  // rawGyroZ = buffer[12] << 8 | buffer[13];
 
 
-  gyroX = ((float)rawGyroX) / gyro_scale;
-  gyroY = ((float)rawGyroY) / gyro_scale;
-  gyroZ = ((float)rawGyroZ) / gyro_scale;
+  // mpu6050_accel_range_t accel_range = getAccelerometerRange();
+
+  // float accel_scale = 1;
+  // if (accel_range == MPU6050_RANGE_16_G)
+  //   accel_scale = 2048;
+  // if (accel_range == MPU6050_RANGE_8_G)
+  //   accel_scale = 4096;
+  // if (accel_range == MPU6050_RANGE_4_G)
+  //   accel_scale = 8192;
+  // if (accel_range == MPU6050_RANGE_2_G)
+  //   accel_scale = 16384;
+
+  // // setup range dependant scaling
+  // accX = ((float)rawAccX) / accel_scale;
+  // accY = ((float)rawAccY) / accel_scale;
+  // accZ = ((float)rawAccZ) / accel_scale;
+
+  // temperature = (rawTemp + 12412.0) / 340.0;
+  // mpu6050_gyro_range_t gyro_range = getGyroRange();
+
+  // float gyro_scale = 1;
+  // if (gyro_range == MPU6050_RANGE_250_DEG)
+  //   gyro_scale = 131;
+  // if (gyro_range == MPU6050_RANGE_500_DEG)
+  //   gyro_scale = 65.5;
+  // if (gyro_range == MPU6050_RANGE_1000_DEG)
+  //   gyro_scale = 32.8;
+  // if (gyro_range == MPU6050_RANGE_2000_DEG)
+  //   gyro_scale = 16.4;
+
+
+  // gyroX = ((float)rawGyroX) / gyro_scale;
+  // gyroY = ((float)rawGyroY) / gyro_scale;
+  // gyroZ = ((float)rawGyroZ) / gyro_scale;
 
   // later, set offsets in constructor or something
   // gyroX -= gyroXoffset;
@@ -463,4 +471,197 @@ bool Adafruit_MPU6050::getEvent(sensors_event_t *accel, sensors_event_t *gyro, s
   temp->temperature = temperature;
 
   return true;
+}
+
+bool Adafruit_MPU6050::selfTest(void){
+  // local variables to hold the two versions of the measurements
+  float regular_accX, regular_accY, regular_accZ, regular_gyroX, regular_gyroY, regular_gyroZ;
+  float test_accX, test_accY, test_accZ, test_gyroX, test_gyroY, test_gyroZ;
+  
+    Adafruit_BusIO_Register gyro_config =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_GYRO_CONFIG, 1);
+  Adafruit_BusIO_RegisterBits gyro_self_test_en =
+      Adafruit_BusIO_RegisterBits(&gyro_config, 3, 5);
+
+
+  Adafruit_BusIO_Register accel_config =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_ACCEL_CONFIG, 1);
+  Adafruit_BusIO_RegisterBits accel_self_test_en =
+      Adafruit_BusIO_RegisterBits(&accel_config, 3, 5);
+
+  // fetch the base non-self-test values
+  read();
+  // regular_accX = accX;
+  // regular_accY = accY;
+  // regular_accZ = accZ;
+
+  // regular_gyroX = gyroX;
+  // regular_gyroY = gyroY;
+  // regular_gyroZ = gyroZ;
+  regular_accX = rawAccX;
+  regular_accY = rawAccY;
+  regular_accZ = rawAccZ;
+
+  regular_gyroX = rawGyroX;
+  regular_gyroY = rawGyroY;
+  regular_gyroZ = rawGyroZ;
+  // turn on the self test modifiers
+  gyro_self_test_en.write(0b111);
+  accel_self_test_en.write(0b111);
+
+  // fetch the readings with the self test modifications
+  read();
+  test_accX = rawAccX;
+  test_accY = rawAccY;
+  test_accZ = rawAccZ;
+
+  test_gyroX = rawGyroX;
+  test_gyroY = rawGyroY;
+  test_gyroZ = rawGyroZ;
+
+  // immediately get another raw readings
+  // disable ST bits
+  gyro_self_test_en.write(0b000);
+  accel_self_test_en.write(0b000);
+
+  float accX, accY, accZ, gyroX, gyroY, gyroZ;
+  // get all the factory test values together
+  Adafruit_BusIO_Register data_reg =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_SELF_TEST_X, 4);
+
+  uint8_t factory_test_buffer[4];
+  // can I make this a int16_t and cast it to a uint8_t?
+  data_reg.read(factory_test_buffer, 4);
+
+  uint8_t xg_test = factory_test_buffer[0] & 0b11111;
+  uint8_t yg_test = factory_test_buffer[1] & 0b11111;
+  uint8_t zg_test = factory_test_buffer[2] & 0b11111;
+
+  uint8_t xa_test = factory_test_buffer[0] & 0b11100000 >>3
+  | ((factory_test_buffer[3] & 0b00110000) >>4);
+  uint8_t ya_test = factory_test_buffer[1] & 0b11100000 >>3
+  | ((factory_test_buffer[3] & 0b00001100) >>2);
+  uint8_t za_test = factory_test_buffer[2] & 0b11100000 >>3
+  | (factory_test_buffer[3] & 0b00000011);
+  // do calcs; not sure about pass/fail
+
+  double ft_xg = 25 * 131 * pow(1.046, (float)xg_test-1);
+  double ft_yg =-25 * 131 * pow(1.046, (float)yg_test-1);
+  double ft_zg = 25 * 131 * pow(1.046, (float)zg_test-1);
+
+
+  double ft_xa = _ft_acc_math(xa_test);
+  double ft_ya = _ft_acc_math(ya_test);
+  double ft_za = _ft_acc_math(za_test);
+
+  Serial.print("Normal GyroX: "); Serial.print(regular_gyroX);
+  Serial.print(" Test GyroX: "); Serial.println(test_gyroX);
+
+  Serial.print("Normal GyroY: "); Serial.print(regular_gyroY);
+  Serial.print(" Test GyroY: "); Serial.println(test_gyroY);
+
+  Serial.print("Normal GyroZ: "); Serial.print(regular_gyroZ);
+  Serial.print(" Test GyroZ: "); Serial.println(test_gyroZ);
+
+  Serial.print("Normal AccelX: "); Serial.print(regular_accX);
+  Serial.print(" Test AccelX: "); Serial.println(test_accX);
+
+  Serial.print("Normal AccelY: "); Serial.print(regular_accY);
+  Serial.print(" Test AccelY: "); Serial.println(test_accY);
+
+  Serial.print("Normal AccelZ: "); Serial.print(regular_accZ);
+  Serial.print(" Test AccelZ: "); Serial.println(test_accZ);
+
+  Serial.print("AccelX FT: "); Serial.println(xa_test);
+  Serial.print("AccelY FT: "); Serial.println(ya_test);
+  Serial.print("AccelZ FT: "); Serial.println(za_test);
+
+  Serial.print("GyroX FT: "); Serial.println(xg_test);
+  Serial.print("GyroY FT: "); Serial.println(yg_test);
+  Serial.print("GyroZ FT: "); Serial.println(zg_test);
+
+  Serial.print("ft_xg: "); Serial.println(ft_xg);
+  Serial.print("ft_yg: "); Serial.println(ft_yg);
+  Serial.print("ft_zg: "); Serial.println(ft_zg);
+
+  Serial.print("ft_xa: "); Serial.println(ft_xa);
+  Serial.print("ft_ya: "); Serial.println(ft_ya);
+  Serial.print("ft_za: "); Serial.println(ft_za);
+}
+
+double Adafruit_MPU6050::_ft_acc_math(int8_t ft_reg_value){
+
+    double ft_acc = (
+      pow(
+        0.92,
+        (
+          ((float)ft_reg_value-1)
+          /
+          (pow(2,5) -2)
+        )
+      )
+      /
+      0.34
+    );
+    return 4096 * 0.34 * ft_acc;
+}
+
+void Adafruit_MPU6050::_getRawSensorData(void){
+  // get raw readings
+  Adafruit_BusIO_Register data_reg =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_ACCEL_OUT, 14);
+
+  uint8_t buffer[14];
+  // can I make this a int16_t and cast it to a uint8_t?
+  data_reg.read(buffer, 14);
+
+  rawAccX = buffer[0] << 8 | buffer[1];
+  rawAccY = buffer[2] << 8 | buffer[3];
+  rawAccZ = buffer[4] << 8 | buffer[5];
+
+  rawTemp = buffer[6] << 8 | buffer[7];
+
+  rawGyroX = buffer[8] << 8 | buffer[9];
+  rawGyroY = buffer[10] << 8 | buffer[11];
+  rawGyroZ = buffer[12] << 8 | buffer[13];
+
+}
+
+void Adafruit_MPU6050::_scaleSensorData(void){
+
+  temperature = (rawTemp + 12412.0) / 340.0;
+
+  mpu6050_accel_range_t accel_range = getAccelerometerRange();
+
+  float accel_scale = 1;
+  if (accel_range == MPU6050_RANGE_16_G)
+    accel_scale = 2048;
+  if (accel_range == MPU6050_RANGE_8_G)
+    accel_scale = 4096;
+  if (accel_range == MPU6050_RANGE_4_G)
+    accel_scale = 8192;
+  if (accel_range == MPU6050_RANGE_2_G)
+    accel_scale = 16384;
+
+  // setup range dependant scaling
+  accX = ((float)rawAccX) / accel_scale;
+  accY = ((float)rawAccY) / accel_scale;
+  accZ = ((float)rawAccZ) / accel_scale;
+
+  mpu6050_gyro_range_t gyro_range = getGyroRange();
+
+  float gyro_scale = 1;
+  if (gyro_range == MPU6050_RANGE_250_DEG)
+    gyro_scale = 131;
+  if (gyro_range == MPU6050_RANGE_500_DEG)
+    gyro_scale = 65.5;
+  if (gyro_range == MPU6050_RANGE_1000_DEG)
+    gyro_scale = 32.8;
+  if (gyro_range == MPU6050_RANGE_2000_DEG)
+    gyro_scale = 16.4;
+
+
+  gyroX = ((float)rawGyroX) / gyro_scale;
+  gyroY = ((float)rawGyroY) / gyro_scale;
+  gyroZ = ((float)rawGyroZ) / gyro_scale;
 }

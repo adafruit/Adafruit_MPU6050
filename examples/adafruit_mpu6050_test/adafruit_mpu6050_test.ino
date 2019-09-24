@@ -54,84 +54,95 @@ void setup(void) {
     Serial.println("+- 2000 °/s");
     break;
   }
+
+
+  mpu.setFilterBandwidth(MPU6050_BAND_260_HZ);
+  Serial.print("Filter bandwidth set to: ");
+  switch (mpu.getFilterBandwidth()) {
+  case MPU6050_BAND_260_HZ:
+    Serial.println("260 Hz");
+    break;
+  case MPU6050_BAND_184_HZ:
+    Serial.println("184 Hz");
+    break;
+  case MPU6050_BAND_94_HZ:
+    Serial.println("94 Hz");
+    break;
+  case MPU6050_BAND_44_HZ:
+    Serial.println("44 Hz");
+    break;
+  case MPU6050_BAND_21_HZ:
+    Serial.println("21 Hz");
+    break;
+  case MPU6050_BAND_10_HZ:
+    Serial.println("10 Hz");
+    break;
+  case MPU6050_BAND_5_HZ:
+    Serial.println("5 Hz");
+    break;
+  }
+  mpu.setSampleRateDivisor(0);
+//  mpu.read();
+//  mpu.enableSleep(false);
+//  mpu.enableCycle(false);
+//  mpu.setCycleRate(MPU6050_CYCLE_5_HZ);
+
+  mpu.selfTest();
+  delay(1000);
+  mpu.selfTest();
+  delay(1000);
+  mpu.selfTest();
+
 }
 
 void loop() {
+  // for some reason this gives bad data
+
+  //
+  //
+  //
+  //
+  //              WHAT?
+  //
+  //
+  //
+  //
+  mpu.read(); /* ask it to read in the data */
   mpu.read(); /* ask it to read in the data */
 
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
   /* Get a new sensor event */
   sensors_event_t a, g, temp;
 
   mpu.getEvent(&a, &g, &temp);
 
   
-//  Serial.print(a.acceleration.x);
-//  Serial.print(",");
-//  Serial.print(a.acceleration.y);
-//  Serial.print(",");
-//  Serial.print(a.acceleration.z);
-//  Serial.print(",");
-//  
-  Serial.print(g.gyro.x);
-  Serial.print(",");
-  Serial.print(g.gyro.y);
-  Serial.print(",");
-  Serial.print(g.gyro.z);
-  Serial.print(",");
-
-  Serial.println(temp.temperature);
-
-
-  // Serial.print("Accel X: ");
-  // Serial.print(a.acceleration.x);
-  // Serial.print(" m/s^2");
-  // Serial.print("\tY: ");
-  // Serial.print(a.acceleration.y);
-  // Serial.print(" m/s^2 ");
-  // Serial.print("\tZ: ");
-  // Serial.print(a.acceleration.z);
-  // Serial.println(" m/s^2 ");
-
-  // Serial.print("Gyro X: ");
-  // Serial.print(g.gyro.x);
-  // Serial.print(" deg/s");
-  // Serial.print("\tY: ");
-  // Serial.print(g.gyro.y);
-  // Serial.print(" deg/s ");
-  // Serial.print("\tZ: ");
-  // Serial.print(g.gyro.z);
-  // Serial.println(" deg/s");
-
-  delay(100);
-}
-
-void loop() {
-  mpu.read(); /* ask it to read in the data */
-
-  /* Get a new sensor event */
-  sensors_event_t a, g, temp;
-
-  mpu.getEvent(&a, &g);
-
-  Serial.print("Accel X: ");
   Serial.print(a.acceleration.x);
-  Serial.print(" m/s^2");
-  Serial.print("\tY: ");
+  Serial.print(",");
   Serial.print(a.acceleration.y);
-  Serial.print(" m/s^2 ");
-  Serial.print("\tZ: ");
+  Serial.print(",");
   Serial.print(a.acceleration.z);
-  Serial.println(" m/s^2 ");
+  Serial.println("");q
 
-  Serial.print("Gyro X: ");
-  Serial.print(g.gyro.x);
-  Serial.print(" deg/s");
-  Serial.print("\tY: ");
-  Serial.print(g.gyro.y);
-  Serial.print(" deg/s ");
-  Serial.print("\tZ: ");
-  Serial.print(g.gyro.z);
-  Serial.println(" deg/s");
 
-  delay(100);
+//  Serial.print(",");
+//
+//  Serial.print(g.gyro.x);
+//  Serial.print(",");
+//  Serial.print(g.gyro.y);
+//  Serial.print(",");
+//  Serial.print(g.gyro.z);
+//  Serial.print(",");
+
+//  Serial.println(temp.temperature);
+
+  delay(10);
 }
