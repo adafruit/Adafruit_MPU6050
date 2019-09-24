@@ -55,7 +55,7 @@ void setup(void) {
     break;
   }
 
-  mpu.setFilterBandwidth(MPU6050_BAND_260_HZ);
+  mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);
   Serial.print("Filter bandwidth set to: ");
   switch (mpu.getFilterBandwidth()) {
   case MPU6050_BAND_260_HZ:
@@ -80,64 +80,41 @@ void setup(void) {
     Serial.println("5 Hz");
     break;
   }
-  mpu.setSampleRateDivisor(0);
-  //  mpu.read();
-  //  mpu.enableSleep(false);
-  //  mpu.enableCycle(false);
-  //  mpu.setCycleRate(MPU6050_CYCLE_5_HZ);
 
-  mpu.selfTest();
-  delay(1000);
-  mpu.selfTest();
-  delay(1000);
-  mpu.selfTest();
+  Serial.println("");
+  delay(100);
 }
 
 void loop() {
-  // for some reason this gives bad data
-
-  //
-  //
-  //
-  //
-  //              WHAT?
-  //
-  //
-  //
-  //
-  mpu.read(); /* ask it to read in the data */
-  mpu.read(); /* ask it to read in the data */
-
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  /* Get a new sensor event */
+  
+  /* Take a new reading */
+  mpu.read();
+  
+  /* Get new sensor events with the readings */
   sensors_event_t a, g, temp;
-
   mpu.getEvent(&a, &g, &temp);
 
+  /* Print out the values */
+  Serial.print("Acceleration X: ");
   Serial.print(a.acceleration.x);
-  Serial.print(",");
+  Serial.print(", Y: ");
   Serial.print(a.acceleration.y);
-  Serial.print(",");
+  Serial.print(", Z:");
   Serial.print(a.acceleration.z);
+  Serial.println(" m/s^2");
+
+  Serial.print("Rotation X:");
+  Serial.print(g.gyro.x);
+  Serial.print(", Y:");
+  Serial.print(g.gyro.y);
+  Serial.print(",Z: ");
+  Serial.print(g.gyro.z);
+  Serial.println(" °/s");
+
+  Serial.print("Temperature: ");
+  Serial.print(temp.temperature);
+  Serial.println(" °C");
+
   Serial.println("");
-      //  Serial.print(",");
-      //
-      //  Serial.print(g.gyro.x);
-      //  Serial.print(",");
-      //  Serial.print(g.gyro.y);
-      //  Serial.print(",");
-      //  Serial.print(g.gyro.z);
-      //  Serial.print(",");
-
-      //  Serial.println(temp.temperature);
-
-      delay(10);
+  delay(500);
 }
