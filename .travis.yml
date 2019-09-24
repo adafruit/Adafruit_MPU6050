@@ -9,7 +9,7 @@ git:
   quiet: true
 env:
   global:
-     - PRETTYNAME="Adafruit MSA301 Arduino Library"
+     - PRETTYNAME="Adafruit MPU6050 Arduino Library"
 addons:
   apt:
     sources:
