@@ -65,7 +65,7 @@ boolean Adafruit_MPU6050::begin(uint8_t i2c_address, TwoWire *wire,
 
 boolean Adafruit_MPU6050::_init(int32_t sensorID) {
   Adafruit_BusIO_Register chip_id =
-    Adafruit_BusIO_Register(i2c_dev, MPU6050_WHO_AM_I, 1);
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_WHO_AM_I, 1);
 
   // make sure we're talking to the right chip
   if (chip_id.read() != MPU6050_DEVICE_ID) {
@@ -79,7 +79,7 @@ boolean Adafruit_MPU6050::_init(int32_t sensorID) {
   Adafruit_BusIO_Register power_mgmt_1 =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_1, 1);
 
-  power_mgmt_1.write(0b10000000); // reset
+  power_mgmt_1.write(0b10000000);             // reset
   while (power_mgmt_1.read() != 0b01000000) { // check for the post reset value
     delay(10);
   }
@@ -90,7 +90,7 @@ boolean Adafruit_MPU6050::_init(int32_t sensorID) {
 
   setGyroRange(MPU6050_RANGE_500_DEG);
 
-  setAccelerometerRange(MPU6050_RANGE_2_G); //already the default
+  setAccelerometerRange(MPU6050_RANGE_2_G); // already the default
 
   power_mgmt_1.write(0x01); // set clock config to PLL with Gyro X reference
 
@@ -104,9 +104,9 @@ boolean Adafruit_MPU6050::_init(int32_t sensorID) {
     @return  The sample rate divisor
 */
 /**************************************************************************/
-uint8_t Adafruit_MPU6050::getSampleRateDivisor(void){
+uint8_t Adafruit_MPU6050::getSampleRateDivisor(void) {
   Adafruit_BusIO_Register sample_rate_div =
-    Adafruit_BusIO_Register(i2c_dev, MPU6050_SMPLRT_DIV, 1);
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_SMPLRT_DIV, 1);
   return sample_rate_div.read();
 }
 
@@ -118,9 +118,9 @@ uint8_t Adafruit_MPU6050::getSampleRateDivisor(void){
             The new clock divisor
 */
 /**************************************************************************/
-void Adafruit_MPU6050::setSampleRateDivisor(uint8_t divisor){
+void Adafruit_MPU6050::setSampleRateDivisor(uint8_t divisor) {
   Adafruit_BusIO_Register sample_rate_div =
-    Adafruit_BusIO_Register(i2c_dev, MPU6050_SMPLRT_DIV, 1);
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_SMPLRT_DIV, 1);
   sample_rate_div.write(divisor);
 }
 
@@ -160,7 +160,7 @@ void Adafruit_MPU6050::setAccelerometerRange(mpu6050_accel_range_t new_range) {
     @return  The `mpu6050_gyro_range_t` gyroscope measurement range
 */
 /**************************************************************************/
-mpu6050_gyro_range_t Adafruit_MPU6050::getGyroRange(void){
+mpu6050_gyro_range_t Adafruit_MPU6050::getGyroRange(void) {
   Adafruit_BusIO_Register gyro_config =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_GYRO_CONFIG, 1);
   Adafruit_BusIO_RegisterBits gyro_range =
@@ -176,7 +176,7 @@ mpu6050_gyro_range_t Adafruit_MPU6050::getGyroRange(void){
             The new range to set. Must be a `mpu6050_gyro_range_t`
 */
 /**************************************************************************/
-void Adafruit_MPU6050::setGyroRange(mpu6050_gyro_range_t new_range){
+void Adafruit_MPU6050::setGyroRange(mpu6050_gyro_range_t new_range) {
   Adafruit_BusIO_Register gyro_config =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_GYRO_CONFIG, 1);
   Adafruit_BusIO_RegisterBits gyro_range =
@@ -218,16 +218,16 @@ mpu6050_clock_select_t Adafruit_MPU6050::getClock(void) {
 
 /**************************************************************************/
 /*!
-*     @brief  Sets the location that the FSYNC pin sample is stored
-*     @return fsync_output
-*/
+ *     @brief  Sets the location that the FSYNC pin sample is stored
+ *     @return fsync_output
+ */
 /**************************************************************************/
-mpu6050_fsync_out_t Adafruit_MPU6050::getFsyncSampleOutput(void){
-    Adafruit_BusIO_Register config =
+mpu6050_fsync_out_t Adafruit_MPU6050::getFsyncSampleOutput(void) {
+  Adafruit_BusIO_Register config =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_CONFIG, 1);
-    Adafruit_BusIO_RegisterBits fsync_out =
+  Adafruit_BusIO_RegisterBits fsync_out =
       Adafruit_BusIO_RegisterBits(&config, 3, 3);
-    return (mpu6050_fsync_out_t)fsync_out.read();
+  return (mpu6050_fsync_out_t)fsync_out.read();
 }
 
 /**************************************************************************/
@@ -238,42 +238,42 @@ mpu6050_fsync_out_t Adafruit_MPU6050::getFsyncSampleOutput(void){
               should be used to store the state of the FSYNC pin
 */
 /**************************************************************************/
-void Adafruit_MPU6050::setFsyncSampleOutput(mpu6050_fsync_out_t fsync_output){
-    Adafruit_BusIO_Register config =
+void Adafruit_MPU6050::setFsyncSampleOutput(mpu6050_fsync_out_t fsync_output) {
+  Adafruit_BusIO_Register config =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_CONFIG, 1);
-    Adafruit_BusIO_RegisterBits fsync_out =
+  Adafruit_BusIO_RegisterBits fsync_out =
       Adafruit_BusIO_RegisterBits(&config, 3, 3);
-    fsync_out.write(fsync_output);
+  fsync_out.write(fsync_output);
 }
 
 /**************************************************************************/
 /*!
-*     @brief  Gets bandwidth of the Digital Low Pass Filter
-*     @return  The current `mpu6050_bandwidth_t` filter bandwidth
-*/
+ *     @brief  Gets bandwidth of the Digital Low Pass Filter
+ *     @return  The current `mpu6050_bandwidth_t` filter bandwidth
+ */
 /**************************************************************************/
-mpu6050_bandwidth_t Adafruit_MPU6050::getFilterBandwidth(void){
-    Adafruit_BusIO_Register config =
+mpu6050_bandwidth_t Adafruit_MPU6050::getFilterBandwidth(void) {
+  Adafruit_BusIO_Register config =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_CONFIG, 1);
 
-    Adafruit_BusIO_RegisterBits filter_config =
+  Adafruit_BusIO_RegisterBits filter_config =
       Adafruit_BusIO_RegisterBits(&config, 3, 3);
-    return (mpu6050_bandwidth_t)filter_config.read();
+  return (mpu6050_bandwidth_t)filter_config.read();
 }
 
 /**************************************************************************/
 /*!
-*    @brief Sets the bandwidth of the Digital Low-Pass Filter
-*    @param bandwidth the new `mpu6050_bandwidth_t` bandwidth
-*/
+ *    @brief Sets the bandwidth of the Digital Low-Pass Filter
+ *    @param bandwidth the new `mpu6050_bandwidth_t` bandwidth
+ */
 /**************************************************************************/
-void Adafruit_MPU6050::setFilterBandwidth(mpu6050_bandwidth_t bandwidth){
-    Adafruit_BusIO_Register config =
+void Adafruit_MPU6050::setFilterBandwidth(mpu6050_bandwidth_t bandwidth) {
+  Adafruit_BusIO_Register config =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_CONFIG, 1);
 
-    Adafruit_BusIO_RegisterBits filter_config =
+  Adafruit_BusIO_RegisterBits filter_config =
       Adafruit_BusIO_RegisterBits(&config, 3, 3);
-    filter_config.write(bandwidth);
+  filter_config.write(bandwidth);
 }
 
 /**************************************************************************/
@@ -284,11 +284,11 @@ void Adafruit_MPU6050::setFilterBandwidth(mpu6050_bandwidth_t bandwidth){
               If `false` the pin will be high when an interrupt is active
 */
 /**************************************************************************/
-void Adafruit_MPU6050::setInterruptPinPolarity(bool active_low){
+void Adafruit_MPU6050::setInterruptPinPolarity(bool active_low) {
   Adafruit_BusIO_Register int_pin_config =
-    Adafruit_BusIO_Register(i2c_dev, MPU6050_INT_PIN_CONFIG, 1);
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_INT_PIN_CONFIG, 1);
   Adafruit_BusIO_RegisterBits int_level =
-  Adafruit_BusIO_RegisterBits(&int_pin_config, 1, 7);
+      Adafruit_BusIO_RegisterBits(&int_pin_config, 1, 7);
   int_level.write(active_low);
 }
 
@@ -302,16 +302,16 @@ void Adafruit_MPU6050::setInterruptPinPolarity(bool active_low){
               functions of the sensor
 */
 /**************************************************************************/
-void Adafruit_MPU6050::setI2CBypass(bool bypass){
+void Adafruit_MPU6050::setI2CBypass(bool bypass) {
   Adafruit_BusIO_Register int_pin_config =
-    Adafruit_BusIO_Register(i2c_dev, MPU6050_INT_PIN_CONFIG, 1);
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_INT_PIN_CONFIG, 1);
   Adafruit_BusIO_RegisterBits i2c_bypass =
-    Adafruit_BusIO_RegisterBits(&int_pin_config, 1, 1);
+      Adafruit_BusIO_RegisterBits(&int_pin_config, 1, 1);
 
   Adafruit_BusIO_Register user_ctrl =
-    Adafruit_BusIO_Register(i2c_dev, MPU6050_USER_CTRL, 1);
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_USER_CTRL, 1);
   Adafruit_BusIO_RegisterBits i2c_master_enable =
-  Adafruit_BusIO_RegisterBits(&int_pin_config, 1, 5);
+      Adafruit_BusIO_RegisterBits(&int_pin_config, 1, 5);
 
   i2c_bypass.write(bypass);
   i2c_master_enable.write(!bypass);
@@ -327,7 +327,7 @@ void Adafruit_MPU6050::setI2CBypass(bool bypass){
               resuming measurements.
 */
 /**************************************************************************/
-void Adafruit_MPU6050::enableSleep(bool enable){
+void Adafruit_MPU6050::enableSleep(bool enable) {
   Adafruit_BusIO_Register pwr_mgmt =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_1, 1);
 
@@ -348,7 +348,7 @@ void Adafruit_MPU6050::enableSleep(bool enable){
               measurement mode.
 */
 /**************************************************************************/
-void Adafruit_MPU6050::enableCycle(bool enable){
+void Adafruit_MPU6050::enableCycle(bool enable) {
   Adafruit_BusIO_Register pwr_mgmt =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_1, 1);
 
@@ -359,13 +359,13 @@ void Adafruit_MPU6050::enableCycle(bool enable){
 
 /**************************************************************************/
 /*!
-*     @brief  Gets the frequencey of measurements in 'Cycle' mode
-*     @return  The current 'Cycle' measurement frequency
-*/
+ *     @brief  Gets the frequencey of measurements in 'Cycle' mode
+ *     @return  The current 'Cycle' measurement frequency
+ */
 /**************************************************************************/
-mpu6050_cycle_rate_t Adafruit_MPU6050::getCycleRate(void){
+mpu6050_cycle_rate_t Adafruit_MPU6050::getCycleRate(void) {
   Adafruit_BusIO_Register pwr_mgmt_2 =
-    Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_2, 1);
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_2, 1);
 
   Adafruit_BusIO_RegisterBits cycle_rate =
       Adafruit_BusIO_RegisterBits(&pwr_mgmt_2, 1, 5);
@@ -374,26 +374,25 @@ mpu6050_cycle_rate_t Adafruit_MPU6050::getCycleRate(void){
 
 /**************************************************************************/
 /*!
-*     @brief  Sets the frequency of measurement in 'Cycle' mode
-*     @param  rate
-*              The `mpu6050_cycle_rate_t` specifying the desired
-*              measurement rate
-*/
+ *     @brief  Sets the frequency of measurement in 'Cycle' mode
+ *     @param  rate
+ *              The `mpu6050_cycle_rate_t` specifying the desired
+ *              measurement rate
+ */
 /**************************************************************************/
-void Adafruit_MPU6050::setCycleRate(mpu6050_cycle_rate_t rate){
+void Adafruit_MPU6050::setCycleRate(mpu6050_cycle_rate_t rate) {
   Adafruit_BusIO_Register pwr_mgmt_2 =
-    Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_2, 1);
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_2, 1);
 
   Adafruit_BusIO_RegisterBits cycle_rate =
       Adafruit_BusIO_RegisterBits(&pwr_mgmt_2, 1, 5);
   cycle_rate.write(rate);
 }
 
-
 /******************* Adafruit_Sensor functions *****************/
 /*!
-*     @brief  Updates the measurement data for all sensors simultaneously
-*/
+ *     @brief  Updates the measurement data for all sensors simultaneously
+ */
 /**************************************************************************/
 void Adafruit_MPU6050::read(void) {
   //
@@ -403,27 +402,23 @@ void Adafruit_MPU6050::read(void) {
   //
   _getRawSensorData();
   _scaleSensorData();
-
-
-
-
-
-
-
 }
 
 /**************************************************************************/
 /*!
- *  @brief  Provides the sensor_t data the acceleromenter, gyroscope, and temperature sensor
+ *  @brief  Provides the sensor_t data the acceleromenter, gyroscope, and
+ * temperature sensor
  *  @param  accel
- *          Pointer to the `sensor_t` object to be filled with accelerometer data.
+ *          Pointer to the `sensor_t` object to be filled with accelerometer
+ * data.
  *  @param  gyro
  *          Pointer to the `sensor_t` object to be filled with gyroscope data.
  *  @param  temp
  *          Pointer to the `sensor_t` object to be filled with temperature data.
  */
 /**************************************************************************/
-void Adafruit_MPU6050::getSensor(sensor_t *accel, sensor_t *gyro, sensor_t *temp) {
+void Adafruit_MPU6050::getSensor(sensor_t *accel, sensor_t *gyro,
+                                 sensor_t *temp) {
   /* Clear the sensor_t object */
   memset(accel, 0, sizeof(sensor_t));
 
@@ -461,23 +456,23 @@ void Adafruit_MPU6050::getSensor(sensor_t *accel, sensor_t *gyro, sensor_t *temp
   temp->resolution = 0.0; // ToDo
 }
 
-
 /**************************************************************************/
 /*!
     @brief  Gets the most recent sensor event, Adafruit Unified Sensor format
-    @param  accel 
+    @param  accel
             Pointer to an Adafruit Unified sensor_event_t object to be filled
             with acceleration event data.
-    @param  gyro 
+    @param  gyro
             Pointer to an Adafruit Unified sensor_event_t object to be filled
             with gyroscope event data.
-    @param  temp 
+    @param  temp
             Pointer to an Adafruit Unified sensor_event_t object to be filled
             with temperature event data.
     @return True on successful read
 */
 /**************************************************************************/
-bool Adafruit_MPU6050::getEvent(sensors_event_t *accel, sensors_event_t *gyro, sensors_event_t *temp) {
+bool Adafruit_MPU6050::getEvent(sensors_event_t *accel, sensors_event_t *gyro,
+                                sensors_event_t *temp) {
   /* Clear the event */
   memset(accel, 0, sizeof(sensors_event_t));
 
@@ -505,9 +500,9 @@ bool Adafruit_MPU6050::getEvent(sensors_event_t *accel, sensors_event_t *gyro, s
   gyro->gyro.z = gyroZ;
 
   memset(temp, 0, sizeof(sensors_event_t));
-  temp->version   = sizeof(sensors_event_t);
+  temp->version = sizeof(sensors_event_t);
   temp->sensor_id = _sensorid_temp;
-  temp->type      = SENSOR_TYPE_AMBIENT_TEMPERATURE;
+  temp->type = SENSOR_TYPE_AMBIENT_TEMPERATURE;
   temp->timestamp = 0;
   temp->temperature = temperature;
 
@@ -524,16 +519,16 @@ bool Adafruit_MPU6050::getEvent(sensors_event_t *accel, sensors_event_t *gyro, s
     @return True if all sensor axes are performing nominally
 */
 /**************************************************************************/
-bool Adafruit_MPU6050::selfTest(void){
+bool Adafruit_MPU6050::selfTest(void) {
   // local variables to hold the two versions of the measurements
-  float regular_accX, regular_accY, regular_accZ, regular_gyroX, regular_gyroY, regular_gyroZ;
+  float regular_accX, regular_accY, regular_accZ, regular_gyroX, regular_gyroY,
+      regular_gyroZ;
   float test_accX, test_accY, test_accZ, test_gyroX, test_gyroY, test_gyroZ;
-  
-    Adafruit_BusIO_Register gyro_config =
+
+  Adafruit_BusIO_Register gyro_config =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_GYRO_CONFIG, 1);
   Adafruit_BusIO_RegisterBits gyro_self_test_en =
       Adafruit_BusIO_RegisterBits(&gyro_config, 3, 5);
-
 
   Adafruit_BusIO_Register accel_config =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_ACCEL_CONFIG, 1);
@@ -588,76 +583,89 @@ bool Adafruit_MPU6050::selfTest(void){
   uint8_t yg_test = factory_test_buffer[1] & 0b11111;
   uint8_t zg_test = factory_test_buffer[2] & 0b11111;
 
-  uint8_t xa_test = factory_test_buffer[0] & 0b11100000 >>3
-  | ((factory_test_buffer[3] & 0b00110000) >>4);
-  uint8_t ya_test = factory_test_buffer[1] & 0b11100000 >>3
-  | ((factory_test_buffer[3] & 0b00001100) >>2);
-  uint8_t za_test = factory_test_buffer[2] & 0b11100000 >>3
-  | (factory_test_buffer[3] & 0b00000011);
+  uint8_t xa_test = factory_test_buffer[0] & 0b11100000 >> 3 |
+                    ((factory_test_buffer[3] & 0b00110000) >> 4);
+  uint8_t ya_test = factory_test_buffer[1] & 0b11100000 >> 3 |
+                    ((factory_test_buffer[3] & 0b00001100) >> 2);
+  uint8_t za_test = factory_test_buffer[2] & 0b11100000 >> 3 |
+                    (factory_test_buffer[3] & 0b00000011);
   // do calcs; not sure about pass/fail
 
-  double ft_xg = 25 * 131 * pow(1.046, (float)xg_test-1);
-  double ft_yg =-25 * 131 * pow(1.046, (float)yg_test-1);
-  double ft_zg = 25 * 131 * pow(1.046, (float)zg_test-1);
-
+  double ft_xg = 25 * 131 * pow(1.046, (float)xg_test - 1);
+  double ft_yg = -25 * 131 * pow(1.046, (float)yg_test - 1);
+  double ft_zg = 25 * 131 * pow(1.046, (float)zg_test - 1);
 
   double ft_xa = _ft_acc_math(xa_test);
   double ft_ya = _ft_acc_math(ya_test);
   double ft_za = _ft_acc_math(za_test);
 
-  Serial.print("Normal GyroX: "); Serial.print(regular_gyroX);
-  Serial.print(" Test GyroX: "); Serial.println(test_gyroX);
+  Serial.print("Normal GyroX: ");
+  Serial.print(regular_gyroX);
+  Serial.print(" Test GyroX: ");
+  Serial.println(test_gyroX);
 
-  Serial.print("Normal GyroY: "); Serial.print(regular_gyroY);
-  Serial.print(" Test GyroY: "); Serial.println(test_gyroY);
+  Serial.print("Normal GyroY: ");
+  Serial.print(regular_gyroY);
+  Serial.print(" Test GyroY: ");
+  Serial.println(test_gyroY);
 
-  Serial.print("Normal GyroZ: "); Serial.print(regular_gyroZ);
-  Serial.print(" Test GyroZ: "); Serial.println(test_gyroZ);
+  Serial.print("Normal GyroZ: ");
+  Serial.print(regular_gyroZ);
+  Serial.print(" Test GyroZ: ");
+  Serial.println(test_gyroZ);
 
-  Serial.print("Normal AccelX: "); Serial.print(regular_accX);
-  Serial.print(" Test AccelX: "); Serial.println(test_accX);
+  Serial.print("Normal AccelX: ");
+  Serial.print(regular_accX);
+  Serial.print(" Test AccelX: ");
+  Serial.println(test_accX);
 
-  Serial.print("Normal AccelY: "); Serial.print(regular_accY);
-  Serial.print(" Test AccelY: "); Serial.println(test_accY);
+  Serial.print("Normal AccelY: ");
+  Serial.print(regular_accY);
+  Serial.print(" Test AccelY: ");
+  Serial.println(test_accY);
 
-  Serial.print("Normal AccelZ: "); Serial.print(regular_accZ);
-  Serial.print(" Test AccelZ: "); Serial.println(test_accZ);
+  Serial.print("Normal AccelZ: ");
+  Serial.print(regular_accZ);
+  Serial.print(" Test AccelZ: ");
+  Serial.println(test_accZ);
 
-  Serial.print("AccelX FT: "); Serial.println(xa_test);
-  Serial.print("AccelY FT: "); Serial.println(ya_test);
-  Serial.print("AccelZ FT: "); Serial.println(za_test);
+  Serial.print("AccelX FT: ");
+  Serial.println(xa_test);
+  Serial.print("AccelY FT: ");
+  Serial.println(ya_test);
+  Serial.print("AccelZ FT: ");
+  Serial.println(za_test);
 
-  Serial.print("GyroX FT: "); Serial.println(xg_test);
-  Serial.print("GyroY FT: "); Serial.println(yg_test);
-  Serial.print("GyroZ FT: "); Serial.println(zg_test);
+  Serial.print("GyroX FT: ");
+  Serial.println(xg_test);
+  Serial.print("GyroY FT: ");
+  Serial.println(yg_test);
+  Serial.print("GyroZ FT: ");
+  Serial.println(zg_test);
 
-  Serial.print("ft_xg: "); Serial.println(ft_xg);
-  Serial.print("ft_yg: "); Serial.println(ft_yg);
-  Serial.print("ft_zg: "); Serial.println(ft_zg);
+  Serial.print("ft_xg: ");
+  Serial.println(ft_xg);
+  Serial.print("ft_yg: ");
+  Serial.println(ft_yg);
+  Serial.print("ft_zg: ");
+  Serial.println(ft_zg);
 
-  Serial.print("ft_xa: "); Serial.println(ft_xa);
-  Serial.print("ft_ya: "); Serial.println(ft_ya);
-  Serial.print("ft_za: "); Serial.println(ft_za);
+  Serial.print("ft_xa: ");
+  Serial.println(ft_xa);
+  Serial.print("ft_ya: ");
+  Serial.println(ft_ya);
+  Serial.print("ft_za: ");
+  Serial.println(ft_za);
 }
 
-double Adafruit_MPU6050::_ft_acc_math(int8_t ft_reg_value){
+double Adafruit_MPU6050::_ft_acc_math(int8_t ft_reg_value) {
 
-    double ft_acc = (
-      pow(
-        0.92,
-        (
-          ((float)ft_reg_value-1)
-          /
-          (pow(2,5) -2)
-        )
-      )
-      /
-      0.34
-    );
-    return 4096 * 0.34 * ft_acc;
+  double ft_acc =
+      (pow(0.92, (((float)ft_reg_value - 1) / (pow(2, 5) - 2))) / 0.34);
+  return 4096 * 0.34 * ft_acc;
 }
 
-void Adafruit_MPU6050::_getRawSensorData(void){
+void Adafruit_MPU6050::_getRawSensorData(void) {
   // get raw readings
   Adafruit_BusIO_Register data_reg =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_ACCEL_OUT, 14);
@@ -675,10 +683,9 @@ void Adafruit_MPU6050::_getRawSensorData(void){
   rawGyroX = buffer[8] << 8 | buffer[9];
   rawGyroY = buffer[10] << 8 | buffer[11];
   rawGyroZ = buffer[12] << 8 | buffer[13];
-
 }
 
-void Adafruit_MPU6050::_scaleSensorData(void){
+void Adafruit_MPU6050::_scaleSensorData(void) {
 
   temperature = (rawTemp + 12412.0) / 340.0;
 
@@ -710,7 +717,6 @@ void Adafruit_MPU6050::_scaleSensorData(void){
     gyro_scale = 32.8;
   if (gyro_range == MPU6050_RANGE_2000_DEG)
     gyro_scale = 16.4;
-
 
   gyroX = ((float)rawGyroX) / gyro_scale;
   gyroY = ((float)rawGyroY) / gyro_scale;

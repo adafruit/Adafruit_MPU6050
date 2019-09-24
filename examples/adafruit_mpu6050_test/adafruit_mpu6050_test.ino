@@ -55,7 +55,6 @@ void setup(void) {
     break;
   }
 
-
   mpu.setFilterBandwidth(MPU6050_BAND_260_HZ);
   Serial.print("Filter bandwidth set to: ");
   switch (mpu.getFilterBandwidth()) {
@@ -82,17 +81,16 @@ void setup(void) {
     break;
   }
   mpu.setSampleRateDivisor(0);
-//  mpu.read();
-//  mpu.enableSleep(false);
-//  mpu.enableCycle(false);
-//  mpu.setCycleRate(MPU6050_CYCLE_5_HZ);
+  //  mpu.read();
+  //  mpu.enableSleep(false);
+  //  mpu.enableCycle(false);
+  //  mpu.setCycleRate(MPU6050_CYCLE_5_HZ);
 
   mpu.selfTest();
   delay(1000);
   mpu.selfTest();
   delay(1000);
   mpu.selfTest();
-
 }
 
 void loop() {
@@ -124,25 +122,24 @@ void loop() {
 
   mpu.getEvent(&a, &g, &temp);
 
-  
   Serial.print(a.acceleration.x);
   Serial.print(",");
   Serial.print(a.acceleration.y);
   Serial.print(",");
   Serial.print(a.acceleration.z);
-  Serial.println("");q
+  Serial.println("");
+  q
 
+      //  Serial.print(",");
+      //
+      //  Serial.print(g.gyro.x);
+      //  Serial.print(",");
+      //  Serial.print(g.gyro.y);
+      //  Serial.print(",");
+      //  Serial.print(g.gyro.z);
+      //  Serial.print(",");
 
-//  Serial.print(",");
-//
-//  Serial.print(g.gyro.x);
-//  Serial.print(",");
-//  Serial.print(g.gyro.y);
-//  Serial.print(",");
-//  Serial.print(g.gyro.z);
-//  Serial.print(",");
+      //  Serial.println(temp.temperature);
 
-//  Serial.println(temp.temperature);
-
-  delay(10);
+      delay(10);
 }
