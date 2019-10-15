@@ -368,7 +368,7 @@ mpu6050_cycle_rate_t Adafruit_MPU6050::getCycleRate(void) {
       Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_2, 1);
 
   Adafruit_BusIO_RegisterBits cycle_rate =
-      Adafruit_BusIO_RegisterBits(&pwr_mgmt_2, 1, 5);
+      Adafruit_BusIO_RegisterBits(&pwr_mgmt_2, 2, 6);
   return (mpu6050_cycle_rate_t)cycle_rate.read();
 }
 
@@ -385,7 +385,7 @@ void Adafruit_MPU6050::setCycleRate(mpu6050_cycle_rate_t rate) {
       Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_2, 1);
 
   Adafruit_BusIO_RegisterBits cycle_rate =
-      Adafruit_BusIO_RegisterBits(&pwr_mgmt_2, 1, 5);
+      Adafruit_BusIO_RegisterBits(&pwr_mgmt_2, 2, 6);
   cycle_rate.write(rate);
 }
 
@@ -700,6 +700,7 @@ void Adafruit_MPU6050::_scaleSensorData(void) {
     accel_scale = 8192;
   if (accel_range == MPU6050_RANGE_2_G)
     accel_scale = 16384;
+
 
   // setup range dependant scaling
   accX = ((float)rawAccX) / accel_scale;
