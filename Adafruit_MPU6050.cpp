@@ -653,7 +653,6 @@ bool Adafruit_MPU6050::selfTest(void) {
   double ft_ya = _ft_acc_math(ya_test);
   double ft_za = _ft_acc_math(za_test);
 
-  /*
   Serial.print("Normal GyroX: ");
   Serial.print(regular_gyroX);
   Serial.print(" Test GyroX: ");
@@ -711,7 +710,6 @@ bool Adafruit_MPU6050::selfTest(void) {
   Serial.println(ft_ya);
   Serial.print("ft_za: ");
   Serial.println(ft_za);
-*/
 }
 
 double Adafruit_MPU6050::_ft_acc_math(int8_t ft_reg_value) {
