@@ -41,15 +41,15 @@
 #define MPU6050_GYRO_CONFIG 0x1B ///< Gyro specfic configuration register
 #define MPU6050_ACCEL_CONFIG                                                   \
   0x1C ///< Accelerometer specific configration register
-#define MPU6050_INT_PIN_CONFIG 0x37 ///< Interrupt pin configuration register
-#define MPU6050_WHO_AM_I 0x75       ///< Divice ID register
-#define MPU6050_SIGNAL_PATH_RESET 0x68
-#define MPU6050_USER_CTRL 0x6A      ///< FIFO and I2C Master control register
-#define MPU6050_PWR_MGMT_1 0x6B     ///< Primary power/sleep control register
-#define MPU6050_PWR_MGMT_2 0x6C     ///< Secondary power/sleep control register
-#define MPU6050_TEMP_H 0x41         ///< Temperature data high byte register
-#define MPU6050_TEMP_L 0x42         ///< Temperature data low byte register
-#define MPU6050_ACCEL_OUT 0x3B      ///< base address for sensor data reads
+#define MPU6050_INT_PIN_CONFIG 0x37    ///< Interrupt pin configuration register
+#define MPU6050_WHO_AM_I 0x75          ///< Divice ID register
+#define MPU6050_SIGNAL_PATH_RESET 0x68 ///< Signal path reset register
+#define MPU6050_USER_CTRL 0x6A         ///< FIFO and I2C Master control register
+#define MPU6050_PWR_MGMT_1 0x6B        ///< Primary power/sleep control register
+#define MPU6050_PWR_MGMT_2 0x6C ///< Secondary power/sleep control register
+#define MPU6050_TEMP_H 0x41     ///< Temperature data high byte register
+#define MPU6050_TEMP_L 0x42     ///< Temperature data low byte register
+#define MPU6050_ACCEL_OUT 0x3B  ///< base address for sensor data reads
 
 /**
  * @brief FSYNC output values
@@ -179,8 +179,6 @@ public:
   void setCycleRate(mpu6050_cycle_rate_t rate);
   mpu6050_cycle_rate_t getCycleRate(void);
 
-  bool selfTest(void);
-
 private:
   bool _init(int32_t);
 
@@ -191,12 +189,7 @@ private:
   float temperature, accX, accY, accZ, gyroX, gyroY, gyroZ;
   int16_t rawAccX, rawAccY, rawAccZ, rawTemp, rawGyroX, rawGyroY, rawGyroZ;
 
-  float angleGyroX, angleGyroY, angleGyroZ, angleAccX, angleAccY, angleAccZ;
-
-  float accCoef, gyroCoef;
-
   uint8_t _sensorid_accel, _sensorid_gyro, _sensorid_temp;
-  double _ft_acc_math(int8_t ft_reg_value);
 };
 
 #endif

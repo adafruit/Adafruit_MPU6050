@@ -9,7 +9,7 @@
  * 	I2C Driver for the MPU6050 proximity and ambient light sensor library
  *
  * 	This is a library for the Adafruit MPU6050 breakout:
- * 	https://www.adafruit.com/product/4161
+ * 	https://www.adafruit.com/product/3886
  *
  * 	Adafruit invests time and resources providing this open source code,
  *  please support Adafruit and open-source hardware by purchasing products from
@@ -90,7 +90,12 @@ boolean Adafruit_MPU6050::begin(uint8_t i2c_address, TwoWire *wire,
   delay(100);
   return true;
 }
-
+/**************************************************************************/
+/*!
+    @brief Resets registers to their initial value and resets the sensors'
+    analog and digital signal paths.
+*/
+/**************************************************************************/
 void Adafruit_MPU6050::reset(void) {
   Adafruit_BusIO_Register power_mgmt_1 =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_1, 1);
@@ -105,7 +110,7 @@ void Adafruit_MPU6050::reset(void) {
     delay(1);
   }
   delay(100);
-  
+
   sig_path_reset.write(0x7);
 
   delay(100);
@@ -439,7 +444,6 @@ void Adafruit_MPU6050::read(void) {
   if (accel_range == MPU6050_RANGE_2_G)
     accel_scale = 16384;
 
-
   // setup range dependant scaling
   accX = ((float)rawAccX) / accel_scale;
   accY = ((float)rawAccY) / accel_scale;
@@ -560,163 +564,4 @@ bool Adafruit_MPU6050::getEvent(sensors_event_t *accel, sensors_event_t *gyro,
   temp->temperature = temperature;
 
   return true;
-}
-
-/**************************************************************************/
-/*!
-    @brief  Performs a self test on each accelerometer and gyroscope axis
-            Each axis is put into a self test mode that modifies the measured
-            value by a known ammount. These changes are then compared to
-            factory calibrated values to ensure that the sensor is working as
-            expected
-
-    @return True if all sensor axes are performing nominally
-*/
-/**************************************************************************/
-bool Adafruit_MPU6050::selfTest(void) {
-  // local variables to hold the two versions of the measurements
-  float regular_accX, regular_accY, regular_accZ, regular_gyroX, regular_gyroY,
-      regular_gyroZ;
-  float test_accX, test_accY, test_accZ, test_gyroX, test_gyroY, test_gyroZ;
-
-  Adafruit_BusIO_Register gyro_config =
-      Adafruit_BusIO_Register(i2c_dev, MPU6050_GYRO_CONFIG, 1);
-  Adafruit_BusIO_RegisterBits gyro_self_test_en =
-      Adafruit_BusIO_RegisterBits(&gyro_config, 3, 5);
-
-  Adafruit_BusIO_Register accel_config =
-      Adafruit_BusIO_Register(i2c_dev, MPU6050_ACCEL_CONFIG, 1);
-  Adafruit_BusIO_RegisterBits accel_self_test_en =
-      Adafruit_BusIO_RegisterBits(&accel_config, 3, 5);
-
-  // fetch the base non-self-test values
-  read();
-  // regular_accX = accX;
-  // regular_accY = accY;
-  // regular_accZ = accZ;
-
-  // regular_gyroX = gyroX;
-  // regular_gyroY = gyroY;
-  // regular_gyroZ = gyroZ;
-  regular_accX = rawAccX;
-  regular_accY = rawAccY;
-  regular_accZ = rawAccZ;
-
-  regular_gyroX = rawGyroX;
-  regular_gyroY = rawGyroY;
-  regular_gyroZ = rawGyroZ;
-  // turn on the self test modifiers
-  gyro_self_test_en.write(0b111);
-  accel_self_test_en.write(0b111);
-
-  // fetch the readings with the self test modifications
-  read();
-  test_accX = rawAccX;
-  test_accY = rawAccY;
-  test_accZ = rawAccZ;
-
-  test_gyroX = rawGyroX;
-  test_gyroY = rawGyroY;
-  test_gyroZ = rawGyroZ;
-
-  // immediately get another raw readings
-  // disable ST bits
-  gyro_self_test_en.write(0b000);
-  accel_self_test_en.write(0b000);
-
-  float accX, accY, accZ, gyroX, gyroY, gyroZ;
-  // get all the factory test values together
-  Adafruit_BusIO_Register data_reg =
-      Adafruit_BusIO_Register(i2c_dev, MPU6050_SELF_TEST_X, 4);
-
-  uint8_t factory_test_buffer[4];
-  // can I make this a int16_t and cast it to a uint8_t?
-  data_reg.read(factory_test_buffer, 4);
-
-  uint8_t xg_test = factory_test_buffer[0] & 0b11111;
-  uint8_t yg_test = factory_test_buffer[1] & 0b11111;
-  uint8_t zg_test = factory_test_buffer[2] & 0b11111;
-
-  uint8_t xa_test = factory_test_buffer[0] & 0b11100000 >> 3 |
-                    ((factory_test_buffer[3] & 0b00110000) >> 4);
-  uint8_t ya_test = factory_test_buffer[1] & 0b11100000 >> 3 |
-                    ((factory_test_buffer[3] & 0b00001100) >> 2);
-  uint8_t za_test = factory_test_buffer[2] & 0b11100000 >> 3 |
-                    (factory_test_buffer[3] & 0b00000011);
-  // do calcs; not sure about pass/fail
-
-  double ft_xg = 25 * 131 * pow(1.046, (float)xg_test - 1);
-  double ft_yg = -25 * 131 * pow(1.046, (float)yg_test - 1);
-  double ft_zg = 25 * 131 * pow(1.046, (float)zg_test - 1);
-
-  double ft_xa = _ft_acc_math(xa_test);
-  double ft_ya = _ft_acc_math(ya_test);
-  double ft_za = _ft_acc_math(za_test);
-
-  /*
-  Serial.print("Normal GyroX: ");
-  Serial.print(regular_gyroX);
-  Serial.print(" Test GyroX: ");
-  Serial.println(test_gyroX);
-
-  Serial.print("Normal GyroY: ");
-  Serial.print(regular_gyroY);
-  Serial.print(" Test GyroY: ");
-  Serial.println(test_gyroY);
-
-  Serial.print("Normal GyroZ: ");
-  Serial.print(regular_gyroZ);
-  Serial.print(" Test GyroZ: ");
-  Serial.println(test_gyroZ);
-
-  Serial.print("Normal AccelX: ");
-  Serial.print(regular_accX);
-  Serial.print(" Test AccelX: ");
-  Serial.println(test_accX);
-
-  Serial.print("Normal AccelY: ");
-  Serial.print(regular_accY);
-  Serial.print(" Test AccelY: ");
-  Serial.println(test_accY);
-
-  Serial.print("Normal AccelZ: ");
-  Serial.print(regular_accZ);
-  Serial.print(" Test AccelZ: ");
-  Serial.println(test_accZ);
-
-  Serial.print("AccelX FT: ");
-  Serial.println(xa_test);
-  Serial.print("AccelY FT: ");
-  Serial.println(ya_test);
-  Serial.print("AccelZ FT: ");
-  Serial.println(za_test);
-
-  Serial.print("GyroX FT: ");
-  Serial.println(xg_test);
-  Serial.print("GyroY FT: ");
-  Serial.println(yg_test);
-  Serial.print("GyroZ FT: ");
-  Serial.println(zg_test);
-
-  Serial.print("ft_xg: ");
-  Serial.println(ft_xg);
-  Serial.print("ft_yg: ");
-  Serial.println(ft_yg);
-  Serial.print("ft_zg: ");
-  Serial.println(ft_zg);
-
-  Serial.print("ft_xa: ");
-  Serial.println(ft_xa);
-  Serial.print("ft_ya: ");
-  Serial.println(ft_ya);
-  Serial.print("ft_za: ");
-  Serial.println(ft_za);
-*/
-}
-
-double Adafruit_MPU6050::_ft_acc_math(int8_t ft_reg_value) {
-
-  double ft_acc =
-      (pow(0.92, (((float)ft_reg_value - 1) / (pow(2, 5) - 2))) / 0.34);
-  return 4096 * 0.34 * ft_acc;
 }

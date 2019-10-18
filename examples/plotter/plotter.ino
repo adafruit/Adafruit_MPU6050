@@ -11,7 +11,7 @@ void setup(void) {
   while (!Serial) {
     delay(10); // will pause Zero, Leonardo, etc until serial console opens
   }
-  
+
   // Try to initialize!
   if (!mpu.begin()) {
     Serial.println("Failed to find MPU6050 chip");
@@ -21,7 +21,7 @@ void setup(void) {
   }
 
   mpu.setAccelerometerRange(MPU6050_RANGE_16_G);
-  mpu.setGyroRange(MPU6050_RANGE_250_DEG); 
+  mpu.setGyroRange(MPU6050_RANGE_250_DEG);
   mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);
   Serial.println("");
   delay(100);
@@ -30,7 +30,7 @@ void setup(void) {
 void loop() {
   /* Take a new reading */
   mpu.read();
-  
+
   /* Get new sensor events with the readings */
   sensors_event_t a, g, temp;
   mpu.getEvent(&a, &g, &temp);

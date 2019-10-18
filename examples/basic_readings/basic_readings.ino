@@ -42,16 +42,16 @@ void setup(void) {
   Serial.print("Gyro range set to: ");
   switch (mpu.getGyroRange()) {
   case MPU6050_RANGE_250_DEG:
-    Serial.println("+- 250 °/s");
+    Serial.println("+- 250 deg/s");
     break;
   case MPU6050_RANGE_500_DEG:
-    Serial.println("+- 500 °/s");
+    Serial.println("+- 500 deg/s");
     break;
   case MPU6050_RANGE_1000_DEG:
-    Serial.println("+- 1000 °/s");
+    Serial.println("+- 1000 deg/s");
     break;
   case MPU6050_RANGE_2000_DEG:
-    Serial.println("+- 2000 °/s");
+    Serial.println("+- 2000 deg/s");
     break;
   }
 
@@ -86,10 +86,10 @@ void setup(void) {
 }
 
 void loop() {
-  
+
   /* Take a new reading */
   mpu.read();
-  
+
   /* Get new sensor events with the readings */
   sensors_event_t a, g, temp;
   mpu.getEvent(&a, &g, &temp);
@@ -109,11 +109,11 @@ void loop() {
   Serial.print(g.gyro.y);
   Serial.print(", Z: ");
   Serial.print(g.gyro.z);
-  Serial.println(" °/s");
+  Serial.println(" deg/s");
 
   Serial.print("Temperature: ");
   Serial.print(temp.temperature);
-  Serial.println(" °C");
+  Serial.println(" degC");
 
   Serial.println("");
   delay(500);
