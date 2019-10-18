@@ -15,14 +15,16 @@ Adafruit invests time and resources providing this open source code, please supp
 Contributing
 ============
 
-Contributions are welcome! Please read our `Code of Conduct
-<https://github.com/adafruit/Adafruit_MPU6050/blob/master/CODE_OF_CONDUCT.md>`_
+Contributions are welcome! Please read our [Code of Conduct](https://github.com/adafruit/Adafruit_MPU6050/blob/master/CODE_OF_CONDUCT.md)
 before contributing to help this project stay welcoming.
 
-# Doxygen example and basics/link to guide
-https://learn.adafruit.com/the-well-automated-arduino-library/doxygen
-https://learn.adafruit.com/the-well-automated-arduino-library/doxygen-tips
-##########################
+### Doxygen documentation
+All contributions must have doxygen compatible documentation
+[This guide will get you started](https://learn.adafruit.com/the-well-automated-arduino-library/doxygen)
+
+and [this page](https://learn.adafruit.com/the-well-automated-arduino-library/doxygen-tips) offers advice on how do document different types of code.
+
+
 Written by Bryan Siepert for Adafruit Industries.  
 BSD license, check license.txt for more information
 All text above must be included in any redistribution
