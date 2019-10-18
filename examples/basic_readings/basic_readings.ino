@@ -42,16 +42,16 @@ void setup(void) {
   Serial.print("Gyro range set to: ");
   switch (mpu.getGyroRange()) {
   case MPU6050_RANGE_250_DEG:
-    Serial.println("+- 250 Â°/s");
+    Serial.println("+- 250 °/s");
     break;
   case MPU6050_RANGE_500_DEG:
-    Serial.println("+- 500 Â°/s");
+    Serial.println("+- 500 °/s");
     break;
   case MPU6050_RANGE_1000_DEG:
-    Serial.println("+- 1000 Â°/s");
+    Serial.println("+- 1000 °/s");
     break;
   case MPU6050_RANGE_2000_DEG:
-    Serial.println("+- 2000 Â°/s");
+    Serial.println("+- 2000 °/s");
     break;
   }
 
@@ -99,21 +99,21 @@ void loop() {
   Serial.print(a.acceleration.x);
   Serial.print(", Y: ");
   Serial.print(a.acceleration.y);
-  Serial.print(", Z:");
+  Serial.print(", Z: ");
   Serial.print(a.acceleration.z);
   Serial.println(" m/s^2");
 
-  Serial.print("Rotation X:");
+  Serial.print("Rotation X: ");
   Serial.print(g.gyro.x);
-  Serial.print(", Y:");
+  Serial.print(", Y: ");
   Serial.print(g.gyro.y);
-  Serial.print(",Z: ");
+  Serial.print(", Z: ");
   Serial.print(g.gyro.z);
-  Serial.println(" Â°/s");
+  Serial.println(" °/s");
 
   Serial.print("Temperature: ");
   Serial.print(temp.temperature);
-  Serial.println(" Â°C");
+  Serial.println(" °C");
 
   Serial.println("");
   delay(500);
