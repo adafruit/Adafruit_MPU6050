@@ -43,6 +43,7 @@
   0x1C ///< Accelerometer specific configration register
 #define MPU6050_INT_PIN_CONFIG 0x37 ///< Interrupt pin configuration register
 #define MPU6050_WHO_AM_I 0x75       ///< Divice ID register
+#define MPU6050_SIGNAL_PATH_RESET 0x68
 #define MPU6050_USER_CTRL 0x6A      ///< FIFO and I2C Master control register
 #define MPU6050_PWR_MGMT_1 0x6B     ///< Primary power/sleep control register
 #define MPU6050_PWR_MGMT_2 0x6C     ///< Secondary power/sleep control register
@@ -143,6 +144,7 @@ public:
 
   boolean begin(uint8_t i2c_addr = MPU6050_I2CADDR_DEFAULT,
                 TwoWire *wire = &Wire, int32_t sensorID = 0);
+  void reset(void);
 
   mpu6050_accel_range_t getAccelerometerRange(void);
   void setAccelerometerRange(mpu6050_accel_range_t);

@@ -60,10 +60,6 @@ boolean Adafruit_MPU6050::begin(uint8_t i2c_address, TwoWire *wire,
     return false;
   }
 
-  return _init(sensorID);
-}
-
-boolean Adafruit_MPU6050::_init(int32_t sensorID) {
   Adafruit_BusIO_Register chip_id =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_WHO_AM_I, 1);
 
@@ -76,13 +72,7 @@ boolean Adafruit_MPU6050::_init(int32_t sensorID) {
   _sensorid_gyro = sensorID + 1;
   _sensorid_temp = sensorID + 2;
 
-  Adafruit_BusIO_Register power_mgmt_1 =
-      Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_1, 1);
-
-  power_mgmt_1.write(0b10000000);             // reset
-  while (power_mgmt_1.read() != 0b01000000) { // check for the post reset value
-    delay(10);
-  }
+  reset();
 
   setSampleRateDivisor(0);
 
@@ -92,10 +82,33 @@ boolean Adafruit_MPU6050::_init(int32_t sensorID) {
 
   setAccelerometerRange(MPU6050_RANGE_2_G); // already the default
 
+  Adafruit_BusIO_Register power_mgmt_1 =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_1, 1);
+
   power_mgmt_1.write(0x01); // set clock config to PLL with Gyro X reference
 
   delay(100);
   return true;
+}
+
+void Adafruit_MPU6050::reset(void) {
+  Adafruit_BusIO_Register power_mgmt_1 =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_1, 1);
+  Adafruit_BusIO_Register sig_path_reset =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_SIGNAL_PATH_RESET, 1);
+  Adafruit_BusIO_RegisterBits device_reset =
+      Adafruit_BusIO_RegisterBits(&power_mgmt_1, 1, 7);
+
+  // see register map page 41
+  device_reset.write(1);             // reset
+  while (device_reset.read() == 1) { // check for the post reset value
+    delay(1);
+  }
+  delay(100);
+  
+  sig_path_reset.write(0x7);
+
+  delay(100);
 }
 
 /**************************************************************************/
@@ -257,7 +270,7 @@ mpu6050_bandwidth_t Adafruit_MPU6050::getFilterBandwidth(void) {
       Adafruit_BusIO_Register(i2c_dev, MPU6050_CONFIG, 1);
 
   Adafruit_BusIO_RegisterBits filter_config =
-      Adafruit_BusIO_RegisterBits(&config, 3, 3);
+      Adafruit_BusIO_RegisterBits(&config, 3, 0);
   return (mpu6050_bandwidth_t)filter_config.read();
 }
 
@@ -272,7 +285,7 @@ void Adafruit_MPU6050::setFilterBandwidth(mpu6050_bandwidth_t bandwidth) {
       Adafruit_BusIO_Register(i2c_dev, MPU6050_CONFIG, 1);
 
   Adafruit_BusIO_RegisterBits filter_config =
-      Adafruit_BusIO_RegisterBits(&config, 3, 3);
+      Adafruit_BusIO_RegisterBits(&config, 3, 0);
   filter_config.write(bandwidth);
 }
 
@@ -311,7 +324,7 @@ void Adafruit_MPU6050::setI2CBypass(bool bypass) {
   Adafruit_BusIO_Register user_ctrl =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_USER_CTRL, 1);
   Adafruit_BusIO_RegisterBits i2c_master_enable =
-      Adafruit_BusIO_RegisterBits(&int_pin_config, 1, 5);
+      Adafruit_BusIO_RegisterBits(&user_ctrl, 1, 5);
 
   i2c_bypass.write(bypass);
   i2c_master_enable.write(!bypass);
@@ -395,13 +408,58 @@ void Adafruit_MPU6050::setCycleRate(mpu6050_cycle_rate_t rate) {
  */
 /**************************************************************************/
 void Adafruit_MPU6050::read(void) {
-  //
-  //
-  //              WHAT? TWO READS IN A ROW MAKES FOR INTERESTING DATQA
-  //
-  //
-  _getRawSensorData();
-  _scaleSensorData();
+  // get raw readings
+  Adafruit_BusIO_Register data_reg =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_ACCEL_OUT, 14);
+
+  uint8_t buffer[14];
+  data_reg.read(buffer, 14);
+
+  rawAccX = buffer[0] << 8 | buffer[1];
+  rawAccY = buffer[2] << 8 | buffer[3];
+  rawAccZ = buffer[4] << 8 | buffer[5];
+
+  rawTemp = buffer[6] << 8 | buffer[7];
+
+  rawGyroX = buffer[8] << 8 | buffer[9];
+  rawGyroY = buffer[10] << 8 | buffer[11];
+  rawGyroZ = buffer[12] << 8 | buffer[13];
+
+  temperature = (rawTemp + 12412.0) / 340.0;
+
+  mpu6050_accel_range_t accel_range = getAccelerometerRange();
+
+  float accel_scale = 1;
+  if (accel_range == MPU6050_RANGE_16_G)
+    accel_scale = 2048;
+  if (accel_range == MPU6050_RANGE_8_G)
+    accel_scale = 4096;
+  if (accel_range == MPU6050_RANGE_4_G)
+    accel_scale = 8192;
+  if (accel_range == MPU6050_RANGE_2_G)
+    accel_scale = 16384;
+
+
+  // setup range dependant scaling
+  accX = ((float)rawAccX) / accel_scale;
+  accY = ((float)rawAccY) / accel_scale;
+  accZ = ((float)rawAccZ) / accel_scale;
+
+  mpu6050_gyro_range_t gyro_range = getGyroRange();
+
+  float gyro_scale = 1;
+  if (gyro_range == MPU6050_RANGE_250_DEG)
+    gyro_scale = 131;
+  if (gyro_range == MPU6050_RANGE_500_DEG)
+    gyro_scale = 65.5;
+  if (gyro_range == MPU6050_RANGE_1000_DEG)
+    gyro_scale = 32.8;
+  if (gyro_range == MPU6050_RANGE_2000_DEG)
+    gyro_scale = 16.4;
+
+  gyroX = ((float)rawGyroX) / gyro_scale;
+  gyroY = ((float)rawGyroY) / gyro_scale;
+  gyroZ = ((float)rawGyroZ) / gyro_scale;
 }
 
 /**************************************************************************/
@@ -473,28 +531,23 @@ void Adafruit_MPU6050::getSensor(sensor_t *accel, sensor_t *gyro,
 /**************************************************************************/
 bool Adafruit_MPU6050::getEvent(sensors_event_t *accel, sensors_event_t *gyro,
                                 sensors_event_t *temp) {
-  /* Clear the event */
-  memset(accel, 0, sizeof(sensors_event_t));
+  uint32_t t = millis();
+  read();
 
-  accel->version = sizeof(sensors_event_t);
+  memset(accel, 0, sizeof(sensors_event_t));
+  accel->version = 1;
   accel->sensor_id = _sensorid_accel;
   accel->type = SENSOR_TYPE_ACCELEROMETER;
-  accel->timestamp = 0;
-  // read();
-
+  accel->timestamp = t;
   accel->acceleration.x = accX * SENSORS_GRAVITY_STANDARD;
   accel->acceleration.y = accY * SENSORS_GRAVITY_STANDARD;
   accel->acceleration.z = accZ * SENSORS_GRAVITY_STANDARD;
 
-  /*           GYRO               */
   memset(gyro, 0, sizeof(sensors_event_t));
-  gyro->version = sizeof(sensors_event_t);
+  gyro->version = 1;
   gyro->sensor_id = _sensorid_gyro;
   gyro->type = SENSOR_TYPE_GYROSCOPE;
-  gyro->timestamp = 0;
-  // gyro->gyro.x = gyroData.x * _gyro_dps_digit;
-  // gyro->gyro.y = gyroData.y * _gyro_dps_digit;
-  // gyro->gyro.z = gyroData.z * _gyro_dps_digit;
+  gyro->timestamp = t;
   gyro->gyro.x = gyroX;
   gyro->gyro.y = gyroY;
   gyro->gyro.z = gyroZ;
@@ -503,11 +556,12 @@ bool Adafruit_MPU6050::getEvent(sensors_event_t *accel, sensors_event_t *gyro,
   temp->version = sizeof(sensors_event_t);
   temp->sensor_id = _sensorid_temp;
   temp->type = SENSOR_TYPE_AMBIENT_TEMPERATURE;
-  temp->timestamp = 0;
+  temp->timestamp = t;
   temp->temperature = temperature;
 
   return true;
 }
+
 /**************************************************************************/
 /*!
     @brief  Performs a self test on each accelerometer and gyroscope axis
@@ -599,6 +653,7 @@ bool Adafruit_MPU6050::selfTest(void) {
   double ft_ya = _ft_acc_math(ya_test);
   double ft_za = _ft_acc_math(za_test);
 
+  /*
   Serial.print("Normal GyroX: ");
   Serial.print(regular_gyroX);
   Serial.print(" Test GyroX: ");
@@ -656,6 +711,7 @@ bool Adafruit_MPU6050::selfTest(void) {
   Serial.println(ft_ya);
   Serial.print("ft_za: ");
   Serial.println(ft_za);
+*/
 }
 
 double Adafruit_MPU6050::_ft_acc_math(int8_t ft_reg_value) {
@@ -663,63 +719,4 @@ double Adafruit_MPU6050::_ft_acc_math(int8_t ft_reg_value) {
   double ft_acc =
       (pow(0.92, (((float)ft_reg_value - 1) / (pow(2, 5) - 2))) / 0.34);
   return 4096 * 0.34 * ft_acc;
-}
-
-void Adafruit_MPU6050::_getRawSensorData(void) {
-  // get raw readings
-  Adafruit_BusIO_Register data_reg =
-      Adafruit_BusIO_Register(i2c_dev, MPU6050_ACCEL_OUT, 14);
-
-  uint8_t buffer[14];
-  // can I make this a int16_t and cast it to a uint8_t?
-  data_reg.read(buffer, 14);
-
-  rawAccX = buffer[0] << 8 | buffer[1];
-  rawAccY = buffer[2] << 8 | buffer[3];
-  rawAccZ = buffer[4] << 8 | buffer[5];
-
-  rawTemp = buffer[6] << 8 | buffer[7];
-
-  rawGyroX = buffer[8] << 8 | buffer[9];
-  rawGyroY = buffer[10] << 8 | buffer[11];
-  rawGyroZ = buffer[12] << 8 | buffer[13];
-}
-
-void Adafruit_MPU6050::_scaleSensorData(void) {
-
-  temperature = (rawTemp + 12412.0) / 340.0;
-
-  mpu6050_accel_range_t accel_range = getAccelerometerRange();
-
-  float accel_scale = 1;
-  if (accel_range == MPU6050_RANGE_16_G)
-    accel_scale = 2048;
-  if (accel_range == MPU6050_RANGE_8_G)
-    accel_scale = 4096;
-  if (accel_range == MPU6050_RANGE_4_G)
-    accel_scale = 8192;
-  if (accel_range == MPU6050_RANGE_2_G)
-    accel_scale = 16384;
-
-
-  // setup range dependant scaling
-  accX = ((float)rawAccX) / accel_scale;
-  accY = ((float)rawAccY) / accel_scale;
-  accZ = ((float)rawAccZ) / accel_scale;
-
-  mpu6050_gyro_range_t gyro_range = getGyroRange();
-
-  float gyro_scale = 1;
-  if (gyro_range == MPU6050_RANGE_250_DEG)
-    gyro_scale = 131;
-  if (gyro_range == MPU6050_RANGE_500_DEG)
-    gyro_scale = 65.5;
-  if (gyro_range == MPU6050_RANGE_1000_DEG)
-    gyro_scale = 32.8;
-  if (gyro_range == MPU6050_RANGE_2000_DEG)
-    gyro_scale = 16.4;
-
-  gyroX = ((float)rawGyroX) / gyro_scale;
-  gyroY = ((float)rawGyroY) / gyro_scale;
-  gyroZ = ((float)rawGyroZ) / gyro_scale;
 }
