@@ -552,9 +552,9 @@ bool Adafruit_MPU6050::getEvent(sensors_event_t *accel, sensors_event_t *gyro,
   gyro->sensor_id = _sensorid_gyro;
   gyro->type = SENSOR_TYPE_GYROSCOPE;
   gyro->timestamp = t;
-  gyro->gyro.x = gyroX;
-  gyro->gyro.y = gyroY;
-  gyro->gyro.z = gyroZ;
+  gyro->gyro.x = gyroX * SENSORS_DPS_TO_RADS;
+  gyro->gyro.y = gyroY * SENSORS_DPS_TO_RADS;
+  gyro->gyro.z = gyroZ * SENSORS_DPS_TO_RADS;
 
   memset(temp, 0, sizeof(sensors_event_t));
   temp->version = sizeof(sensors_event_t);

@@ -35,7 +35,7 @@ void loop() {
 
   display.clearDisplay();
   display.setCursor(0,0);
-  
+
   Serial.print("Accelerometer ");
   Serial.print("X: "); Serial.print(a.acceleration.x, 1); Serial.print(" m/s^2, ");
   Serial.print("Y: "); Serial.print(a.acceleration.y, 1); Serial.print(" m/s^2, ");
@@ -47,15 +47,15 @@ void loop() {
   display.print(a.acceleration.z, 1); display.println("");
 
   Serial.print("Gyroscope ");
-  Serial.print("X: "); Serial.print(g.gyro.x, 1); Serial.print(" dps, ");
-  Serial.print("Y: "); Serial.print(g.gyro.y, 1); Serial.print(" dps, ");
-  Serial.print("Z: "); Serial.print(g.gyro.z, 1); Serial.println(" dps");
+  Serial.print("X: "); Serial.print(g.gyro.x, 1); Serial.print(" rps, ");
+  Serial.print("Y: "); Serial.print(g.gyro.y, 1); Serial.print(" rps, ");
+  Serial.print("Z: "); Serial.print(g.gyro.z, 1); Serial.println(" rps");
 
-  display.println("Gyroscope - dps");
+  display.println("Gyroscope - rps");
   display.print(g.gyro.x, 1); display.print(", ");
   display.print(g.gyro.y, 1); display.print(", ");
   display.print(g.gyro.z, 1); display.println("");
-  
+
   display.display();
   delay(100);
 }
