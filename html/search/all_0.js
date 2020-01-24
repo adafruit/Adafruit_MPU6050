@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['accel_5frange',['accel_range',['../_adafruit___m_p_u6050_8h.html#ad548999846dfd5d5af7b9efa951a11d4',1,'Adafruit_MPU6050.h']]],
-  ['adafruit_5fmpu6050',['Adafruit_MPU6050',['../class_adafruit___m_p_u6050.html',1,'Adafruit_MPU6050'],['../class_adafruit___m_p_u6050.html#a7d2c14256b4a95964c3df1f39953338a',1,'Adafruit_MPU6050::Adafruit_MPU6050()']]],
-  ['adafruit_5fmpu6050_2ecpp',['Adafruit_MPU6050.cpp',['../_adafruit___m_p_u6050_8cpp.html',1,'']]],
-  ['adafruit_5fmpu6050_2eh',['Adafruit_MPU6050.h',['../_adafruit___m_p_u6050_8h.html',1,'']]],
-  ['adafruit_20mpu6050_20proximity_20and_20ambient_20light_20sensor_20library',['Adafruit MPU6050 proximity and ambient light sensor library',['../index.html',1,'']]]
+  ['_5finit',['_init',['../class_adafruit___m_p_u6050.html#aa3f748d672d046c117f7e1c71f906096',1,'Adafruit_MPU6050']]],
+  ['_5fread',['_read',['../class_adafruit___m_p_u6050.html#a7b5bcc810183612840fd05e65fab697e',1,'Adafruit_MPU6050']]],
+  ['_5fsensorid_5faccel',['_sensorid_accel',['../class_adafruit___m_p_u6050.html#aaf0664feb73c25762c720416a9a937b8',1,'Adafruit_MPU6050']]],
+  ['_5fsensorid_5fgyro',['_sensorid_gyro',['../class_adafruit___m_p_u6050.html#a2ce67342d47785fbd00bc4ae0f07950a',1,'Adafruit_MPU6050']]],
+  ['_5fsensorid_5ftemp',['_sensorid_temp',['../class_adafruit___m_p_u6050.html#ab8cd0c933f3221b471214b53fd2fba6a',1,'Adafruit_MPU6050']]]
 ];

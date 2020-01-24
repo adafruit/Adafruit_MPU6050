@@ -60,6 +60,9 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="class_adafruit___m_p_u6050-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Adafruit_MPU6050 Class Reference</div>  </div>
@@ -77,35 +80,28 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#a7d2c14256b4a95964c3df1f39953338a">Adafruit_MPU6050</a> ()</td></tr>
 <tr class="memdesc:a7d2c14256b4a95964c3df1f39953338a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Instantiates a new MPU6050 class. <br /></td></tr>
 <tr class="separator:a7d2c14256b4a95964c3df1f39953338a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c7c335005f49747b11674f33e2191eb"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#a8c7c335005f49747b11674f33e2191eb">begin</a> (uint8_t i2c_addr=<a class="el" href="_adafruit___m_p_u6050_8h.html#a952ca2ed4be1ff4f1ff1c90c0203df0d">MPU6050_I2CADDR_DEFAULT</a>, TwoWire *wire=&amp;Wire, int32_t sensorID=0)</td></tr>
-<tr class="memdesc:a8c7c335005f49747b11674f33e2191eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the hardware and initializes I2C.  <a href="#a8c7c335005f49747b11674f33e2191eb">More...</a><br /></td></tr>
-<tr class="separator:a8c7c335005f49747b11674f33e2191eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afac296ae5d46a29b14dc013ad8a1587d"><td class="memItemLeft" align="right" valign="top"><a id="afac296ae5d46a29b14dc013ad8a1587d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#afac296ae5d46a29b14dc013ad8a1587d">reset</a> (void)</td></tr>
-<tr class="memdesc:afac296ae5d46a29b14dc013ad8a1587d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets registers to their initial value and resets the sensors' analog and digital signal paths. <br /></td></tr>
-<tr class="separator:afac296ae5d46a29b14dc013ad8a1587d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd28bc1399b050b832fc8dd702a6d75a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_adafruit___m_p_u6050_8h.html#a07ff93d0c1e6798ac0ac9c2f65ab467f">mpu6050_accel_range_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#acd28bc1399b050b832fc8dd702a6d75a">getAccelerometerRange</a> (void)</td></tr>
-<tr class="memdesc:acd28bc1399b050b832fc8dd702a6d75a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the acceleration measurement range.  <a href="#acd28bc1399b050b832fc8dd702a6d75a">More...</a><br /></td></tr>
-<tr class="separator:acd28bc1399b050b832fc8dd702a6d75a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1583d1351bb907d3823aee36af0efe5f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#a1583d1351bb907d3823aee36af0efe5f">setAccelerometerRange</a> (<a class="el" href="_adafruit___m_p_u6050_8h.html#a07ff93d0c1e6798ac0ac9c2f65ab467f">mpu6050_accel_range_t</a>)</td></tr>
-<tr class="memdesc:a1583d1351bb907d3823aee36af0efe5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the accelerometer measurement range.  <a href="#a1583d1351bb907d3823aee36af0efe5f">More...</a><br /></td></tr>
-<tr class="separator:a1583d1351bb907d3823aee36af0efe5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf4b1c925882acbeb92ea26260986f67"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_adafruit___m_p_u6050_8h.html#a9b23731444e6b48d9c6485ce131b67c1">mpu6050_gyro_range_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#adf4b1c925882acbeb92ea26260986f67">getGyroRange</a> (void)</td></tr>
-<tr class="memdesc:adf4b1c925882acbeb92ea26260986f67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the gyroscope measurement range.  <a href="#adf4b1c925882acbeb92ea26260986f67">More...</a><br /></td></tr>
-<tr class="separator:adf4b1c925882acbeb92ea26260986f67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a2a0b17f69e93b2ad0d8c2949178b88"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#a0a2a0b17f69e93b2ad0d8c2949178b88">setGyroRange</a> (<a class="el" href="_adafruit___m_p_u6050_8h.html#a9b23731444e6b48d9c6485ce131b67c1">mpu6050_gyro_range_t</a>)</td></tr>
-<tr class="memdesc:a0a2a0b17f69e93b2ad0d8c2949178b88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the gyroscope measurement range.  <a href="#a0a2a0b17f69e93b2ad0d8c2949178b88">More...</a><br /></td></tr>
-<tr class="separator:a0a2a0b17f69e93b2ad0d8c2949178b88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad6ebfd6389b90dcc495f6622d41a781c"><td class="memItemLeft" align="right" valign="top"><a id="ad6ebfd6389b90dcc495f6622d41a781c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#ad6ebfd6389b90dcc495f6622d41a781c">read</a> ()</td></tr>
-<tr class="memdesc:ad6ebfd6389b90dcc495f6622d41a781c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the measurement data for all sensors simultaneously. <br /></td></tr>
-<tr class="separator:ad6ebfd6389b90dcc495f6622d41a781c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74de481767474467b20d6ab535b696b3"><td class="memItemLeft" align="right" valign="top"><a id="a74de481767474467b20d6ab535b696b3"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#a74de481767474467b20d6ab535b696b3">~Adafruit_MPU6050</a> ()</td></tr>
+<tr class="memdesc:a74de481767474467b20d6ab535b696b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans up the MPU6050 class. <br /></td></tr>
+<tr class="separator:a74de481767474467b20d6ab535b696b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af557280a5c05d15f089c82506179144d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#af557280a5c05d15f089c82506179144d">begin</a> (uint8_t i2c_addr=<a class="el" href="_adafruit___m_p_u6050_8h.html#a952ca2ed4be1ff4f1ff1c90c0203df0d">MPU6050_I2CADDR_DEFAULT</a>, TwoWire *wire=&amp;Wire, int32_t sensorID=0)</td></tr>
+<tr class="memdesc:af557280a5c05d15f089c82506179144d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the hardware and initializes I2C.  <a href="#af557280a5c05d15f089c82506179144d">More...</a><br /></td></tr>
+<tr class="separator:af557280a5c05d15f089c82506179144d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64e6b74741d31138fb60f14ec2e7d9c1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#a64e6b74741d31138fb60f14ec2e7d9c1">getEvent</a> (sensors_event_t *accel, sensors_event_t *gyro, sensors_event_t *temp)</td></tr>
 <tr class="memdesc:a64e6b74741d31138fb60f14ec2e7d9c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the most recent sensor event, Adafruit Unified Sensor format.  <a href="#a64e6b74741d31138fb60f14ec2e7d9c1">More...</a><br /></td></tr>
 <tr class="separator:a64e6b74741d31138fb60f14ec2e7d9c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a62afd59ec260f44baca0887980d2fbe7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#a62afd59ec260f44baca0887980d2fbe7">getSensor</a> (sensor_t *accel, sensor_t *gyro, sensor_t *temp)</td></tr>
-<tr class="memdesc:a62afd59ec260f44baca0887980d2fbe7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the sensor_t data the acceleromenter, gyroscope, and temperature sensor.  <a href="#a62afd59ec260f44baca0887980d2fbe7">More...</a><br /></td></tr>
-<tr class="separator:a62afd59ec260f44baca0887980d2fbe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd28bc1399b050b832fc8dd702a6d75a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_adafruit___m_p_u6050_8h.html#a23b716a7164564b8b86ab318a5c38499">mpu6050_accel_range_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#acd28bc1399b050b832fc8dd702a6d75a">getAccelerometerRange</a> (void)</td></tr>
+<tr class="memdesc:acd28bc1399b050b832fc8dd702a6d75a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the acceleration measurement range.  <a href="#acd28bc1399b050b832fc8dd702a6d75a">More...</a><br /></td></tr>
+<tr class="separator:acd28bc1399b050b832fc8dd702a6d75a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1583d1351bb907d3823aee36af0efe5f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#a1583d1351bb907d3823aee36af0efe5f">setAccelerometerRange</a> (<a class="el" href="_adafruit___m_p_u6050_8h.html#a23b716a7164564b8b86ab318a5c38499">mpu6050_accel_range_t</a>)</td></tr>
+<tr class="memdesc:a1583d1351bb907d3823aee36af0efe5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the accelerometer measurement range.  <a href="#a1583d1351bb907d3823aee36af0efe5f">More...</a><br /></td></tr>
+<tr class="separator:a1583d1351bb907d3823aee36af0efe5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf4b1c925882acbeb92ea26260986f67"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_adafruit___m_p_u6050_8h.html#a44d0fd4bf1507100e4b43cc60c14a16a">mpu6050_gyro_range_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#adf4b1c925882acbeb92ea26260986f67">getGyroRange</a> (void)</td></tr>
+<tr class="memdesc:adf4b1c925882acbeb92ea26260986f67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the gyroscope measurement range.  <a href="#adf4b1c925882acbeb92ea26260986f67">More...</a><br /></td></tr>
+<tr class="separator:adf4b1c925882acbeb92ea26260986f67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a2a0b17f69e93b2ad0d8c2949178b88"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#a0a2a0b17f69e93b2ad0d8c2949178b88">setGyroRange</a> (<a class="el" href="_adafruit___m_p_u6050_8h.html#a44d0fd4bf1507100e4b43cc60c14a16a">mpu6050_gyro_range_t</a>)</td></tr>
+<tr class="memdesc:a0a2a0b17f69e93b2ad0d8c2949178b88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the gyroscope measurement range.  <a href="#a0a2a0b17f69e93b2ad0d8c2949178b88">More...</a><br /></td></tr>
+<tr class="separator:a0a2a0b17f69e93b2ad0d8c2949178b88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f0243ccb16ed7953f73b65118b0276a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#a6f0243ccb16ed7953f73b65118b0276a">setInterruptPinPolarity</a> (bool active_low)</td></tr>
 <tr class="memdesc:a6f0243ccb16ed7953f73b65118b0276a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the polarity of the INT pin when active.  <a href="#a6f0243ccb16ed7953f73b65118b0276a">More...</a><br /></td></tr>
 <tr class="separator:a6f0243ccb16ed7953f73b65118b0276a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -124,10 +120,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:aeb22b6810e4b5d9ab1a3c0471dd9c7aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_adafruit___m_p_u6050_8h.html#a1e2407c1b2a71ced7bf50122b2fc5ce9">mpu6050_clock_select_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#aeb22b6810e4b5d9ab1a3c0471dd9c7aa">getClock</a> (void)</td></tr>
 <tr class="memdesc:aeb22b6810e4b5d9ab1a3c0471dd9c7aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets clock source.  <a href="#aeb22b6810e4b5d9ab1a3c0471dd9c7aa">More...</a><br /></td></tr>
 <tr class="separator:aeb22b6810e4b5d9ab1a3c0471dd9c7aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab818534e87053b58966934d12fe57051"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#ab818534e87053b58966934d12fe57051">setFilterBandwidth</a> (<a class="el" href="_adafruit___m_p_u6050_8h.html#a6f7a1fa0aa69550b2860a35f76a76b86">mpu6050_bandwidth_t</a> <a class="el" href="_adafruit___m_p_u6050_8h.html#ac5b2780b2a85010473f257f0e5dcc33a">bandwidth</a>)</td></tr>
+<tr class="memitem:ab818534e87053b58966934d12fe57051"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#ab818534e87053b58966934d12fe57051">setFilterBandwidth</a> (<a class="el" href="_adafruit___m_p_u6050_8h.html#abfcce2dfac7d0af9f7c4ae4717024ec5">mpu6050_bandwidth_t</a> bandwidth)</td></tr>
 <tr class="memdesc:ab818534e87053b58966934d12fe57051"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the bandwidth of the Digital Low-Pass Filter.  <a href="#ab818534e87053b58966934d12fe57051">More...</a><br /></td></tr>
 <tr class="separator:ab818534e87053b58966934d12fe57051"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a62ed3cabdf2c75f14a5005f73941d84b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_adafruit___m_p_u6050_8h.html#a6f7a1fa0aa69550b2860a35f76a76b86">mpu6050_bandwidth_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#a62ed3cabdf2c75f14a5005f73941d84b">getFilterBandwidth</a> (void)</td></tr>
+<tr class="memitem:a62ed3cabdf2c75f14a5005f73941d84b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_adafruit___m_p_u6050_8h.html#abfcce2dfac7d0af9f7c4ae4717024ec5">mpu6050_bandwidth_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#a62ed3cabdf2c75f14a5005f73941d84b">getFilterBandwidth</a> (void)</td></tr>
 <tr class="memdesc:a62ed3cabdf2c75f14a5005f73941d84b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets bandwidth of the Digital Low Pass Filter.  <a href="#a62ed3cabdf2c75f14a5005f73941d84b">More...</a><br /></td></tr>
 <tr class="separator:a62ed3cabdf2c75f14a5005f73941d84b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd946ff22ebb7cb55e5dbf080f995c5d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#afd946ff22ebb7cb55e5dbf080f995c5d">setSampleRateDivisor</a> (uint8_t)</td></tr>
@@ -142,24 +138,114 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:ad399250052871e4c5eff319c7a9f07ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#ad399250052871e4c5eff319c7a9f07ff">enableCycle</a> (bool enable)</td></tr>
 <tr class="memdesc:ad399250052871e4c5eff319c7a9f07ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controls sensor's 'Cycle' measurement mode.  <a href="#ad399250052871e4c5eff319c7a9f07ff">More...</a><br /></td></tr>
 <tr class="separator:ad399250052871e4c5eff319c7a9f07ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2010ff1e161a8fa54dfed0fd9a7a796b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#a2010ff1e161a8fa54dfed0fd9a7a796b">setCycleRate</a> (<a class="el" href="_adafruit___m_p_u6050_8h.html#a608231c2258403aac1e2ed4c6f82e220">mpu6050_cycle_rate_t</a> rate)</td></tr>
+<tr class="memitem:a2010ff1e161a8fa54dfed0fd9a7a796b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#a2010ff1e161a8fa54dfed0fd9a7a796b">setCycleRate</a> (<a class="el" href="_adafruit___m_p_u6050_8h.html#a581f03aa11b55de772b4234fc392ec8b">mpu6050_cycle_rate_t</a> rate)</td></tr>
 <tr class="memdesc:a2010ff1e161a8fa54dfed0fd9a7a796b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the frequency of measurement in 'Cycle' mode.  <a href="#a2010ff1e161a8fa54dfed0fd9a7a796b">More...</a><br /></td></tr>
 <tr class="separator:a2010ff1e161a8fa54dfed0fd9a7a796b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af28744c1b4332c3e393704af53b4b93d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_adafruit___m_p_u6050_8h.html#a608231c2258403aac1e2ed4c6f82e220">mpu6050_cycle_rate_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#af28744c1b4332c3e393704af53b4b93d">getCycleRate</a> (void)</td></tr>
+<tr class="memitem:af28744c1b4332c3e393704af53b4b93d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_adafruit___m_p_u6050_8h.html#a581f03aa11b55de772b4234fc392ec8b">mpu6050_cycle_rate_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#af28744c1b4332c3e393704af53b4b93d">getCycleRate</a> (void)</td></tr>
 <tr class="memdesc:af28744c1b4332c3e393704af53b4b93d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the frequencey of measurements in 'Cycle' mode.  <a href="#af28744c1b4332c3e393704af53b4b93d">More...</a><br /></td></tr>
 <tr class="separator:af28744c1b4332c3e393704af53b4b93d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afac296ae5d46a29b14dc013ad8a1587d"><td class="memItemLeft" align="right" valign="top"><a id="afac296ae5d46a29b14dc013ad8a1587d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#afac296ae5d46a29b14dc013ad8a1587d">reset</a> (void)</td></tr>
+<tr class="memdesc:afac296ae5d46a29b14dc013ad8a1587d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets registers to their initial value and resets the sensors' analog and digital signal paths. <br /></td></tr>
+<tr class="separator:afac296ae5d46a29b14dc013ad8a1587d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae13a59cfd7c77861d756f3489168b289"><td class="memItemLeft" align="right" valign="top">Adafruit_Sensor *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#ae13a59cfd7c77861d756f3489168b289">getTemperatureSensor</a> (void)</td></tr>
+<tr class="memdesc:ae13a59cfd7c77861d756f3489168b289"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an Adafruit Unified Sensor object for the temp sensor component.  <a href="#ae13a59cfd7c77861d756f3489168b289">More...</a><br /></td></tr>
+<tr class="separator:ae13a59cfd7c77861d756f3489168b289"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea9a5a4ec2c966011cbdd1634b0eb2ed"><td class="memItemLeft" align="right" valign="top">Adafruit_Sensor *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#aea9a5a4ec2c966011cbdd1634b0eb2ed">getAccelerometerSensor</a> (void)</td></tr>
+<tr class="memdesc:aea9a5a4ec2c966011cbdd1634b0eb2ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an Adafruit Unified Sensor object for the accelerometer sensor component.  <a href="#aea9a5a4ec2c966011cbdd1634b0eb2ed">More...</a><br /></td></tr>
+<tr class="separator:aea9a5a4ec2c966011cbdd1634b0eb2ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54468035f6bb9064bc93a3bf022ed05d"><td class="memItemLeft" align="right" valign="top">Adafruit_Sensor *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#a54468035f6bb9064bc93a3bf022ed05d">getGyroSensor</a> (void)</td></tr>
+<tr class="memdesc:a54468035f6bb9064bc93a3bf022ed05d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an Adafruit Unified Sensor object for the gyro sensor component.  <a href="#a54468035f6bb9064bc93a3bf022ed05d">More...</a><br /></td></tr>
+<tr class="separator:a54468035f6bb9064bc93a3bf022ed05d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a7b5bcc810183612840fd05e65fab697e"><td class="memItemLeft" align="right" valign="top"><a id="a7b5bcc810183612840fd05e65fab697e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#a7b5bcc810183612840fd05e65fab697e">_read</a> (void)</td></tr>
+<tr class="memdesc:a7b5bcc810183612840fd05e65fab697e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the measurement data for all sensors simultaneously. <br /></td></tr>
+<tr class="separator:a7b5bcc810183612840fd05e65fab697e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3f748d672d046c117f7e1c71f906096"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#aa3f748d672d046c117f7e1c71f906096">_init</a> (int32_t sensor_id)</td></tr>
+<tr class="memdesc:aa3f748d672d046c117f7e1c71f906096"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initilizes the sensor.  <a href="#aa3f748d672d046c117f7e1c71f906096">More...</a><br /></td></tr>
+<tr class="separator:aa3f748d672d046c117f7e1c71f906096"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a850ec66076e5c9fd7efb986e2d6d0a8d"><td class="memItemLeft" align="right" valign="top"><a id="a850ec66076e5c9fd7efb986e2d6d0a8d"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#a850ec66076e5c9fd7efb986e2d6d0a8d">temperature</a></td></tr>
+<tr class="memdesc:a850ec66076e5c9fd7efb986e2d6d0a8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Last reading's temperature (C) <br /></td></tr>
+<tr class="separator:a850ec66076e5c9fd7efb986e2d6d0a8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a428e262b99cb17685d4f8ef88eff8c54"><td class="memItemLeft" align="right" valign="top"><a id="a428e262b99cb17685d4f8ef88eff8c54"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#a428e262b99cb17685d4f8ef88eff8c54">accX</a></td></tr>
+<tr class="memdesc:a428e262b99cb17685d4f8ef88eff8c54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Last reading's accelerometer X axis m/s^2. <br /></td></tr>
+<tr class="separator:a428e262b99cb17685d4f8ef88eff8c54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e3102b369839aeb9b07046b0b85d689"><td class="memItemLeft" align="right" valign="top"><a id="a6e3102b369839aeb9b07046b0b85d689"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#a6e3102b369839aeb9b07046b0b85d689">accY</a></td></tr>
+<tr class="memdesc:a6e3102b369839aeb9b07046b0b85d689"><td class="mdescLeft">&#160;</td><td class="mdescRight">Last reading's accelerometer Y axis m/s^2. <br /></td></tr>
+<tr class="separator:a6e3102b369839aeb9b07046b0b85d689"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5d9febdd5b88663b3bba33264b87dd8"><td class="memItemLeft" align="right" valign="top"><a id="ad5d9febdd5b88663b3bba33264b87dd8"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#ad5d9febdd5b88663b3bba33264b87dd8">accZ</a></td></tr>
+<tr class="memdesc:ad5d9febdd5b88663b3bba33264b87dd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Last reading's accelerometer Z axis m/s^2. <br /></td></tr>
+<tr class="separator:ad5d9febdd5b88663b3bba33264b87dd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d1c29509a8aa371e4226aaf700e41d9"><td class="memItemLeft" align="right" valign="top"><a id="a0d1c29509a8aa371e4226aaf700e41d9"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#a0d1c29509a8aa371e4226aaf700e41d9">gyroX</a></td></tr>
+<tr class="memdesc:a0d1c29509a8aa371e4226aaf700e41d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Last reading's gyro X axis in rad/s. <br /></td></tr>
+<tr class="separator:a0d1c29509a8aa371e4226aaf700e41d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d84729293a27bdbab9fbf1b34861d6c"><td class="memItemLeft" align="right" valign="top"><a id="a1d84729293a27bdbab9fbf1b34861d6c"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#a1d84729293a27bdbab9fbf1b34861d6c">gyroY</a></td></tr>
+<tr class="memdesc:a1d84729293a27bdbab9fbf1b34861d6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Last reading's gyro Y axis in rad/s. <br /></td></tr>
+<tr class="separator:a1d84729293a27bdbab9fbf1b34861d6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6a1be0e11b149da7098a7396b3a3b01"><td class="memItemLeft" align="right" valign="top"><a id="ad6a1be0e11b149da7098a7396b3a3b01"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#ad6a1be0e11b149da7098a7396b3a3b01">gyroZ</a></td></tr>
+<tr class="memdesc:ad6a1be0e11b149da7098a7396b3a3b01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Last reading's gyro Z axis in rad/s. <br /></td></tr>
+<tr class="separator:ad6a1be0e11b149da7098a7396b3a3b01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9c9ad0daaa48e9e8d2aa284859205d7"><td class="memItemLeft" align="right" valign="top"><a id="ae9c9ad0daaa48e9e8d2aa284859205d7"></a>
+Adafruit_I2CDevice *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#ae9c9ad0daaa48e9e8d2aa284859205d7">i2c_dev</a> = NULL</td></tr>
+<tr class="memdesc:ae9c9ad0daaa48e9e8d2aa284859205d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to I2C bus interface. <br /></td></tr>
+<tr class="separator:ae9c9ad0daaa48e9e8d2aa284859205d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af90513182a986ed7a048ccc313ff5614"><td class="memItemLeft" align="right" valign="top"><a id="af90513182a986ed7a048ccc313ff5614"></a>
+<a class="el" href="class_adafruit___m_p_u6050___temp.html">Adafruit_MPU6050_Temp</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#af90513182a986ed7a048ccc313ff5614">temp_sensor</a> = NULL</td></tr>
+<tr class="memdesc:af90513182a986ed7a048ccc313ff5614"><td class="mdescLeft">&#160;</td><td class="mdescRight">Temp sensor data object. <br /></td></tr>
+<tr class="separator:af90513182a986ed7a048ccc313ff5614"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2684e912508c039b3ad7c41098b0c1c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_adafruit___m_p_u6050___accelerometer.html">Adafruit_MPU6050_Accelerometer</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#ac2684e912508c039b3ad7c41098b0c1c">accel_sensor</a></td></tr>
+<tr class="memdesc:ac2684e912508c039b3ad7c41098b0c1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accelerometer data object.  <a href="#ac2684e912508c039b3ad7c41098b0c1c">More...</a><br /></td></tr>
+<tr class="separator:ac2684e912508c039b3ad7c41098b0c1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af925e6befd96d85660f524cfeffeae67"><td class="memItemLeft" align="right" valign="top"><a id="af925e6befd96d85660f524cfeffeae67"></a>
+<a class="el" href="class_adafruit___m_p_u6050___gyro.html">Adafruit_MPU6050_Gyro</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#af925e6befd96d85660f524cfeffeae67">gyro_sensor</a> = NULL</td></tr>
+<tr class="memdesc:af925e6befd96d85660f524cfeffeae67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gyro data object. <br /></td></tr>
+<tr class="separator:af925e6befd96d85660f524cfeffeae67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf0664feb73c25762c720416a9a937b8"><td class="memItemLeft" align="right" valign="top"><a id="aaf0664feb73c25762c720416a9a937b8"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#aaf0664feb73c25762c720416a9a937b8">_sensorid_accel</a></td></tr>
+<tr class="memdesc:aaf0664feb73c25762c720416a9a937b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID number for accelerometer. <br /></td></tr>
+<tr class="separator:aaf0664feb73c25762c720416a9a937b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ce67342d47785fbd00bc4ae0f07950a"><td class="memItemLeft" align="right" valign="top"><a id="a2ce67342d47785fbd00bc4ae0f07950a"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#a2ce67342d47785fbd00bc4ae0f07950a">_sensorid_gyro</a></td></tr>
+<tr class="memdesc:a2ce67342d47785fbd00bc4ae0f07950a"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID number for gyro. <br /></td></tr>
+<tr class="separator:a2ce67342d47785fbd00bc4ae0f07950a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8cd0c933f3221b471214b53fd2fba6a"><td class="memItemLeft" align="right" valign="top"><a id="ab8cd0c933f3221b471214b53fd2fba6a"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#ab8cd0c933f3221b471214b53fd2fba6a">_sensorid_temp</a></td></tr>
+<tr class="memdesc:ab8cd0c933f3221b471214b53fd2fba6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID number for temperature. <br /></td></tr>
+<tr class="separator:ab8cd0c933f3221b471214b53fd2fba6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:afd4d58bff7030c55af6bcae2e9c12533"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#afd4d58bff7030c55af6bcae2e9c12533">Adafruit_MPU6050_Temp</a></td></tr>
+<tr class="separator:afd4d58bff7030c55af6bcae2e9c12533"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9efde7a163ada1c37faf3676c1400d9"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#ac9efde7a163ada1c37faf3676c1400d9">Adafruit_MPU6050_Accelerometer</a></td></tr>
+<tr class="separator:ac9efde7a163ada1c37faf3676c1400d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad40b9efab2859ad37213984523ce9e96"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#ad40b9efab2859ad37213984523ce9e96">Adafruit_MPU6050_Gyro</a></td></tr>
+<tr class="separator:ad40b9efab2859ad37213984523ce9e96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class that stores state and functions for interacting with the MPU6050 I2C Digital Potentiometer. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a8c7c335005f49747b11674f33e2191eb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8c7c335005f49747b11674f33e2191eb">&#9670;&nbsp;</a></span>begin()</h2>
+<a id="af557280a5c05d15f089c82506179144d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af557280a5c05d15f089c82506179144d">&#9670;&nbsp;</a></span>begin()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">boolean Adafruit_MPU6050::begin </td>
+          <td class="memname">bool Adafruit_MPU6050::begin </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>i2c_address</em> = <code><a class="el" href="_adafruit___m_p_u6050_8h.html#a952ca2ed4be1ff4f1ff1c90c0203df0d">MPU6050_I2CADDR_DEFAULT</a></code>, </td>
@@ -174,7 +260,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int32_t&#160;</td>
-          <td class="paramname"><em>sensorID</em> = <code>0</code>&#160;</td>
+          <td class="paramname"><em>sensor_id</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -189,105 +275,11 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <table class="params">
     <tr><td class="paramname">i2c_address</td><td>The I2C address to be used. </td></tr>
     <tr><td class="paramname">wire</td><td>The Wire object to be used for I2C connections. </td></tr>
-    <tr><td class="paramname">sensorID</td><td>The user-defined ID to differentiate different sensors </td></tr>
+    <tr><td class="paramname">sensor_id</td><td>The user-defined ID to differentiate different sensors </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if initialization was successful, otherwise false. </dd></dl>
-
-</div>
-</div>
-<a id="acd28bc1399b050b832fc8dd702a6d75a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acd28bc1399b050b832fc8dd702a6d75a">&#9670;&nbsp;</a></span>getAccelerometerRange()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="_adafruit___m_p_u6050_8h.html#a07ff93d0c1e6798ac0ac9c2f65ab467f">mpu6050_accel_range_t</a> Adafruit_MPU6050::getAccelerometerRange </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets the acceleration measurement range. </p>
-<dl class="section return"><dt>Returns</dt><dd>The acceleration measurement range </dd></dl>
-
-</div>
-</div>
-<a id="a1583d1351bb907d3823aee36af0efe5f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1583d1351bb907d3823aee36af0efe5f">&#9670;&nbsp;</a></span>setAccelerometerRange()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Adafruit_MPU6050::setAccelerometerRange </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="_adafruit___m_p_u6050_8h.html#a07ff93d0c1e6798ac0ac9c2f65ab467f">mpu6050_accel_range_t</a>&#160;</td>
-          <td class="paramname"><em>new_range</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Sets the accelerometer measurement range. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">new_range</td><td>The new range to set. Must be a <code>mpu6050_accel_range_t</code> </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="adf4b1c925882acbeb92ea26260986f67"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adf4b1c925882acbeb92ea26260986f67">&#9670;&nbsp;</a></span>getGyroRange()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="_adafruit___m_p_u6050_8h.html#a9b23731444e6b48d9c6485ce131b67c1">mpu6050_gyro_range_t</a> Adafruit_MPU6050::getGyroRange </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets the gyroscope measurement range. </p>
-<dl class="section return"><dt>Returns</dt><dd>The <code>mpu6050_gyro_range_t</code> gyroscope measurement range </dd></dl>
-
-</div>
-</div>
-<a id="a0a2a0b17f69e93b2ad0d8c2949178b88"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a2a0b17f69e93b2ad0d8c2949178b88">&#9670;&nbsp;</a></span>setGyroRange()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Adafruit_MPU6050::setGyroRange </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="_adafruit___m_p_u6050_8h.html#a9b23731444e6b48d9c6485ce131b67c1">mpu6050_gyro_range_t</a>&#160;</td>
-          <td class="paramname"><em>new_range</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Sets the gyroscope measurement range. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">new_range</td><td>The new range to set. Must be a <code>mpu6050_gyro_range_t</code> </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
@@ -336,44 +328,94 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
-<a id="a62afd59ec260f44baca0887980d2fbe7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a62afd59ec260f44baca0887980d2fbe7">&#9670;&nbsp;</a></span>getSensor()</h2>
+<a id="acd28bc1399b050b832fc8dd702a6d75a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd28bc1399b050b832fc8dd702a6d75a">&#9670;&nbsp;</a></span>getAccelerometerRange()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Adafruit_MPU6050::getSensor </td>
+          <td class="memname"><a class="el" href="_adafruit___m_p_u6050_8h.html#a23b716a7164564b8b86ab318a5c38499">mpu6050_accel_range_t</a> Adafruit_MPU6050::getAccelerometerRange </td>
           <td>(</td>
-          <td class="paramtype">sensor_t *&#160;</td>
-          <td class="paramname"><em>accel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">sensor_t *&#160;</td>
-          <td class="paramname"><em>gyro</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">sensor_t *&#160;</td>
-          <td class="paramname"><em>temp</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Provides the sensor_t data the acceleromenter, gyroscope, and temperature sensor. </p>
+<p>Gets the acceleration measurement range. </p>
+<dl class="section return"><dt>Returns</dt><dd>The acceleration measurement range </dd></dl>
+
+</div>
+</div>
+<a id="a1583d1351bb907d3823aee36af0efe5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1583d1351bb907d3823aee36af0efe5f">&#9670;&nbsp;</a></span>setAccelerometerRange()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Adafruit_MPU6050::setAccelerometerRange </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="_adafruit___m_p_u6050_8h.html#a23b716a7164564b8b86ab318a5c38499">mpu6050_accel_range_t</a>&#160;</td>
+          <td class="paramname"><em>new_range</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the accelerometer measurement range. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">accel</td><td>Pointer to the <code>sensor_t</code> object to be filled with accelerometer data. </td></tr>
-    <tr><td class="paramname">gyro</td><td>Pointer to the <code>sensor_t</code> object to be filled with gyroscope data. </td></tr>
-    <tr><td class="paramname">temp</td><td>Pointer to the <code>sensor_t</code> object to be filled with temperature data. </td></tr>
+    <tr><td class="paramname">new_range</td><td>The new range to set. Must be a <code>mpu6050_accel_range_t</code> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="adf4b1c925882acbeb92ea26260986f67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf4b1c925882acbeb92ea26260986f67">&#9670;&nbsp;</a></span>getGyroRange()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="_adafruit___m_p_u6050_8h.html#a44d0fd4bf1507100e4b43cc60c14a16a">mpu6050_gyro_range_t</a> Adafruit_MPU6050::getGyroRange </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the gyroscope measurement range. </p>
+<dl class="section return"><dt>Returns</dt><dd>The <code>mpu6050_gyro_range_t</code> gyroscope measurement range </dd></dl>
+
+</div>
+</div>
+<a id="a0a2a0b17f69e93b2ad0d8c2949178b88"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a2a0b17f69e93b2ad0d8c2949178b88">&#9670;&nbsp;</a></span>setGyroRange()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Adafruit_MPU6050::setGyroRange </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="_adafruit___m_p_u6050_8h.html#a44d0fd4bf1507100e4b43cc60c14a16a">mpu6050_gyro_range_t</a>&#160;</td>
+          <td class="paramname"><em>new_range</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the gyroscope measurement range. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">new_range</td><td>The new range to set. Must be a <code>mpu6050_gyro_range_t</code> </td></tr>
   </table>
   </dd>
 </dl>
@@ -535,7 +577,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
         <tr>
           <td class="memname">void Adafruit_MPU6050::setFilterBandwidth </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="_adafruit___m_p_u6050_8h.html#a6f7a1fa0aa69550b2860a35f76a76b86">mpu6050_bandwidth_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="_adafruit___m_p_u6050_8h.html#abfcce2dfac7d0af9f7c4ae4717024ec5">mpu6050_bandwidth_t</a>&#160;</td>
           <td class="paramname"><em>bandwidth</em></td><td>)</td>
           <td></td>
         </tr>
@@ -559,7 +601,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="_adafruit___m_p_u6050_8h.html#a6f7a1fa0aa69550b2860a35f76a76b86">mpu6050_bandwidth_t</a> Adafruit_MPU6050::getFilterBandwidth </td>
+          <td class="memname"><a class="el" href="_adafruit___m_p_u6050_8h.html#abfcce2dfac7d0af9f7c4ae4717024ec5">mpu6050_bandwidth_t</a> Adafruit_MPU6050::getFilterBandwidth </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -681,7 +723,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
         <tr>
           <td class="memname">void Adafruit_MPU6050::setCycleRate </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="_adafruit___m_p_u6050_8h.html#a608231c2258403aac1e2ed4c6f82e220">mpu6050_cycle_rate_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="_adafruit___m_p_u6050_8h.html#a581f03aa11b55de772b4234fc392ec8b">mpu6050_cycle_rate_t</a>&#160;</td>
           <td class="paramname"><em>rate</em></td><td>)</td>
           <td></td>
         </tr>
@@ -705,7 +747,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="_adafruit___m_p_u6050_8h.html#a608231c2258403aac1e2ed4c6f82e220">mpu6050_cycle_rate_t</a> Adafruit_MPU6050::getCycleRate </td>
+          <td class="memname"><a class="el" href="_adafruit___m_p_u6050_8h.html#a581f03aa11b55de772b4234fc392ec8b">mpu6050_cycle_rate_t</a> Adafruit_MPU6050::getCycleRate </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -716,6 +758,199 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 <p>Gets the frequencey of measurements in 'Cycle' mode. </p>
 <dl class="section return"><dt>Returns</dt><dd>The current 'Cycle' measurement frequency </dd></dl>
+
+</div>
+</div>
+<a id="ae13a59cfd7c77861d756f3489168b289"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae13a59cfd7c77861d756f3489168b289">&#9670;&nbsp;</a></span>getTemperatureSensor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Adafruit_Sensor * Adafruit_MPU6050::getTemperatureSensor </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets an Adafruit Unified Sensor object for the temp sensor component. </p>
+<dl class="section return"><dt>Returns</dt><dd>Adafruit_Sensor pointer to temperature sensor </dd></dl>
+
+</div>
+</div>
+<a id="aea9a5a4ec2c966011cbdd1634b0eb2ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea9a5a4ec2c966011cbdd1634b0eb2ed">&#9670;&nbsp;</a></span>getAccelerometerSensor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Adafruit_Sensor * Adafruit_MPU6050::getAccelerometerSensor </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets an Adafruit Unified Sensor object for the accelerometer sensor component. </p>
+<dl class="section return"><dt>Returns</dt><dd>Adafruit_Sensor pointer to accelerometer sensor </dd></dl>
+
+</div>
+</div>
+<a id="a54468035f6bb9064bc93a3bf022ed05d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54468035f6bb9064bc93a3bf022ed05d">&#9670;&nbsp;</a></span>getGyroSensor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Adafruit_Sensor * Adafruit_MPU6050::getGyroSensor </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets an Adafruit Unified Sensor object for the gyro sensor component. </p>
+<dl class="section return"><dt>Returns</dt><dd>Adafruit_Sensor pointer to gyro sensor </dd></dl>
+
+</div>
+</div>
+<a id="aa3f748d672d046c117f7e1c71f906096"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3f748d672d046c117f7e1c71f906096">&#9670;&nbsp;</a></span>_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Adafruit_MPU6050::_init </td>
+          <td>(</td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>sensor_id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Initilizes the sensor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sensor_id</td><td>Optional unique ID for the sensor set </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if chip identified and initialized </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Function Documentation</h2>
+<a id="afd4d58bff7030c55af6bcae2e9c12533"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd4d58bff7030c55af6bcae2e9c12533">&#9670;&nbsp;</a></span>Adafruit_MPU6050_Temp</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend class <a class="el" href="class_adafruit___m_p_u6050___temp.html">Adafruit_MPU6050_Temp</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Gives access to private members to Temp data object </p>
+
+</div>
+</div>
+<a id="ac9efde7a163ada1c37faf3676c1400d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9efde7a163ada1c37faf3676c1400d9">&#9670;&nbsp;</a></span>Adafruit_MPU6050_Accelerometer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend class <a class="el" href="class_adafruit___m_p_u6050___accelerometer.html">Adafruit_MPU6050_Accelerometer</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Gives access to private members to Accelerometer data object </p>
+
+</div>
+</div>
+<a id="ad40b9efab2859ad37213984523ce9e96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad40b9efab2859ad37213984523ce9e96">&#9670;&nbsp;</a></span>Adafruit_MPU6050_Gyro</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend class <a class="el" href="class_adafruit___m_p_u6050___gyro.html">Adafruit_MPU6050_Gyro</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Gives access to private members to Gyro data object </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="ac2684e912508c039b3ad7c41098b0c1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2684e912508c039b3ad7c41098b0c1c">&#9670;&nbsp;</a></span>accel_sensor</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_adafruit___m_p_u6050___accelerometer.html">Adafruit_MPU6050_Accelerometer</a>* Adafruit_MPU6050::accel_sensor</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">      NULL</div></div><!-- fragment -->
+<p>Accelerometer data object. </p>
 
 </div>
 </div>
