@@ -1,7 +1,4 @@
-
-
-Adafruit MPU6050 [![Build Status](https://travis-ci.com/adafruit/Adafruit_MPU6050.svg?branch=master)](https://travis-ci.com/adafruit/Adafruit_MPU6050)
-================
+# Adafruit MPU6050 ![Build Status](https://github.com/adafruit/Adafruit_MPU6050/workflows/Arduino%20Library%20CI/badge.svg)
 
 <a href="https://www.adafruit.com/products/3886"><img src="assets/board.jpg?raw=true" width="500px"></a>
 This is the Adafruit MPU6050 6-DoF Accelerometer and Magnetometer Library for Arduino
