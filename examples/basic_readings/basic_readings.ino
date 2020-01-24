@@ -87,9 +87,6 @@ void setup(void) {
 
 void loop() {
 
-  /* Take a new reading */
-  mpu.read();
-
   /* Get new sensor events with the readings */
   sensors_event_t a, g, temp;
   mpu.getEvent(&a, &g, &temp);
@@ -109,7 +106,7 @@ void loop() {
   Serial.print(g.gyro.y);
   Serial.print(", Z: ");
   Serial.print(g.gyro.z);
-  Serial.println(" deg/s");
+  Serial.println(" rad/s");
 
   Serial.print("Temperature: ");
   Serial.print(temp.temperature);
