@@ -87,9 +87,6 @@ void setup(void) {
 
 void loop() {
 
-  /* Take a new reading */
-  mpu.read();
-
   /* Get new sensor events with the readings */
   sensors_event_t a, g, temp;
   mpu.getEvent(&a, &g, &temp);

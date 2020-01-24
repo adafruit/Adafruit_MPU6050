@@ -74,8 +74,6 @@ void loop() {
 }
 
 void printAvailableData(void) {
-  /* Read the measurement registers */
-  mpu.read();
 
   /* Populate the sensor events with the readings*/
   mpu.getEvent(&a, &g, &temp);
