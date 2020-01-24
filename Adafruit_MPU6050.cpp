@@ -41,19 +41,38 @@
  *    @brief  Instantiates a new MPU6050 class
  */
 Adafruit_MPU6050::Adafruit_MPU6050(void) {}
+
+/*!
+ *    @brief  Cleans up the MPU6050 class
+ */
+Adafruit_MPU6050::~Adafruit_MPU6050(void) {
+  if (temp_sensor)
+    delete temp_sensor;
+  if (accel_sensor)
+    delete accel_sensor;
+  if (gyro_sensor)
+    delete gyro_sensor;
+  if (i2c_dev)
+    delete i2c_dev;
+}
+
 /*!
  *    @brief  Sets up the hardware and initializes I2C
  *    @param  i2c_address
  *            The I2C address to be used.
  *    @param  wire
  *            The Wire object to be used for I2C connections.
- *    @param sensorID
+ *    @param sensor_id
  *            The user-defined ID to differentiate different sensors
  *    @return True if initialization was successful, otherwise false.
  */
 
-boolean Adafruit_MPU6050::begin(uint8_t i2c_address, TwoWire *wire,
-                                int32_t sensorID) {
+bool Adafruit_MPU6050::begin(uint8_t i2c_address, TwoWire *wire,
+                             int32_t sensor_id) {
+  if (i2c_dev) {
+    delete i2c_dev; // remove old interface
+  }
+
   i2c_dev = new Adafruit_I2CDevice(i2c_address, wire);
 
   if (!i2c_dev->begin()) {
@@ -68,9 +87,18 @@ boolean Adafruit_MPU6050::begin(uint8_t i2c_address, TwoWire *wire,
     return false;
   }
 
-  _sensorid_accel = sensorID;
-  _sensorid_gyro = sensorID + 1;
-  _sensorid_temp = sensorID + 2;
+  return _init(sensor_id);
+}
+
+/*!  @brief Initilizes the sensor
+ *   @param sensor_id Optional unique ID for the sensor set
+ *   @returns True if chip identified and initialized
+ */
+bool Adafruit_MPU6050::_init(int32_t sensor_id) {
+
+  _sensorid_accel = sensor_id;
+  _sensorid_gyro = sensor_id + 1;
+  _sensorid_temp = sensor_id + 2;
 
   reset();
 
@@ -88,6 +116,11 @@ boolean Adafruit_MPU6050::begin(uint8_t i2c_address, TwoWire *wire,
   power_mgmt_1.write(0x01); // set clock config to PLL with Gyro X reference
 
   delay(100);
+
+  temp_sensor = new Adafruit_MPU6050_Temp(this);
+  accel_sensor = new Adafruit_MPU6050_Accelerometer(this);
+  gyro_sensor = new Adafruit_MPU6050_Gyro(this);
+
   return true;
 }
 /**************************************************************************/
@@ -412,7 +445,7 @@ void Adafruit_MPU6050::setCycleRate(mpu6050_cycle_rate_t rate) {
  *     @brief  Updates the measurement data for all sensors simultaneously
  */
 /**************************************************************************/
-void Adafruit_MPU6050::read(void) {
+void Adafruit_MPU6050::_read(void) {
   // get raw readings
   Adafruit_BusIO_Register data_reg =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_ACCEL_OUT, 14);
@@ -430,7 +463,7 @@ void Adafruit_MPU6050::read(void) {
   rawGyroY = buffer[10] << 8 | buffer[11];
   rawGyroZ = buffer[12] << 8 | buffer[13];
 
-  temperature = (rawTemp + 12412.0) / 340.0;
+  temperature = (rawTemp / 340.0) + 36.53;
 
   mpu6050_accel_range_t accel_range = getAccelerometerRange();
 
@@ -468,58 +501,6 @@ void Adafruit_MPU6050::read(void) {
 
 /**************************************************************************/
 /*!
- *  @brief  Provides the sensor_t data the acceleromenter, gyroscope, and
- * temperature sensor
- *  @param  accel
- *          Pointer to the `sensor_t` object to be filled with accelerometer
- * data.
- *  @param  gyro
- *          Pointer to the `sensor_t` object to be filled with gyroscope data.
- *  @param  temp
- *          Pointer to the `sensor_t` object to be filled with temperature data.
- */
-/**************************************************************************/
-void Adafruit_MPU6050::getSensor(sensor_t *accel, sensor_t *gyro,
-                                 sensor_t *temp) {
-  /* Clear the sensor_t object */
-  memset(accel, 0, sizeof(sensor_t));
-
-  /* Insert the accel name in the fixed length char array */
-  strncpy(accel->name, "MPU6050_A", sizeof(accel->name) - 1);
-  accel->name[sizeof(accel->name) - 1] = 0;
-  accel->version = 1;
-  accel->sensor_id = _sensorid_accel;
-  accel->type = SENSOR_TYPE_ACCELEROMETER;
-  accel->min_delay = 0;
-  accel->max_value = 0;
-  accel->min_value = 0;
-  accel->resolution = 0;
-
-  memset(gyro, 0, sizeof(sensor_t));
-  strncpy(gyro->name, "MPU6050_G", sizeof(gyro->name) - 1);
-  gyro->name[sizeof(gyro->name) - 1] = 0;
-  gyro->version = 1;
-  gyro->sensor_id = _sensorid_gyro;
-  gyro->type = SENSOR_TYPE_GYROSCOPE;
-  gyro->min_delay = 0;
-  gyro->max_value = 0.0;  // ToDo
-  gyro->min_value = 0.0;  // ToDo
-  gyro->resolution = 0.0; // ToDo
-
-  memset(temp, 0, sizeof(sensor_t));
-  strncpy(temp->name, "MPU6050_T", sizeof(temp->name) - 1);
-  temp->name[sizeof(temp->name) - 1] = 0;
-  temp->version = 1;
-  temp->sensor_id = _sensorid_temp;
-  temp->type = SENSOR_TYPE_AMBIENT_TEMPERATURE;
-  temp->min_delay = 0;
-  temp->max_value = 0.0;  // ToDo
-  temp->min_value = 0.0;  // ToDo
-  temp->resolution = 0.0; // ToDo
-}
-
-/**************************************************************************/
-/*!
     @brief  Gets the most recent sensor event, Adafruit Unified Sensor format
     @param  accel
             Pointer to an Adafruit Unified sensor_event_t object to be filled
@@ -535,33 +516,175 @@ void Adafruit_MPU6050::getSensor(sensor_t *accel, sensor_t *gyro,
 /**************************************************************************/
 bool Adafruit_MPU6050::getEvent(sensors_event_t *accel, sensors_event_t *gyro,
                                 sensors_event_t *temp) {
-  uint32_t t = millis();
-  read();
+  uint32_t timestamp = millis();
+  _read();
 
-  memset(accel, 0, sizeof(sensors_event_t));
-  accel->version = 1;
-  accel->sensor_id = _sensorid_accel;
-  accel->type = SENSOR_TYPE_ACCELEROMETER;
-  accel->timestamp = t;
-  accel->acceleration.x = accX * SENSORS_GRAVITY_STANDARD;
-  accel->acceleration.y = accY * SENSORS_GRAVITY_STANDARD;
-  accel->acceleration.z = accZ * SENSORS_GRAVITY_STANDARD;
+  fillTempEvent(temp, timestamp);
+  fillAccelEvent(accel, timestamp);
+  fillGyroEvent(gyro, timestamp);
 
-  memset(gyro, 0, sizeof(sensors_event_t));
-  gyro->version = 1;
-  gyro->sensor_id = _sensorid_gyro;
-  gyro->type = SENSOR_TYPE_GYROSCOPE;
-  gyro->timestamp = t;
-  gyro->gyro.x = gyroX * SENSORS_DPS_TO_RADS;
-  gyro->gyro.y = gyroY * SENSORS_DPS_TO_RADS;
-  gyro->gyro.z = gyroZ * SENSORS_DPS_TO_RADS;
+  return true;
+}
+
+void Adafruit_MPU6050::fillTempEvent(sensors_event_t *temp,
+                                     uint32_t timestamp) {
 
   memset(temp, 0, sizeof(sensors_event_t));
   temp->version = sizeof(sensors_event_t);
   temp->sensor_id = _sensorid_temp;
   temp->type = SENSOR_TYPE_AMBIENT_TEMPERATURE;
-  temp->timestamp = t;
+  temp->timestamp = timestamp;
   temp->temperature = temperature;
+}
+
+void Adafruit_MPU6050::fillAccelEvent(sensors_event_t *accel,
+                                      uint32_t timestamp) {
+
+  memset(accel, 0, sizeof(sensors_event_t));
+  accel->version = 1;
+  accel->sensor_id = _sensorid_accel;
+  accel->type = SENSOR_TYPE_ACCELEROMETER;
+  accel->timestamp = timestamp;
+  accel->acceleration.x = accX * SENSORS_GRAVITY_STANDARD;
+  accel->acceleration.y = accY * SENSORS_GRAVITY_STANDARD;
+  accel->acceleration.z = accZ * SENSORS_GRAVITY_STANDARD;
+}
+void Adafruit_MPU6050::fillGyroEvent(sensors_event_t *gyro,
+                                     uint32_t timestamp) {
+  memset(gyro, 0, sizeof(sensors_event_t));
+  gyro->version = 1;
+  gyro->sensor_id = _sensorid_gyro;
+  gyro->type = SENSOR_TYPE_GYROSCOPE;
+  gyro->timestamp = timestamp;
+  gyro->gyro.x = gyroX * SENSORS_DPS_TO_RADS;
+  gyro->gyro.y = gyroY * SENSORS_DPS_TO_RADS;
+  gyro->gyro.z = gyroZ * SENSORS_DPS_TO_RADS;
+}
+
+/*!
+  @brief  Gets an Adafruit Unified Sensor object for the temp sensor component
+  @return Adafruit_Sensor pointer to temperature sensor
+*/
+Adafruit_Sensor *Adafruit_MPU6050::getTemperatureSensor(void) {
+  return temp_sensor;
+}
+
+/*!
+    @brief  Gets an Adafruit Unified Sensor object for the accelerometer
+    sensor component
+    @return Adafruit_Sensor pointer to accelerometer sensor
+ */
+Adafruit_Sensor *Adafruit_MPU6050::getAccelerometerSensor(void) {
+  return accel_sensor;
+}
+
+/*!
+    @brief  Gets an Adafruit Unified Sensor object for the gyro sensor component
+    @return Adafruit_Sensor pointer to gyro sensor
+ */
+Adafruit_Sensor *Adafruit_MPU6050::getGyroSensor(void) { return gyro_sensor; }
+
+/**************************************************************************/
+/*!
+    @brief  Gets the sensor_t data for the MPU6050's gyroscope sensor
+*/
+/**************************************************************************/
+void Adafruit_MPU6050_Gyro::getSensor(sensor_t *sensor) {
+  /* Clear the sensor_t object */
+  memset(sensor, 0, sizeof(sensor_t));
+
+  /* Insert the sensor name in the fixed length char array */
+  strncpy(sensor->name, "MPU6050_G", sizeof(sensor->name) - 1);
+  sensor->name[sizeof(sensor->name) - 1] = 0;
+  sensor->version = 1;
+  sensor->sensor_id = _sensorID;
+  sensor->type = SENSOR_TYPE_GYROSCOPE;
+  sensor->min_delay = 0;
+  sensor->min_value = -34.91; /* -000 dps -> rad/s (radians per second) */
+  sensor->max_value = +34.91;
+  sensor->resolution = 1.332e-4; /* 131.5 LSB/DPS */
+}
+
+/**************************************************************************/
+/*!
+    @brief  Gets the gyroscope as a standard sensor event
+    @param  event Sensor event object that will be populated
+    @returns True
+*/
+/**************************************************************************/
+bool Adafruit_MPU6050_Gyro::getEvent(sensors_event_t *event) {
+  _theMPU6050->_read();
+  _theMPU6050->fillGyroEvent(event, millis());
+
+  return true;
+}
+
+/**************************************************************************/
+/*!
+    @brief  Gets the sensor_t data for the MPU6050's accelerometer
+*/
+/**************************************************************************/
+void Adafruit_MPU6050_Accelerometer::getSensor(sensor_t *sensor) {
+  /* Clear the sensor_t object */
+  memset(sensor, 0, sizeof(sensor_t));
+
+  /* Insert the sensor name in the fixed length char array */
+  strncpy(sensor->name, "MPU6050_A", sizeof(sensor->name) - 1);
+  sensor->name[sizeof(sensor->name) - 1] = 0;
+  sensor->version = 1;
+  sensor->sensor_id = _sensorID;
+  sensor->type = SENSOR_TYPE_ACCELEROMETER;
+  sensor->min_delay = 0;
+  sensor->min_value = -156.9064F; /*  -16g = 156.9064 m/s^2  */
+  sensor->max_value = 156.9064F;  /* 16g = 156.9064 m/s^2  */
+  sensor->resolution = 0.061;     /* 0.061 mg/LSB at +-2g */
+}
+
+/**************************************************************************/
+/*!
+    @brief  Gets the accelerometer as a standard sensor event
+    @param  event Sensor event object that will be populatedx
+    @returns True
+*/
+/**************************************************************************/
+bool Adafruit_MPU6050_Accelerometer::getEvent(sensors_event_t *event) {
+  _theMPU6050->_read();
+  _theMPU6050->fillAccelEvent(event, millis());
+
+  return true;
+}
+
+/**************************************************************************/
+/*!
+    @brief  Gets the sensor_t data for the MPU6050's tenperature
+*/
+/**************************************************************************/
+void Adafruit_MPU6050_Temp::getSensor(sensor_t *sensor) {
+  /* Clear the sensor_t object */
+  memset(sensor, 0, sizeof(sensor_t));
+
+  /* Insert the sensor name in the fixed length char array */
+  strncpy(sensor->name, "MPU6050_T", sizeof(sensor->name) - 1);
+  sensor->name[sizeof(sensor->name) - 1] = 0;
+  sensor->version = 1;
+  sensor->sensor_id = _sensorID;
+  sensor->type = SENSOR_TYPE_AMBIENT_TEMPERATURE;
+  sensor->min_delay = 0;
+  sensor->min_value = -40;
+  sensor->max_value = 105;
+  sensor->resolution = 0.00294; /* 340 LSB/C => 1/340 C/LSB */
+}
+
+/**************************************************************************/
+/*!
+    @brief  Gets the temperature as a standard sensor event
+    @param  event Sensor event object that will be populated
+    @returns True
+*/
+/**************************************************************************/
+bool Adafruit_MPU6050_Temp::getEvent(sensors_event_t *event) {
+  _theMPU6050->_read();
+  _theMPU6050->fillTempEvent(event, millis());
 
   return true;
 }
