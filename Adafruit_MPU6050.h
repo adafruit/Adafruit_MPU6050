@@ -216,8 +216,8 @@ public:
   void setSampleRateDivisor(uint8_t);
   uint8_t getSampleRateDivisor(void);
 
-  void enableSleep(bool enable);
-  void enableCycle(bool enable);
+  bool enableSleep(bool enable);
+  bool enableCycle(bool enable);
 
   void setCycleRate(mpu6050_cycle_rate_t rate);
   mpu6050_cycle_rate_t getCycleRate(void);

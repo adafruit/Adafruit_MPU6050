@@ -376,9 +376,10 @@ void Adafruit_MPU6050::setI2CBypass(bool bypass) {
               and measurements are halted until sleep mode is deactivated
               Setting `false` wakes up the sensor from sleep mode,
               resuming measurements.
+      @returns True or false on successful write
 */
 /**************************************************************************/
-void Adafruit_MPU6050::enableSleep(bool enable) {
+bool Adafruit_MPU6050::enableSleep(bool enable) {
   Adafruit_BusIO_Register pwr_mgmt =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_1, 1);
 
@@ -397,9 +398,10 @@ void Adafruit_MPU6050::enableSleep(bool enable) {
               if the sensor has been put into a sleep state with `enableSleep`
               Setting `false` returns the sensor to the normal
               measurement mode.
+      @returns True or false on successful write
 */
 /**************************************************************************/
-void Adafruit_MPU6050::enableCycle(bool enable) {
+bool Adafruit_MPU6050::enableCycle(bool enable) {
   Adafruit_BusIO_Register pwr_mgmt =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_1, 1);
 
