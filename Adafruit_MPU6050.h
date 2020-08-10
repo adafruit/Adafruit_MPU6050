@@ -1,7 +1,7 @@
 /*!
  *  @file Adafruit_MPU6050.h
  *
- * 	I2C Driver for MPU6050 6-DoF Accelerometer and Magnetometer
+ * 	I2C Driver for MPU6050 6-DoF Accelerometer and Gyro
  *
  * 	This is a library for the Adafruit MPU6050 breakout:
  * 	https://www.adafruit.com/products/3886
