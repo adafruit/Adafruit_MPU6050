@@ -420,12 +420,11 @@ bool Adafruit_MPU6050::getMotionInterruptStatus(void) {
   return (bool)motion.read();
 }
 
-
 /**************************************************************************/
 /*!
-*     @brief  Sets the motion detection threshold
-*     @param  thr
-*/
+ *     @brief  Sets the motion detection threshold
+ *     @param  thr
+ */
 /**************************************************************************/
 void Adafruit_MPU6050::setMotionDetectionThreshold(uint8_t thr) {
   Adafruit_BusIO_Register threshold =
@@ -435,9 +434,9 @@ void Adafruit_MPU6050::setMotionDetectionThreshold(uint8_t thr) {
 
 /**************************************************************************/
 /*!
-*     @brief  Sets the motion detection duration
-*     @param  dur
-*/
+ *     @brief  Sets the motion detection duration
+ *     @param  dur
+ */
 /**************************************************************************/
 void Adafruit_MPU6050::setMotionDetectionDuration(uint8_t dur) {
   Adafruit_BusIO_Register duration =
