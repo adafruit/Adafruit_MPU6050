@@ -119,12 +119,12 @@ bool Adafruit_MPU6050::_init(int32_t sensor_id) {
 
   // remove old reference
   if (temp_sensor)
-      delete temp_sensor;
+    delete temp_sensor;
   if (accel_sensor)
-      delete accel_sensor;
+    delete accel_sensor;
   if (gyro_sensor)
-      delete gyro_sensor;
-  
+    delete gyro_sensor;
+
   temp_sensor = new Adafruit_MPU6050_Temp(this);
   accel_sensor = new Adafruit_MPU6050_Accelerometer(this);
   gyro_sensor = new Adafruit_MPU6050_Gyro(this);
