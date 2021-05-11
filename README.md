@@ -33,9 +33,9 @@ Documentation is produced by doxygen. Contributions should include documentation
 
 Some examples of how to use doxygen can be found in these guide pages:
 
-https://learn.adafruit.com/the-well-automated-arduino-library/doxygen
+[About Doxygen](https://learn.adafruit.com/the-well-automated-arduino-library/doxygen)
 
-https://learn.adafruit.com/the-well-automated-arduino-library/doxygen-tips
+[Doxygen Tips](https://learn.adafruit.com/the-well-automated-arduino-library/doxygen-tips)
 
 ## Formatting and clang-format
 This library uses [`clang-format`](https://releases.llvm.org/download.html) to standardize the formatting of `.cpp` and `.h` files.
