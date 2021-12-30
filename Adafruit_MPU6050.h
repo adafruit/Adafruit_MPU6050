@@ -41,6 +41,7 @@
 #define MPU6050_ACCEL_CONFIG                                                   \
   0x1C ///< Accelerometer specific configration register
 #define MPU6050_INT_PIN_CONFIG 0x37    ///< Interrupt pin configuration register
+#define MPU6050_INT_ENABLE 0x38        ///< Interrupt enable register
 #define MPU6050_WHO_AM_I 0x75          ///< Divice ID register
 #define MPU6050_SIGNAL_PATH_RESET 0x68 ///< Signal path reset register
 #define MPU6050_USER_CTRL 0x6A         ///< FIFO and I2C Master control register
@@ -132,6 +133,17 @@ typedef enum {
   MPU6050_CYCLE_40_HZ,   ///< 40 Hz
 } mpu6050_cycle_rate_t;
 
+/**
+ * @brief Interrupt options
+ *
+ * Allowed values for `enableInterrupt` and `disableInterrupt`.
+ */
+typedef enum {
+  MPU6050_DATA_RDY_EN = 0,    ///< Enables the Data Ready interrupt
+  MPU6050_I2C_MST_INT_EN = 3, ///< Enables any of the I2C Master interrupt sources
+  MPU6050_FIFO_OFLOW_EN = 4,  ///< Enables a FIFO buffer overflow interrupt
+} mpu6050_int_source_t;
+
 class Adafruit_MPU6050;
 
 /** Adafruit Unified Sensor interface for temperature component of MPU6050 */
@@ -202,6 +214,8 @@ public:
   void setGyroRange(mpu6050_gyro_range_t);
 
   void setInterruptPinPolarity(bool active_low);
+  void enableInterrupt(mpu6050_int_source_t int_source);
+  void disableInterrupt(mpu6050_int_source_t int_source);
   void setFsyncSampleOutput(mpu6050_fsync_out_t fsync_output);
 
   mpu6050_fsync_out_t getFsyncSampleOutput(void);

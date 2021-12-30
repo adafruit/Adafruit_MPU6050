@@ -353,6 +353,36 @@ void Adafruit_MPU6050::setInterruptPinPolarity(bool active_low) {
 
 /**************************************************************************/
 /*!
+*     @brief  Enables interrupt generation by a interrupt source
+*     @param  int_source
+*             The `mpu6050_int_source_t` specifying the interrupt source
+*/
+/**************************************************************************/
+void Adafruit_MPU6050::enableInterrupt(mpu6050_int_source_t int_source) {
+  Adafruit_BusIO_Register int_pin_config =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_INT_ENABLE, 1);
+  Adafruit_BusIO_RegisterBits int_level =
+      Adafruit_BusIO_RegisterBits(&int_pin_config, 1, int_source);
+  int_level.write(1);
+}
+
+/**************************************************************************/
+/*!
+*     @brief  Disables interrupt generation by a interrupt source
+*     @param  int_source
+*             The `mpu6050_int_source_t` specifying the interrupt source
+*/
+/**************************************************************************/
+void Adafruit_MPU6050::disableInterrupt(mpu6050_int_source_t int_source) {
+  Adafruit_BusIO_Register int_pin_config =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_INT_ENABLE, 1);
+  Adafruit_BusIO_RegisterBits int_level =
+      Adafruit_BusIO_RegisterBits(&int_pin_config, 1, int_source);
+  int_level.write(0);
+}
+
+/**************************************************************************/
+/*!
 *     @brief  Connects or disconects the I2C master pins to the main I2C pins
 *     @param  bypass
               If `true` the I2C Master pins are connected to the main I2C pins,
