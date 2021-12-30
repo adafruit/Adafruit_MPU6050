@@ -353,10 +353,10 @@ void Adafruit_MPU6050::setInterruptPinPolarity(bool active_low) {
 
 /**************************************************************************/
 /*!
-*     @brief  Enables interrupt generation by a interrupt source
-*     @param  int_source
-*             The `mpu6050_int_source_t` specifying the interrupt source
-*/
+ *     @brief  Enables interrupt generation by a interrupt source
+ *     @param  int_source
+ *             The `mpu6050_int_source_t` specifying the interrupt source
+ */
 /**************************************************************************/
 void Adafruit_MPU6050::enableInterrupt(mpu6050_int_source_t int_source) {
   Adafruit_BusIO_Register int_pin_config =
@@ -368,10 +368,10 @@ void Adafruit_MPU6050::enableInterrupt(mpu6050_int_source_t int_source) {
 
 /**************************************************************************/
 /*!
-*     @brief  Disables interrupt generation by a interrupt source
-*     @param  int_source
-*             The `mpu6050_int_source_t` specifying the interrupt source
-*/
+ *     @brief  Disables interrupt generation by a interrupt source
+ *     @param  int_source
+ *             The `mpu6050_int_source_t` specifying the interrupt source
+ */
 /**************************************************************************/
 void Adafruit_MPU6050::disableInterrupt(mpu6050_int_source_t int_source) {
   Adafruit_BusIO_Register int_pin_config =

@@ -139,9 +139,10 @@ typedef enum {
  * Allowed values for `enableInterrupt` and `disableInterrupt`.
  */
 typedef enum {
-  MPU6050_DATA_RDY_EN = 0,    ///< Enables the Data Ready interrupt
-  MPU6050_I2C_MST_INT_EN = 3, ///< Enables any of the I2C Master interrupt sources
-  MPU6050_FIFO_OFLOW_EN = 4,  ///< Enables a FIFO buffer overflow interrupt
+  MPU6050_DATA_RDY_EN = 0, ///< Enables the Data Ready interrupt
+  MPU6050_I2C_MST_INT_EN =
+      3, ///< Enables any of the I2C Master interrupt sources
+  MPU6050_FIFO_OFLOW_EN = 4, ///< Enables a FIFO buffer overflow interrupt
 } mpu6050_int_source_t;
 
 class Adafruit_MPU6050;
