@@ -9,6 +9,8 @@ var searchData=
   ['getfsyncsampleoutput',['getFsyncSampleOutput',['../class_adafruit___m_p_u6050.html#a68eea5646dda3660908e5851aa4cda87',1,'Adafruit_MPU6050']]],
   ['getgyrorange',['getGyroRange',['../class_adafruit___m_p_u6050.html#adf4b1c925882acbeb92ea26260986f67',1,'Adafruit_MPU6050']]],
   ['getgyrosensor',['getGyroSensor',['../class_adafruit___m_p_u6050.html#a54468035f6bb9064bc93a3bf022ed05d',1,'Adafruit_MPU6050']]],
+  ['gethighpassfilter',['getHighPassFilter',['../class_adafruit___m_p_u6050.html#a9e486bc80c8ef0257b6e779e81376ad4',1,'Adafruit_MPU6050']]],
+  ['getmotioninterruptstatus',['getMotionInterruptStatus',['../class_adafruit___m_p_u6050.html#ae63f0f83eb44392cb3300392287db3e9',1,'Adafruit_MPU6050']]],
   ['getsampleratedivisor',['getSampleRateDivisor',['../class_adafruit___m_p_u6050.html#a3ac2b92f540713d1acadad35caa46f1f',1,'Adafruit_MPU6050']]],
   ['getsensor',['getSensor',['../class_adafruit___m_p_u6050___temp.html#a6fba202c789225a106144d7c20a6729c',1,'Adafruit_MPU6050_Temp::getSensor()'],['../class_adafruit___m_p_u6050___accelerometer.html#a39494ac70765f841317585034b3354f0',1,'Adafruit_MPU6050_Accelerometer::getSensor()'],['../class_adafruit___m_p_u6050___gyro.html#a4324ab78ff5ffb4a45d2b64b1649706c',1,'Adafruit_MPU6050_Gyro::getSensor()']]],
   ['gettemperaturesensor',['getTemperatureSensor',['../class_adafruit___m_p_u6050.html#ae13a59cfd7c77861d756f3489168b289',1,'Adafruit_MPU6050']]]
