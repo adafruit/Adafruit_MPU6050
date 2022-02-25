@@ -40,8 +40,10 @@
 #define MPU6050_GYRO_CONFIG 0x1B ///< Gyro specfic configuration register
 #define MPU6050_ACCEL_CONFIG                                                   \
   0x1C ///< Accelerometer specific configration register
-#define MPU6050_INT_PIN_CONFIG 0x37    ///< Interrupt pin configuration register
-#define MPU6050_WHO_AM_I 0x75          ///< Divice ID register
+#define MPU6050_INT_PIN_CONFIG 0x37 ///< Interrupt pin configuration register
+#define MPU6050_INT_ENABLE 0x38     ///< Interrupt enable configuration register
+#define MPU6050_INT_STATUS 0x3A     ///< Interrupt status register
+#define MPU6050_WHO_AM_I 0x75       ///< Divice ID register
 #define MPU6050_SIGNAL_PATH_RESET 0x68 ///< Signal path reset register
 #define MPU6050_USER_CTRL 0x6A         ///< FIFO and I2C Master control register
 #define MPU6050_PWR_MGMT_1 0x6B        ///< Primary power/sleep control register
@@ -49,6 +51,9 @@
 #define MPU6050_TEMP_H 0x41     ///< Temperature data high byte register
 #define MPU6050_TEMP_L 0x42     ///< Temperature data low byte register
 #define MPU6050_ACCEL_OUT 0x3B  ///< base address for sensor data reads
+#define MPU6050_MOT_THR 0x1F    ///< Motion detection threshold bits [7:0]
+#define MPU6050_MOT_DUR                                                        \
+  0x20 ///< Duration counter threshold for motion int. 1 kHz rate, LSB = 1 ms
 
 /**
  * @brief FSYNC output values
@@ -119,6 +124,21 @@ typedef enum {
   MPU6050_BAND_10_HZ,  ///< 10 Hz
   MPU6050_BAND_5_HZ,   ///< 5 Hz
 } mpu6050_bandwidth_t;
+
+/**
+ * @brief Accelerometer high pass filter options
+ *
+ * Allowed values for `setHighPassFilter`.
+ */
+typedef enum {
+  MPU6050_HIGHPASS_DISABLE,
+  MPU6050_HIGHPASS_5_HZ,
+  MPU6050_HIGHPASS_2_5_HZ,
+  MPU6050_HIGHPASS_1_25_HZ,
+  MPU6050_HIGHPASS_0_63_HZ,
+  MPU6050_HIGHPASS_UNUSED,
+  MPU6050_HIGHPASS_HOLD,
+} mpu6050_highpass_t;
 
 /**
  * @brief Periodic measurement options
@@ -202,7 +222,16 @@ public:
   void setGyroRange(mpu6050_gyro_range_t);
 
   void setInterruptPinPolarity(bool active_low);
+  void setInterruptPinLatch(bool held);
   void setFsyncSampleOutput(mpu6050_fsync_out_t fsync_output);
+
+  mpu6050_highpass_t getHighPassFilter(void);
+  void setHighPassFilter(mpu6050_highpass_t bandwidth);
+
+  void setMotionInterrupt(bool active);
+  void setMotionDetectionThreshold(uint8_t thr);
+  void setMotionDetectionDuration(uint8_t dur);
+  bool getMotionInterruptStatus(void);
 
   mpu6050_fsync_out_t getFsyncSampleOutput(void);
   void setI2CBypass(bool bypass);
