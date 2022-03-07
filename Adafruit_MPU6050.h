@@ -209,7 +209,7 @@ public:
   ~Adafruit_MPU6050();
 
   bool init(uint8_t i2c_addr = MPU6050_I2CADDR_DEFAULT, TwoWire *wire = &Wire,
-             int32_t sensorID = 0);
+            int32_t sensorID = 0);
 
   bool begin(uint8_t i2c_addr = MPU6050_I2CADDR_DEFAULT, TwoWire *wire = &Wire,
              int32_t sensorID = 0);
