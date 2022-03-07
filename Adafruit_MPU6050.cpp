@@ -58,6 +58,9 @@ Adafruit_MPU6050::~Adafruit_MPU6050(void) {
 
 /*!
  *    @brief  Sets up the hardware and initializes I2C
+ *    This call, unlike begin(), doesn't do an initialization of the
+ *    MPU6050 settings, and assumes that the user wants to maintain
+ *    the last settings.
  *    @param  i2c_address
  *            The I2C address to be used.
  *    @param  wire
@@ -66,9 +69,46 @@ Adafruit_MPU6050::~Adafruit_MPU6050(void) {
  *            The user-defined ID to differentiate different sensors
  *    @return True if initialization was successful, otherwise false.
  */
+bool Adafruit_MPU6050::init(uint8_t i2c_address, TwoWire *wire,
+                            int32_t sensor_id) {
+  if (!initI2C(i2c_address, wire)) {
+    return false;
+  }
 
+  _sensorid_accel = sensor_id;
+  _sensorid_gyro = sensor_id + 1;
+  _sensorid_temp = sensor_id + 2;
+  return true;
+}
+
+/*!
+ *    @brief  Sets up the hardware and initializes I2C
+ *    @param  i2c_address
+ *            The I2C address to be used.
+ *    @param  wire
+ *            The Wire object to be used for I2C connections.
+ *    @param sensor_id
+ *            The user-defined ID to differentiate different sensors
+ *    @return True if initialization was successful, otherwise false.
+ */
 bool Adafruit_MPU6050::begin(uint8_t i2c_address, TwoWire *wire,
                              int32_t sensor_id) {
+  if (!initI2C(i2c_address, wire)) {
+    return false;
+  }
+
+  return _init(sensor_id);
+}
+
+/*!
+ *    @brief  Initializes I2C
+ *    @param  i2c_address
+ *            The I2C address to be used.
+ *    @param  wire
+ *            The Wire object to be used for I2C connections.
+ *    @return True if initialization was successful, otherwise false.
+ */
+bool Adafruit_MPU6050::initI2C(uint8_t i2c_address, TwoWire *wire) {
   if (i2c_dev) {
     delete i2c_dev; // remove old interface
   }
@@ -87,7 +127,7 @@ bool Adafruit_MPU6050::begin(uint8_t i2c_address, TwoWire *wire,
     return false;
   }
 
-  return _init(sensor_id);
+  return true;
 }
 
 /*!  @brief Initilizes the sensor
