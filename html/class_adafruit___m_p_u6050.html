@@ -165,6 +165,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af28744c1b4332c3e393704af53b4b93d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_adafruit___m_p_u6050_8h.html#a581f03aa11b55de772b4234fc392ec8b">mpu6050_cycle_rate_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#af28744c1b4332c3e393704af53b4b93d">getCycleRate</a> (void)</td></tr>
 <tr class="memdesc:af28744c1b4332c3e393704af53b4b93d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the frequencey of measurements in 'Cycle' mode.  <a href="#af28744c1b4332c3e393704af53b4b93d">More...</a><br /></td></tr>
 <tr class="separator:af28744c1b4332c3e393704af53b4b93d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab98f5dde9b0385ffc728f41cf5212ac9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#ab98f5dde9b0385ffc728f41cf5212ac9">setGyroStandby</a> (bool xAxisStandby, bool yAxisStandby, bool zAxisStandby)</td></tr>
+<tr class="memdesc:ab98f5dde9b0385ffc728f41cf5212ac9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets standbye mode for each of the gyroscope axes.  <a href="#ab98f5dde9b0385ffc728f41cf5212ac9">More...</a><br /></td></tr>
+<tr class="separator:ab98f5dde9b0385ffc728f41cf5212ac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba5376fae68d23e34ec5bc583ac72a5b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#aba5376fae68d23e34ec5bc583ac72a5b">setAccelerometerStandby</a> (bool xAxisStandby, bool yAxisStandby, bool zAxisStandby)</td></tr>
+<tr class="memdesc:aba5376fae68d23e34ec5bc583ac72a5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets standbye mode for each of the accelerometer axes.  <a href="#aba5376fae68d23e34ec5bc583ac72a5b">More...</a><br /></td></tr>
+<tr class="separator:aba5376fae68d23e34ec5bc583ac72a5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc8464a65e9723d0a153b4929fb80ae0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#adc8464a65e9723d0a153b4929fb80ae0">setTemperatureStandby</a> (bool enable)</td></tr>
+<tr class="memdesc:adc8464a65e9723d0a153b4929fb80ae0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets disable mode for thermometer sensor.  <a href="#adc8464a65e9723d0a153b4929fb80ae0">More...</a><br /></td></tr>
+<tr class="separator:adc8464a65e9723d0a153b4929fb80ae0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afac296ae5d46a29b14dc013ad8a1587d"><td class="memItemLeft" align="right" valign="top"><a id="afac296ae5d46a29b14dc013ad8a1587d"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_p_u6050.html#afac296ae5d46a29b14dc013ad8a1587d">reset</a> (void)</td></tr>
 <tr class="memdesc:afac296ae5d46a29b14dc013ad8a1587d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets registers to their initial value and resets the sensors' analog and digital signal paths. <br /></td></tr>
@@ -953,6 +962,123 @@ Friends</h2></td></tr>
 
 <p>Gets the frequencey of measurements in 'Cycle' mode. </p>
 <dl class="section return"><dt>Returns</dt><dd>The current 'Cycle' measurement frequency </dd></dl>
+
+</div>
+</div>
+<a id="ab98f5dde9b0385ffc728f41cf5212ac9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab98f5dde9b0385ffc728f41cf5212ac9">&#9670;&nbsp;</a></span>setGyroStandby()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Adafruit_MPU6050::setGyroStandby </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>xAxisStandby</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>yAxisStandby</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>zAxisStandby</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets standbye mode for each of the gyroscope axes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">xAxisStandby</td><td>If <code>true</code> the gyroscope stops sensing in the X-axis. Setting <code>false</code> resumes X-axis sensing. </td></tr>
+    <tr><td class="paramname">yAxisStandby</td><td>If <code>true</code> the gyroscope stops sensing in the Y-axis. Setting <code>false</code> resumes Y-axis sensing. </td></tr>
+    <tr><td class="paramname">zAxisStandby</td><td>If <code>true</code> the gyroscope stops sensing in the Z-axis. Setting <code>false</code> resumes Z-axis sensing. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if setting was successful, otherwise false. </dd></dl>
+
+</div>
+</div>
+<a id="aba5376fae68d23e34ec5bc583ac72a5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba5376fae68d23e34ec5bc583ac72a5b">&#9670;&nbsp;</a></span>setAccelerometerStandby()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Adafruit_MPU6050::setAccelerometerStandby </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>xAxisStandby</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>yAxisStandby</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>zAxisStandby</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets standbye mode for each of the accelerometer axes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">xAxisStandby</td><td>If <code>true</code> the accelerometer stops sensing in the X-axis. Setting <code>false</code> resumes X-axis sensing. </td></tr>
+    <tr><td class="paramname">yAxisStandby</td><td>If <code>true</code> the accelerometer stops sensing in the Y-axis. Setting <code>false</code> resumes Y-axis sensing. </td></tr>
+    <tr><td class="paramname">zAxisStandby</td><td>If <code>true</code> the accelerometer stops sensing in the Z-axis. Setting <code>false</code> resumes Z-axis sensing. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if setting was successful, otherwise false. </dd></dl>
+
+</div>
+</div>
+<a id="adc8464a65e9723d0a153b4929fb80ae0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc8464a65e9723d0a153b4929fb80ae0">&#9670;&nbsp;</a></span>setTemperatureStandby()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Adafruit_MPU6050::setTemperatureStandby </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets disable mode for thermometer sensor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">enable</td><td>If <code>true</code> the temperature sensor will stop taking measurements. Setting <code>false</code> returns the temperature sensor to the normal measurement mode. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if setting was successful, otherwise false. </dd></dl>
 
 </div>
 </div>
