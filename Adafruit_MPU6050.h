@@ -251,10 +251,10 @@ public:
   void setCycleRate(mpu6050_cycle_rate_t rate);
   mpu6050_cycle_rate_t getCycleRate(void);
 
-  bool enableGyroStandby(bool xAxisEnable, bool yAxisEnable, bool zAxisEnable);
-  bool enableAccelerometerStandby(bool xAxisEnable, bool yAxisEnable,
-                                  bool zAxisEnable);
-  bool enableTemperatureStandby(bool enable);
+  bool setGyroStandby(bool xAxisEnable, bool yAxisEnable, bool zAxisEnable);
+  bool setAccelerometerStandby(bool xAxisEnable, bool yAxisEnable,
+                               bool zAxisEnable);
+  bool setTemperatureStandby(bool enable);
 
   void reset(void);
 
