@@ -566,7 +566,8 @@ void Adafruit_MPU6050::setCycleRate(mpu6050_cycle_rate_t rate) {
  *     @return True if setting was successful, otherwise false.
  */
 /**************************************************************************/
-bool Adafruit_MPU6050::enableGyroStandby(bool xAxisEnable, bool yAxisEnable, bool zAxisEnable) {
+bool Adafruit_MPU6050::enableGyroStandby(bool xAxisEnable, bool yAxisEnable,
+                                         bool zAxisEnable) {
   Adafruit_BusIO_Register pwr_mgmt_2 =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_2, 1);
 
@@ -590,7 +591,8 @@ bool Adafruit_MPU6050::enableGyroStandby(bool xAxisEnable, bool yAxisEnable, boo
  *     @return True if setting was successful, otherwise false.
  */
 /**************************************************************************/
-bool Adafruit_MPU6050::enableAccelerometerStandby(bool xAxisEnable, bool yAxisEnable,
+bool Adafruit_MPU6050::enableAccelerometerStandby(bool xAxisEnable,
+                                                  bool yAxisEnable,
                                                   bool zAxisEnable) {
   Adafruit_BusIO_Register pwr_mgmt_2 =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_2, 1);
