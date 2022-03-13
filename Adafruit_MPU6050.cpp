@@ -573,8 +573,7 @@ bool Adafruit_MPU6050::setGyroStandby(bool xAxisStandby, bool yAxisStandby,
 
   Adafruit_BusIO_RegisterBits gyro_stdby =
       Adafruit_BusIO_RegisterBits(&pwr_mgmt_2, 3, 0);
-  return gyro_stdby.write(xAxisStandby << 2 | yAxisStandby << 1 |
-                          zAxisStandby);
+  return gyro_stdby.write(xAxisStandby << 2 | yAxisStandby << 1 | zAxisStandby);
 }
 
 /**************************************************************************/
