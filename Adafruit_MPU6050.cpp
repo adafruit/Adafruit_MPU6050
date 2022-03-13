@@ -551,6 +551,77 @@ void Adafruit_MPU6050::setCycleRate(mpu6050_cycle_rate_t rate) {
   cycle_rate.write(rate);
 }
 
+/**************************************************************************/
+/*!
+ *     @brief  Sets standbye mode for each of the gyroscope axes.
+ *     @param  xAxisStandby
+ *             If `true` the gyroscope stops sensing in the X-axis.
+ *             Setting `false` resumes X-axis sensing.
+ *     @param  yAxisStandby
+ *             If `true` the gyroscope stops sensing in the Y-axis.
+ *             Setting `false` resumes Y-axis sensing.
+ *     @param  zAxisStandby
+ *             If `true` the gyroscope stops sensing in the Z-axis.
+ *             Setting `false` resumes Z-axis sensing.
+ *     @return True if setting was successful, otherwise false.
+ */
+/**************************************************************************/
+bool Adafruit_MPU6050::setGyroStandby(bool xAxisStandby, bool yAxisStandby,
+                                      bool zAxisStandby) {
+  Adafruit_BusIO_Register pwr_mgmt_2 =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_2, 1);
+
+  Adafruit_BusIO_RegisterBits gyro_stdby =
+      Adafruit_BusIO_RegisterBits(&pwr_mgmt_2, 3, 0);
+  return gyro_stdby.write(xAxisStandby << 2 | yAxisStandby << 1 | zAxisStandby);
+}
+
+/**************************************************************************/
+/*!
+ *     @brief  Sets standbye mode for each of the accelerometer axes.
+ *     @param  xAxisStandby
+ *             If `true` the accelerometer stops sensing in the X-axis.
+ *             Setting `false` resumes X-axis sensing.
+ *     @param  yAxisStandby
+ *             If `true` the accelerometer stops sensing in the Y-axis.
+ *             Setting `false` resumes Y-axis sensing.
+ *     @param  zAxisStandby
+ *             If `true` the accelerometer stops sensing in the Z-axis.
+ *             Setting `false` resumes Z-axis sensing.
+ *     @return True if setting was successful, otherwise false.
+ */
+/**************************************************************************/
+bool Adafruit_MPU6050::setAccelerometerStandby(bool xAxisStandby,
+                                               bool yAxisStandby,
+                                               bool zAxisStandby) {
+  Adafruit_BusIO_Register pwr_mgmt_2 =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_2, 1);
+
+  Adafruit_BusIO_RegisterBits accel_stdby =
+      Adafruit_BusIO_RegisterBits(&pwr_mgmt_2, 3, 3);
+  return accel_stdby.write(xAxisStandby << 2 | yAxisStandby << 1 |
+                           zAxisStandby);
+}
+
+/**************************************************************************/
+/*!
+ *     @brief  Sets disable mode for thermometer sensor.
+ *     @param  enable
+ *             If `true` the temperature sensor will stop taking measurements.
+ *             Setting `false` returns the temperature sensor to the normal
+ *             measurement mode.
+ *     @return True if setting was successful, otherwise false.
+ */
+/**************************************************************************/
+bool Adafruit_MPU6050::setTemperatureStandby(bool enable) {
+  Adafruit_BusIO_Register pwr_mgmt =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_1, 1);
+
+  Adafruit_BusIO_RegisterBits temp_stdby =
+      Adafruit_BusIO_RegisterBits(&pwr_mgmt, 1, 3);
+  return temp_stdby.write(1);
+}
+
 /******************* Adafruit_Sensor functions *****************/
 /*!
  *     @brief  Updates the measurement data for all sensors simultaneously
