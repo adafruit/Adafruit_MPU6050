@@ -554,52 +554,52 @@ void Adafruit_MPU6050::setCycleRate(mpu6050_cycle_rate_t rate) {
 /**************************************************************************/
 /*!
  *     @brief  Sets standbye mode for each of the gyroscope axes.
- *     @param  xAxisEnable
+ *     @param  xAxisStandby
  *             If `true` the gyroscope stops sensing in the X-axis.
  *             Setting `false` resumes X-axis sensing.
- *     @param  yAxisEnable
+ *     @param  yAxisStandby
  *             If `true` the gyroscope stops sensing in the Y-axis.
  *             Setting `false` resumes Y-axis sensing.
- *     @param  zAxisEnable
+ *     @param  zAxisStandby
  *             If `true` the gyroscope stops sensing in the Z-axis.
  *             Setting `false` resumes Z-axis sensing.
  *     @return True if setting was successful, otherwise false.
  */
 /**************************************************************************/
-bool Adafruit_MPU6050::setGyroStandby(bool xAxisEnable, bool yAxisEnable,
-                                      bool zAxisEnable) {
+bool Adafruit_MPU6050::setGyroStandby(bool xAxisStandby, bool yAxisStandby,
+                                      bool zAxisStandby) {
   Adafruit_BusIO_Register pwr_mgmt_2 =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_2, 1);
 
   Adafruit_BusIO_RegisterBits gyro_stdby =
       Adafruit_BusIO_RegisterBits(&pwr_mgmt_2, 3, 0);
-  return gyro_stdby.write(xAxisEnable << 2 | yAxisEnable << 1 | zAxisEnable);
+  return gyro_stdby.write(xAxisStandby << 2 | yAxisStandby << 1 | zAxisStandby);
 }
 
 /**************************************************************************/
 /*!
  *     @brief  Sets standbye mode for each of the accelerometer axes.
- *     @param  xAxisEnable
+ *     @param  xAxisStandby
  *             If `true` the accelerometer stops sensing in the X-axis.
  *             Setting `false` resumes X-axis sensing.
- *     @param  yAxisEnable
+ *     @param  yAxisStandby
  *             If `true` the accelerometer stops sensing in the Y-axis.
  *             Setting `false` resumes Y-axis sensing.
- *     @param  zAxisEnable
+ *     @param  zAxisStandby
  *             If `true` the accelerometer stops sensing in the Z-axis.
  *             Setting `false` resumes Z-axis sensing.
  *     @return True if setting was successful, otherwise false.
  */
 /**************************************************************************/
-bool Adafruit_MPU6050::setAccelerometerStandby(bool xAxisEnable,
-                                               bool yAxisEnable,
-                                               bool zAxisEnable) {
+bool Adafruit_MPU6050::setAccelerometerStandby(bool xAxisStandby,
+                                               bool yAxisStandby,
+                                               bool zAxisStandby) {
   Adafruit_BusIO_Register pwr_mgmt_2 =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_PWR_MGMT_2, 1);
 
   Adafruit_BusIO_RegisterBits accel_stdby =
       Adafruit_BusIO_RegisterBits(&pwr_mgmt_2, 3, 3);
-  return accel_stdby.write(xAxisEnable << 2 | yAxisEnable << 1 | zAxisEnable);
+  return accel_stdby.write(xAxisStandby << 2 | yAxisStandby << 1 | zAxisStandby);
 }
 
 /**************************************************************************/
