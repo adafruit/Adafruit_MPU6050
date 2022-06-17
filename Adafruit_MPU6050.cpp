@@ -393,7 +393,7 @@ void Adafruit_MPU6050::setInterruptPinLatch(bool held) {
   Adafruit_BusIO_Register int_pin_config =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_INT_PIN_CONFIG, 1);
   Adafruit_BusIO_RegisterBits int_latch =
-      Adafruit_BusIO_RegisterBits(&int_pin_config, 1, 7);
+      Adafruit_BusIO_RegisterBits(&int_pin_config, 1, 5);
   int_latch.write(held);
 }
 
