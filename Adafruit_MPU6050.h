@@ -203,7 +203,7 @@ private:
  *    @brief  Class that stores state and functions for interacting with
  *            the MPU6050 I2C Digital Potentiometer
  */
-class Adafruit_MPU6050 {
+class Adafruit_MPU6050 final {
 public:
   Adafruit_MPU6050();
   ~Adafruit_MPU6050();
