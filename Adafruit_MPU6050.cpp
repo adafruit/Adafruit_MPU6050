@@ -619,7 +619,7 @@ bool Adafruit_MPU6050::setTemperatureStandby(bool enable) {
 
   Adafruit_BusIO_RegisterBits temp_stdby =
       Adafruit_BusIO_RegisterBits(&pwr_mgmt, 1, 3);
-  return temp_stdby.write(1);
+  return temp_stdby.write(enable);
 }
 
 /******************* Adafruit_Sensor functions *****************/
