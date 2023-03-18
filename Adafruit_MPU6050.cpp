@@ -635,13 +635,15 @@ bool Adafruit_MPU6050::setTemperatureStandby(bool enable) {
  *     @brief  Updates the measurement data for all sensors simultaneously
  */
 /**************************************************************************/
-void Adafruit_MPU6050::_read(void) {
+bool Adafruit_MPU6050::_read(void) {
   // get raw readings
   Adafruit_BusIO_Register data_reg =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_ACCEL_OUT, 14);
 
   uint8_t buffer[14];
-  data_reg.read(buffer, 14);
+  bool ret = data_reg.read(buffer, 14);
+
+  if (!ret) return false;
 
   rawAccX = buffer[0] << 8 | buffer[1];
   rawAccY = buffer[2] << 8 | buffer[3];
@@ -687,6 +689,8 @@ void Adafruit_MPU6050::_read(void) {
   gyroX = ((float)rawGyroX) / gyro_scale;
   gyroY = ((float)rawGyroY) / gyro_scale;
   gyroZ = ((float)rawGyroZ) / gyro_scale;
+
+  return true;
 }
 
 /**************************************************************************/
@@ -707,7 +711,9 @@ void Adafruit_MPU6050::_read(void) {
 bool Adafruit_MPU6050::getEvent(sensors_event_t *accel, sensors_event_t *gyro,
                                 sensors_event_t *temp) {
   uint32_t timestamp = millis();
-  _read();
+  bool ret = _read();
+
+  if (!ret) return false;
 
   fillTempEvent(temp, timestamp);
   fillAccelEvent(accel, timestamp);
