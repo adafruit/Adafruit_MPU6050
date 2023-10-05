@@ -55,6 +55,22 @@
 #define MPU6050_MOT_DUR                                                        \
   0x20 ///< Duration counter threshold for motion int. 1 kHz rate, LSB = 1 ms
 
+// Accelerometer offset register
+#define MPU6050_XA_OFFSET_H 0x06 //6
+#define MPU6050_XA_OFFSET_L 0x07 //7
+#define MPU6050_YA_OFFSET_H 0x08 //8
+#define MPU6050_YA_OFFSET_L 0x09 //9
+#define MPU6050_ZA_OFFSET_H 0x0A //10
+#define MPU6050_ZA_OFFSET_L 0x0B //11
+
+// Gyroscope offset register
+#define MPU6050_XG_OFFSET_H 0x13 //19
+#define MPU6050_XG_OFFSET_L 0x14 //20
+#define MPU6050_YG_OFFSET_H 0x15 //21
+#define MPU6050_YG_OFFSET_L 0x16 //22
+#define MPU6050_ZG_OFFSET_H 0x17 //23
+#define MPU6050_ZG_OFFSET_L 0x18 //24
+
 /**
  * @brief FSYNC output values
  *
@@ -261,7 +277,9 @@ public:
   Adafruit_Sensor *getTemperatureSensor(void);
   Adafruit_Sensor *getAccelerometerSensor(void);
   Adafruit_Sensor *getGyroSensor(void);
-
+  Adafruit_I2CDevice * getI2cDev(void){
+    return i2c_dev;
+  }
 private:
   void _getRawSensorData(void);
   void _scaleSensorData(void);
