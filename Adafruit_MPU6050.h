@@ -168,6 +168,16 @@ typedef enum {
   MPU6050_CYCLE_40_HZ,   ///< 40 Hz
 } mpu6050_cycle_rate_t;
 
+/**
+ * @brief offSet for gyro and accel sensor
+ * 
+ */
+typedef struct {
+  int16_t x;
+  int16_t y;
+  int16_t z;
+} mpu6050_offset_t;
+
 class Adafruit_MPU6050;
 
 /** Adafruit Unified Sensor interface for temperature component of MPU6050 */
@@ -273,6 +283,12 @@ public:
   bool setTemperatureStandby(bool enable);
 
   void reset(void);
+
+  //offset control
+  mpu6050_offset_t getGyroOffsets(void);
+  void setGyroOffsets(mpu6050_offset_t offset);
+  mpu6050_offset_t getAccelerometerOffsets(void);
+  void setAccelerometerOffsets(mpu6050_offset_t offset);
 
   Adafruit_Sensor *getTemperatureSensor(void);
   Adafruit_Sensor *getAccelerometerSensor(void);
