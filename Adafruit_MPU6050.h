@@ -24,7 +24,7 @@
 #include <Wire.h>
 
 #define MPU6050_I2CADDR_DEFAULT                                                \
-  0x68                         ///< MPU6050 default i2c address w/ AD0 high
+  0x68                         ///< MPU6050 default i2c address w/ AD0 low
 #define MPU6050_DEVICE_ID 0x68 ///< The correct MPU6050_WHO_AM_I value
 
 #define MPU6050_SELF_TEST_X                                                    \
