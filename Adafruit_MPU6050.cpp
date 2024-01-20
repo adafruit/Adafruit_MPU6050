@@ -137,6 +137,8 @@ bool Adafruit_MPU6050::_init(int32_t sensor_id) {
   accel_sensor = new Adafruit_MPU6050_Accelerometer(this);
   gyro_sensor = new Adafruit_MPU6050_Gyro(this);
 
+
+
   return true;
 }
 /**************************************************************************/
@@ -877,4 +879,80 @@ bool Adafruit_MPU6050_Temp::getEvent(sensors_event_t *event) {
   _theMPU6050->fillTempEvent(event, millis());
 
   return true;
+}
+
+
+/**
+ * @brief OffSet Control
+ * 
+ */
+
+mpu6050_offset_t Adafruit_MPU6050::getGyroOffsets(void)
+{
+    mpu6050_offset_t offSet = {.x = 0, .y = 0, .z = 0};
+    Adafruit_I2CDevice *i2c_dev = getI2cDev();
+    Adafruit_BusIO_Register OffSetReg =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_XG_OFFSET_H, sizeof(mpu6050_offset_t));
+    
+    uint8_t buffer[sizeof(mpu6050_offset_t)];
+    OffSetReg.read(buffer, sizeof(mpu6050_offset_t));
+
+    offSet.x = buffer[0] << 8 | buffer[1];
+    offSet.y = buffer[2] << 8 | buffer[3];
+    offSet.z = buffer[4] << 8 | buffer[5];
+
+    return offSet;
+}
+
+void Adafruit_MPU6050::setGyroOffsets(mpu6050_offset_t offset)
+{
+    Adafruit_I2CDevice *i2c_dev = getI2cDev();
+    Adafruit_BusIO_Register OffSetReg =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_XG_OFFSET_H, sizeof(mpu6050_offset_t));
+
+    uint8_t buffer[sizeof(mpu6050_offset_t)];
+
+    buffer[0] = ((uint8_t*)&offset.x)[1];
+    buffer[1] = ((uint8_t*)&offset.x)[0];
+    buffer[2] = ((uint8_t*)&offset.y)[1];
+    buffer[3] = ((uint8_t*)&offset.y)[0];
+    buffer[4] = ((uint8_t*)&offset.z)[1];
+    buffer[5] = ((uint8_t*)&offset.z)[0];
+
+    OffSetReg.write(buffer, sizeof(mpu6050_offset_t));
+}
+
+mpu6050_offset_t Adafruit_MPU6050::getAccelerometerOffsets(void)
+{
+    mpu6050_offset_t offSet = {.x = 0, .y = 0, .z = 0};
+    Adafruit_I2CDevice *i2c_dev = getI2cDev();
+    Adafruit_BusIO_Register OffSetReg =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_XA_OFFSET_H, sizeof(mpu6050_offset_t), 1);
+    
+    uint8_t buffer[sizeof(mpu6050_offset_t)];
+    OffSetReg.read(buffer, sizeof(mpu6050_offset_t));
+
+    offSet.x = buffer[0] << 8 | buffer[1];
+    offSet.y = buffer[2] << 8 | buffer[3];
+    offSet.z = buffer[4] << 8 | buffer[5];
+    
+    return offSet;
+}
+
+void Adafruit_MPU6050::setAccelerometerOffsets(mpu6050_offset_t offset)
+{
+    Adafruit_I2CDevice *i2c_dev = getI2cDev();
+    Adafruit_BusIO_Register OffSetReg =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_XA_OFFSET_H, sizeof(mpu6050_offset_t), 1);
+    
+    uint8_t buffer[sizeof(mpu6050_offset_t)];
+
+    buffer[0] = ((uint8_t*)&offset.x)[1];
+    buffer[1] = ((uint8_t*)&offset.x)[0];
+    buffer[2] = ((uint8_t*)&offset.y)[1];
+    buffer[3] = ((uint8_t*)&offset.y)[0];
+    buffer[4] = ((uint8_t*)&offset.z)[1];
+    buffer[5] = ((uint8_t*)&offset.z)[0];
+    
+    OffSetReg.write(buffer, sizeof(mpu6050_offset_t));
 }
