@@ -2,11 +2,11 @@
 /*!
  *  @file Adafruit_MPU6050.cpp
  *
- *  @mainpage Adafruit MPU6050 proximity and ambient light sensor library
+ *  @mainpage Adafruit MPU6050 6-DoF Accelerometer and Gyro Library
  *
  *  @section intro_sec Introduction
  *
- * 	I2C Driver for the MPU6050 proximity and ambient light sensor library
+ * 	I2C Driver for the MPU6050 6-DoF accelerometer and gyro sensor library
  *
  * 	This is a library for the Adafruit MPU6050 breakout:
  * 	https://www.adafruit.com/product/3886
