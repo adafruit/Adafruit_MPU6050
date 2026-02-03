@@ -289,6 +289,17 @@ protected:
   void _read(void);
   virtual bool _init(int32_t sensor_id);
 
+public:
+  // added additional interface to access raw values
+  // return last read raw value in LSB
+  inline int16_t getRawAccX(void) { return rawAccX; }; 
+  inline int16_t getRawAccY(void) { return rawAccY; }; 
+  inline int16_t getRawAccZ(void) { return rawAccZ; };
+  inline int16_t getRawGyroX(void) { return rawGyroX; };
+  inline int16_t getRawGyroY(void) { return rawGyroY; };
+  inline int16_t getRawGyroZ(void) { return rawGyroZ; };
+  inline int16_t getRawTemp(void) { return rawTemp; };
+
 private:
   friend class Adafruit_MPU6050_Temp; ///< Gives access to private members to
                                       ///< Temp data object
