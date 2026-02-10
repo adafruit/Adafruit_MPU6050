@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['adafruit_20mpu6050_20proximity_20and_20ambient_20light_20sensor_20library',['Adafruit MPU6050 proximity and ambient light sensor library',['../index.html',1,'']]]
+  ['adafruit_20mpu6050_206_2ddof_20accelerometer_20and_20gyro_20library',['Adafruit MPU6050 6-DoF Accelerometer and Gyro Library',['../index.html',1,'']]]
 ];
