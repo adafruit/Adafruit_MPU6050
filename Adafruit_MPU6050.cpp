@@ -58,6 +58,9 @@ Adafruit_MPU6050::~Adafruit_MPU6050(void) {
 
 /*!
  *    @brief  Sets up the hardware and initializes I2C
+ *    @param alt_ID
+ *            In the case of a knockoff sensor, this is the user-provided I2C
+ *            device ID
  *    @param  i2c_address
  *            The I2C address to be used.
  *    @param  wire
@@ -67,7 +70,7 @@ Adafruit_MPU6050::~Adafruit_MPU6050(void) {
  *    @return True if initialization was successful, otherwise false.
  */
 
-bool Adafruit_MPU6050::begin(uint8_t i2c_address, TwoWire *wire,
+bool Adafruit_MPU6050::begin(int32_t alt_ID, uint8_t i2c_address, TwoWire *wire,
                              int32_t sensor_id) {
   if (i2c_dev) {
     delete i2c_dev; // remove old interface
@@ -91,7 +94,7 @@ bool Adafruit_MPU6050::begin(uint8_t i2c_address, TwoWire *wire,
       Adafruit_BusIO_Register(i2c_dev, MPU6050_WHO_AM_I, 1);
 
   // make sure we're talking to the right chip
-  if (chip_id.read() != MPU6050_DEVICE_ID) {
+  if (chip_id.read() != alt_ID) {
     return false;
   }
 
